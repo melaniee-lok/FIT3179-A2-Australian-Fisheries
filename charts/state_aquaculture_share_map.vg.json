@@ -1,0 +1,248 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 390,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -132,
+      0,
+      0
+    ]
+  },
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "legend": {
+      "labelFontSize": 13,
+      "titleFontSize": 13
+    },
+    "background": "white"
+  },
+  "params": [
+    {
+      "name": "Year_selection",
+      "value": 2024,
+      "bind": {
+        "input": "range",
+        "min": 1998,
+        "max": 2024,
+        "step": 1,
+        "name": "Financial year ",
+        "element": "#map-year-control"
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "maps/australia_states.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "states"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "stroke": "white",
+        "strokeWidth": 1.2,
+        "fill": "#d9ddda"
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "properties.State",
+            "title": "State or territory"
+          },
+          {
+            "field": "Availability",
+            "title": "Data availability"
+          }
+        ]
+      },
+      "transform": [
+        {
+          "calculate": "'No separate production value reported'",
+          "as": "Availability"
+        }
+      ]
+    },
+    {
+      "data": {
+        "url": "data/state_aquaculture_share_yearly.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "YearStart": "number",
+            "AquacultureShare": "number",
+            "Aquaculture": "number",
+            "WildCatch": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.YearStart == Year_selection"
+        },
+        {
+          "lookup": "State",
+          "from": {
+            "data": {
+              "url": "maps/australia_states.topojson",
+              "format": {
+                "type": "topojson",
+                "feature": "states"
+              }
+            },
+            "key": "properties.State"
+          },
+          "as": "geo"
+        },
+        {
+          "calculate": "format(datum.AquacultureShare, '.1f') + '%'",
+          "as": "ShareLabel"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "white",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "shape": {
+          "field": "geo",
+          "type": "geojson"
+        },
+        "color": {
+          "field": "AquacultureShare",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              25,
+              50,
+              75,
+              100
+            ],
+            "range": [
+              "#edf5f4",
+              "#c6e0dd",
+              "#78b5b8",
+              "#278f9b",
+              "#005b70"
+            ]
+          },
+          "legend": {
+            "title": "Aquaculture share",
+            "orient": "bottom",
+            "gradientLength": {
+              "expr": "width"
+            },
+            "values": [
+              0,
+              25,
+              50,
+              75,
+              100
+            ],
+            "labelExpr": "datum.label + '%'",
+            "offset": 8
+          }
+        },
+        "tooltip": [
+          {
+            "field": "State",
+            "title": "State or territory"
+          },
+          {
+            "field": "Year",
+            "title": "Financial year"
+          },
+          {
+            "field": "ShareLabel",
+            "title": "Aquaculture share"
+          },
+          {
+            "field": "Aquaculture",
+            "type": "quantitative",
+            "title": "Aquaculture (A$ million)",
+            "format": ",.1f"
+          },
+          {
+            "field": "WildCatch",
+            "type": "quantitative",
+            "title": "State wild catch (A$ million)",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/state_aquaculture_share_yearly.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "YearStart": "number",
+            "AquacultureShare": "number",
+            "Aquaculture": "number",
+            "WildCatch": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.YearStart == Year_selection"
+        },
+        {
+          "window": [
+            {
+              "op": "rank",
+              "as": "ShareRank"
+            }
+          ],
+          "sort": [
+            {
+              "field": "AquacultureShare",
+              "order": "descending"
+            }
+          ]
+        },
+        {
+          "filter": "datum.ShareRank == 1"
+        },
+        {
+          "calculate": "'Highest aquaculture share: ' + datum.State + ' \u2014 ' + format(datum.AquacultureShare, '.0f') + '%'",
+          "as": "LeaderAnnotation"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "font": "Arial",
+        "fontSize": 13,
+        "fontWeight": 600,
+        "color": "#55696f"
+      },
+      "encoding": {
+        "x": {
+          "value": 0
+        },
+        "y": {
+          "value": 0
+        },
+        "text": {
+          "field": "LeaderAnnotation"
+        }
+      }
+    }
+  ],
+  "padding": 0
+}

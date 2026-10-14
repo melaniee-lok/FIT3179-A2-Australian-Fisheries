@@ -1,0 +1,39 @@
+PathID,SourceColumn,StartYear,EndYear,SourceStatus,TargetStatus,OriginStatus,SourceIndex,TargetIndex,SourceLow,SourceHigh,TargetLow,TargetHigh,StockCount,Examples,FullPath
+0,0,2004,2014,Not overfished,Not overfished,Not overfished,0,0,0,20,0,20,20,Redleg banana prawn; White banana prawn; Brown tiger prawn,Not overfished / Not overfished / Not overfished
+0,1,2014,2023,Not overfished,Not overfished,Not overfished,0,0,0,20,0,20,20,Redleg banana prawn; White banana prawn; Brown tiger prawn,Not overfished / Not overfished / Not overfished
+1,0,2004,2014,Not overfished,Overfished,Not overfished,0,1,20,21,67,68,1,Bigeye tuna,Not overfished / Overfished / Not overfished
+1,1,2014,2023,Overfished,Not overfished,Not overfished,1,0,67,68,20,21,1,Bigeye tuna,Not overfished / Overfished / Not overfished
+2,0,2004,2014,Overfished,Not overfished,Overfished,1,0,21,24,20,23,3,"Orange roughy, eastern zone; Tropical rock lobster; Black teatfish",Overfished / Not overfished / Not overfished
+2,1,2014,2023,Not overfished,Not overfished,Overfished,0,0,20,23,21,24,3,"Orange roughy, eastern zone; Tropical rock lobster; Black teatfish",Overfished / Not overfished / Not overfished
+3,0,2004,2014,Overfished,Not overfished,Overfished,1,0,24,26,23,25,2,Black teatfish; Silver trevally,Overfished / Not overfished / Uncertain
+3,1,2014,2023,Not overfished,Uncertain,Overfished,0,2,23,25,81,83,2,Black teatfish; Silver trevally,Overfished / Not overfished / Uncertain
+4,0,2004,2014,Overfished,Overfished,Overfished,1,1,26,27,68,69,1,Southern bluefin tuna,Overfished / Overfished / Not overfished
+4,1,2014,2023,Overfished,Not overfished,Overfished,1,0,68,69,24,25,1,Southern bluefin tuna,Overfished / Overfished / Not overfished
+5,0,2004,2014,Overfished,Overfished,Overfished,1,1,27,36,69,78,9,"Blue warehou, eastern zone; Blue warehou, western zone; Gemfish, eastern zone",Overfished / Overfished / Overfished
+5,1,2014,2023,Overfished,Overfished,Overfished,1,1,69,78,67,76,9,"Blue warehou, eastern zone; Blue warehou, western zone; Gemfish, eastern zone",Overfished / Overfished / Overfished
+6,0,2004,2014,Overfished,Uncertain,Overfished,1,2,36,37,80,81,1,Commercial scallop,Overfished / Uncertain / Not overfished
+6,1,2014,2023,Uncertain,Not overfished,Overfished,2,0,80,81,25,26,1,Commercial scallop,Overfished / Uncertain / Not overfished
+7,0,2004,2014,Overfished,Not assessed,Overfished,1,3,37,38,93,94,1,Surf redfish,Overfished / Not assessed / Uncertain
+7,1,2014,2023,Not assessed,Uncertain,Overfished,3,2,93,94,83,84,1,Surf redfish,Overfished / Not assessed / Uncertain
+8,0,2004,2014,Uncertain,Not overfished,Uncertain,2,0,38,60,25,47,22,Prickly redfish; Multiple species; Tropical rock lobster,Uncertain / Not overfished / Not overfished
+8,1,2014,2023,Not overfished,Not overfished,Uncertain,0,0,25,47,26,48,22,Prickly redfish; Multiple species; Tropical rock lobster,Uncertain / Not overfished / Not overfished
+9,0,2004,2014,Uncertain,Not overfished,Uncertain,2,0,60,63,47,50,3,"Jackass morwong, eastern; John dory; Striped marlin",Uncertain / Not overfished / Overfished
+9,1,2014,2023,Not overfished,Overfished,Uncertain,0,1,47,50,76,79,3,"Jackass morwong, eastern; John dory; Striped marlin",Uncertain / Not overfished / Overfished
+10,0,2004,2014,Uncertain,Not overfished,Uncertain,2,0,63,66,50,53,3,Surf redfish; Elephantfish; Blue endeavour prawn,Uncertain / Not overfished / Uncertain
+10,1,2014,2023,Not overfished,Uncertain,Uncertain,0,2,50,53,84,87,3,Surf redfish; Elephantfish; Blue endeavour prawn,Uncertain / Not overfished / Uncertain
+11,0,2004,2014,Uncertain,Uncertain,Uncertain,2,2,66,69,81,84,3,"Red endeavour prawn; Redbait, west; Ruby snapper",Uncertain / Uncertain / Not overfished
+11,1,2014,2023,Uncertain,Not overfished,Uncertain,2,0,81,84,48,51,3,"Red endeavour prawn; Redbait, west; Ruby snapper",Uncertain / Uncertain / Not overfished
+12,0,2004,2014,Uncertain,Uncertain,Uncertain,2,2,69,75,84,90,6,White teatfish; Other sea cucumber species; Mixed reef fish and sharks,Uncertain / Uncertain / Uncertain
+12,1,2014,2023,Uncertain,Uncertain,Uncertain,2,2,84,90,87,93,6,White teatfish; Other sea cucumber species; Mixed reef fish and sharks,Uncertain / Uncertain / Uncertain
+13,0,2004,2014,Not assessed,Not overfished,Not assessed,3,0,75,87,53,65,12,"Australian sardine; Blue mackerel, east; Blue mackerel, west",Not assessed / Not overfished / Not overfished
+13,1,2014,2023,Not overfished,Not overfished,Not assessed,0,0,53,65,51,63,12,"Australian sardine; Blue mackerel, east; Blue mackerel, west",Not assessed / Not overfished / Not overfished
+14,0,2004,2014,Not assessed,Not overfished,Not assessed,3,0,87,89,65,67,2,"Oreodory: smooth, non–Cascade Plateau; Oreodory: other",Not assessed / Not overfished / Uncertain
+14,1,2014,2023,Not overfished,Uncertain,Not assessed,0,2,65,67,93,95,2,"Oreodory: smooth, non–Cascade Plateau; Oreodory: other",Not assessed / Not overfished / Uncertain
+15,0,2004,2014,Not assessed,Overfished,Not assessed,3,1,89,91,78,80,2,Gulper sharks; Striped marlin,Not assessed / Overfished / Overfished
+15,1,2014,2023,Overfished,Overfished,Not assessed,1,1,78,80,79,81,2,Gulper sharks; Striped marlin,Not assessed / Overfished / Overfished
+16,0,2004,2014,Not assessed,Uncertain,Not assessed,3,2,91,94,90,93,3,"Deepwater sharks, eastern zone; Deepwater sharks, western zone; Other sea cucumbers",Not assessed / Uncertain / Uncertain
+16,1,2014,2023,Uncertain,Uncertain,Not assessed,2,2,90,93,95,98,3,"Deepwater sharks, eastern zone; Deepwater sharks, western zone; Other sea cucumbers",Not assessed / Uncertain / Uncertain
+17,0,2004,2014,Not assessed,Not assessed,Not assessed,3,3,94,98,94,98,4,Curryfish; Greenfish; Toothfish,Not assessed / Not assessed / Not overfished
+17,1,2014,2023,Not assessed,Not overfished,Not assessed,3,0,94,98,63,67,4,Curryfish; Greenfish; Toothfish,Not assessed / Not assessed / Not overfished
+18,0,2004,2014,Not assessed,Not assessed,Not assessed,3,3,98,102,98,102,4,Deepwater redfish; Hairy blackfish; Toothfish,Not assessed / Not assessed / Uncertain
+18,1,2014,2023,Not assessed,Uncertain,Not assessed,3,2,98,102,98,102,4,Deepwater redfish; Hairy blackfish; Toothfish,Not assessed / Not assessed / Uncertain

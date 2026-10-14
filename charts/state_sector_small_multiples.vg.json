@@ -1,0 +1,127 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Three proportional-symbol maps. Circle area encodes production value on one shared scale; representative jurisdiction locations are schematic, not production sites.",
+  "repeat": ["Aquaculture", "State wild catch", "Total state-managed"],
+  "columns": 3,
+  "spacing": 8,
+  "resolve": {
+    "scale": {"size": "shared"},
+    "legend": {"size": "shared"}
+  },
+  "spec": {
+    "width": 225,
+    "height": 220,
+    "projection": {
+      "type": "conicEqualArea",
+      "parallels": [-18, -36],
+      "rotate": [-132, 0, 0]
+    },
+    "layer": [
+      {
+        "data": {
+          "url": "maps/australia_states.topojson",
+          "format": {"type": "topojson", "feature": "states"}
+        },
+        "mark": {"type": "geoshape", "fill": "#d6e0e2", "stroke": "#ffffff", "strokeWidth": 0.8},
+        "encoding": {
+          "tooltip": [
+            {"field": "properties.State", "title": "Jurisdiction"}
+          ]
+        }
+      },
+      {
+        "data": {
+          "url": "data/state_sector_values_2024_25.csv",
+          "format": {
+            "type": "csv",
+            "parse": {"Aquaculture": "number", "WildCatch": "number", "TotalStateManaged": "number"}
+          }
+        },
+        "transform": [
+          {
+            "lookup": "State",
+            "from": {
+              "data": {
+                "values": [
+                  {"State": "New South Wales", "Longitude": 147, "Latitude": -32.5},
+                  {"State": "Victoria", "Longitude": 145, "Latitude": -37},
+                  {"State": "Queensland", "Longitude": 144.5, "Latitude": -22.5},
+                  {"State": "South Australia", "Longitude": 135.5, "Latitude": -30},
+                  {"State": "Western Australia", "Longitude": 121, "Latitude": -25.5},
+                  {"State": "Tasmania", "Longitude": 146.7, "Latitude": -42},
+                  {"State": "Northern Territory", "Longitude": 133.5, "Latitude": -19.5}
+                ]
+              },
+              "key": "State",
+              "fields": ["Longitude", "Latitude"]
+            }
+          },
+          {"calculate": "datum.WildCatch", "as": "State wild catch"},
+          {"calculate": "datum.TotalStateManaged", "as": "Total state-managed"}
+        ],
+        "mark": {"type": "circle", "color": "#194c5a", "opacity": 0.75, "stroke": "#ffffff", "strokeWidth": 1},
+        "encoding": {
+          "longitude": {"field": "Longitude", "type": "quantitative"},
+          "latitude": {"field": "Latitude", "type": "quantitative"},
+          "size": {
+            "field": {"repeat": "repeat"},
+            "type": "quantitative",
+            "scale": {
+              "domain": [0, 1450],
+              "range": [0, 1500]
+            },
+            "legend": {
+              "title": "Production value (A$ million)",
+              "orient": "bottom",
+              "direction": "horizontal",
+              "values": [100, 500, 1400],
+              "format": ",.0f",
+              "titleLimit": 400
+            }
+          },
+          "tooltip": [
+            {"field": "State", "title": "Jurisdiction"},
+            {
+              "field": {"repeat": "repeat"},
+              "type": "quantitative",
+              "format": ",.1f"
+            }
+          ]
+        }
+      },
+      {
+        "data": {
+          "values": [
+            {
+              "Aquaculture": "AQUACULTURE",
+              "State wild catch": "STATE WILD CATCH",
+              "Total state-managed": "TOTAL STATE-MANAGED"
+            }
+          ]
+        },
+        "mark": {
+          "type": "text",
+          "align": "center",
+          "baseline": "bottom",
+          "fontSize": 14,
+          "fontWeight": 700,
+          "color": "#153a44",
+          "dy": -10
+        },
+        "encoding": {
+          "x": {"value": 105},
+          "y": {"value": 0},
+          "text": {
+            "field": {"repeat": "repeat"}
+          }
+        }
+      }
+    ]
+  },
+  "config": {
+    "font": "Arial",
+    "background": "white",
+    "view": {"stroke": null},
+    "legend": {"labelFontSize": 13, "titleFontSize": 13, "titleFontWeight": 400}
+  }
+}

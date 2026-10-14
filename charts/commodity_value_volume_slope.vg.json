@@ -1,0 +1,228 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Quantity and value shares on parallel 0–50% scales; thirteen commodities with five direct labels.",
+  "width": "container",
+  "height": 440,
+  "autosize": {"type": "fit-x", "contains": "padding"},
+  "padding": {"left": 5, "right": 5, "top": 25, "bottom": 5},
+  "data": {
+    "url": "data/commodity_value_volume_2024_25.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "QuantityShare_percent": "number",
+        "ValueShare_percent": "number",
+        "Implied_value_AUD_per_kg": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "fold": ["QuantityShare_percent", "ValueShare_percent"],
+      "as": ["Measure", "Share"]
+    },
+    {"calculate": "datum.Measure == 'QuantityShare_percent' ? 0 : 1", "as": "Side"},
+    {
+      "calculate": "indexof(['Salmonids', 'Rock Lobsters', 'Other Finfish, Sharks and Rays', 'Prawns', 'Oysters'], datum.Commodity) >= 0",
+      "as": "Highlighted"
+    },
+    {
+      "calculate": "datum.Commodity == 'Other Finfish, Sharks and Rays' ? 'Other finfish,|sharks and rays' : datum.Commodity",
+      "as": "Name"
+    },
+    {
+      "calculate": "datum.Side == 1 ? (datum.Commodity == 'Other Finfish, Sharks and Rays' ? 23 : datum.Share) : (datum.Commodity == 'Rock Lobsters' ? 2 : datum.Commodity == 'Oysters' ? 5.5 : datum.Commodity == 'Prawns' ? 9 : datum.Share)",
+      "as": "LabelShare"
+    },
+    {
+      "calculate": "datum.Side == 0 ? format(datum.Share, '.1f') + '%' : datum.Name + '|' + format(datum.Share, '.1f') + '%'",
+      "as": "EndpointLabel"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Side",
+      "type": "quantitative",
+      "scale": {
+        "domain": [-0.12, 1],
+        "nice": false
+      },
+      "axis": null
+    },
+    "y": {
+      "field": "Share",
+      "type": "quantitative",
+      "scale": {
+        "domain": [0, 50],
+        "nice": false
+      },
+      "axis": {
+        "title": "Share of national production (%)",
+        "values": [0, 10, 20, 30, 40, 50],
+        "domain": false,
+        "tickSize": 0,
+        "grid": false,
+        "labelPadding": 8
+      }
+    }
+  },
+  "layer": [
+    {
+      "data": {
+        "values": [
+          {"Side": 0, "Share": 0, "Top": 50},
+          {"Side": 1, "Share": 0, "Top": 50}
+        ]
+      },
+      "mark": {"type": "rule", "color": "#d5dddf", "strokeWidth": 1},
+      "encoding": {
+        "y2": {"field": "Top"}
+      }
+    },
+    {
+      "mark": {"type": "line"},
+      "encoding": {
+        "detail": {"field": "Commodity"},
+        "order": {"field": "Side"},
+        "color": {
+          "condition": [
+            {"test": "datum.Commodity == 'Salmonids'", "value": "#344454"},
+            {"test": "datum.Commodity == 'Rock Lobsters'", "value": "#607b87"},
+            {"test": "datum.Highlighted", "value": "#8198a1"}
+          ],
+          "value": "#bcc9ce"
+        },
+        "strokeWidth": {
+          "condition": {"test": "datum.Highlighted", "value": 2},
+          "value": 1
+        },
+        "opacity": {
+          "condition": {"test": "datum.Highlighted", "value": 1},
+          "value": 0.45
+        }
+      }
+    },
+    {
+      "mark": {"type": "circle", "size": 55, "opacity": 1},
+      "encoding": {
+        "color": {
+          "condition": [
+            {"test": "datum.Commodity == 'Salmonids'", "value": "#344454"},
+            {"test": "datum.Commodity == 'Rock Lobsters'", "value": "#607b87"},
+            {"test": "datum.Highlighted", "value": "#8198a1"}
+          ],
+          "value": "#bcc9ce"
+        },
+        "tooltip": [
+          {"field": "Commodity", "title": "Commodity"},
+          {"field": "QuantityShare_percent", "title": "Quantity share (%)", "format": ".1f"},
+          {"field": "ValueShare_percent", "title": "Value share (%)", "format": ".1f"},
+          {
+            "field": "Implied_value_AUD_per_kg",
+            "title": "Implied production value (A$ per kilogram)",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.Highlighted"}
+      ],
+      "mark": {"type": "rule", "color": "#9aadb4", "strokeWidth": 0.7},
+      "encoding": {
+        "y2": {"field": "LabelShare"}
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.Highlighted && datum.Side == 0"}
+      ],
+      "mark": {"type": "text", "align": "right", "dx": -8, "fontWeight": 600, "color": "#4c6570"},
+      "encoding": {
+        "y": {"field": "LabelShare", "type": "quantitative"},
+        "text": {"field": "EndpointLabel"}
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.Highlighted && datum.Side == 1"}
+      ],
+      "mark": {"type": "text", "align": "left", "dx": 10, "fontWeight": 600, "color": "#4c6570"},
+      "encoding": {
+        "y": {"field": "LabelShare", "type": "quantitative"},
+        "text": {"field": "EndpointLabel"}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"Side": 0, "Label": "QUANTITY SHARE"},
+          {"Side": 1, "Label": "VALUE SHARE"}
+        ]
+      },
+      "mark": {"type": "text", "align": "left", "baseline": "bottom", "fontWeight": 600, "color": "#55696f"},
+      "encoding": {
+        "y": {"value": -12},
+        "text": {"field": "Label"}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"Side": 0.62, "Share": 46, "Label": "Nearly half the volume"}
+        ]
+      },
+      "mark": {"type": "text", "align": "center", "baseline": "top", "dy": 0, "fontWeight": 600, "color": "#55696f"},
+      "encoding": {
+        "text": {"field": "Label"}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"Side": 0.62, "Share": 46, "Label": "Under one-fifth of value"}
+        ]
+      },
+      "mark": {"type": "text", "align": "center", "baseline": "top", "dy": 18, "fontWeight": 400, "color": "#55696f"},
+      "encoding": {
+        "text": {"field": "Label"}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"Side": 0.5, "Share": 18, "Label": "Small volume, outsized value"}
+        ]
+      },
+      "mark": {"type": "text", "align": "center", "baseline": "top", "dy": 0, "fontWeight": 600, "color": "#55696f"},
+      "encoding": {
+        "text": {"field": "Label"}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"Side": 0.5, "Share": 18, "Label": "Rock lobsters"}
+        ]
+      },
+      "mark": {"type": "text", "align": "center", "baseline": "top", "dy": 18, "fontWeight": 400, "color": "#55696f"},
+      "encoding": {
+        "text": {"field": "Label"}
+      }
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "text": {"fontSize": 13, "lineBreak": "|", "lineHeight": 15},
+    "view": {"stroke": null},
+    "axis": {
+      "labelFontSize": 14,
+      "titleFontSize": 14,
+      "titleFontWeight": 400,
+      "labelColor": "#55696f",
+      "titleColor": "#55696f",
+      "titlePadding": 16
+    }
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Production value trends for three fisheries sectors, with selective annotations and hover tooltips.",
+  "data": {
+    "url": "data/sector_trend.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(substring(datum.Year, 0, 4))",
+      "as": "StartYear"
+    },
+    {
+      "calculate": "toNumber(datum.Value) / 1000",
+      "as": "Billions"
+    },
+    {
+      "calculate": "datum.Sector == 'State wild catch fisheries' ? 'State wild catch' : datum.Sector == 'Commonwealth fisheries' ? 'Commonwealth wild catch' : 'Aquaculture'",
+      "as": "SectorLabel"
+    }
+  ],
+  "config": {
+    "background": "#ffffff",
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial",
+    "axis": {
+      "labelFontSize": 14,
+      "labelColor": "#526267",
+      "domainColor": "#cdd5d7",
+      "tickColor": "#cdd5d7",
+      "gridColor": "#f1f3f3",
+      "gridWidth": 1,
+      "titleFontSize": 14
+    },
+    "text": {
+      "align": "right",
+      "fontSize": 13,
+      "lineBreak": "|",
+      "lineHeight": 17
+    }
+  },
+  "resolve": {
+    "legend": {
+      "color": "independent"
+    }
+  },
+  "width": "container",
+  "height": 324,
+  "padding": {
+    "left": 8,
+    "top": 0,
+    "right": 12,
+    "bottom": 8
+  },
+  "encoding": {
+    "x": {
+      "field": "StartYear",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          1998,
+          2024
+        ],
+        "nice": false,
+        "zero": false
+      },
+      "axis": {
+        "title": "Financial year",
+        "values": [
+          1999,
+          2004,
+          2009,
+          2014,
+          2019,
+          2024
+        ],
+        "labelExpr": "toString(datum.value) + '\u2013' + substring(toString(datum.value + 1), 2)",
+        "labelAngle": 0,
+        "labelPadding": 12,
+        "grid": false,
+        "titleFontSize": 14,
+        "titleFontWeight": 400,
+        "titleColor": "#526267",
+        "titlePadding": 16,
+        "labelFontSize": 14,
+        "labelOverlap": false,
+        "labelFlush": false
+      }
+    },
+    "y": {
+      "field": "Billions",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          0,
+          2.7
+        ],
+        "nice": false,
+        "zero": true
+      },
+      "axis": {
+        "title": "Production value (A$ billion)",
+        "values": [
+          0,
+          0.5,
+          1,
+          1.5,
+          2,
+          2.5
+        ],
+        "format": ".1f",
+        "labelPadding": 8,
+        "domain": false,
+        "ticks": false,
+        "titleFontSize": 14,
+        "titleFontWeight": 400,
+        "titleColor": "#526267",
+        "titlePadding": 16,
+        "labelFontSize": 14
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3.2,
+        "strokeCap": "round",
+        "clip": true
+      },
+      "encoding": {
+        "color": {
+          "field": "SectorLabel",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Aquaculture",
+              "State wild catch",
+              "Commonwealth wild catch"
+            ],
+            "range": [
+              "#007c91",
+              "#a75b20",
+              "#756487"
+            ]
+          },
+          "legend": null
+        },
+        "order": {
+          "field": "StartYear",
+          "type": "quantitative"
+        },
+        "strokeWidth": {
+          "condition": {
+            "test": "datum.SectorLabel == 'Aquaculture'",
+            "value": 3.8
+          },
+          "value": 3.2
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 140,
+        "opacity": 0
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "Year",
+            "title": "Financial year"
+          },
+          {
+            "field": "SectorLabel",
+            "title": "Sector"
+          },
+          {
+            "field": "Billions",
+            "type": "quantitative",
+            "title": "Production value (A$ billion)",
+            "format": ".3f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.Sector == 'Aquaculture' && datum.StartYear == 2024"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "dx": -10,
+        "fontWeight": 600,
+        "color": "#007c91"
+      },
+      "encoding": {
+        "y": {
+          "datum": 2.58
+        },
+        "text": {
+          "value": "2024\u201325: A$0.85 billion gap|Above state wild catch"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.Sector == 'Commonwealth fisheries' && datum.StartYear == 2024"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "dx": -10,
+        "fontWeight": 600,
+        "color": "#756487"
+      },
+      "encoding": {
+        "y": {
+          "datum": 0.24
+        },
+        "text": {
+          "value": "2.1% lower than in 1998\u201399"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.StartYear == 2024"
+        },
+        {
+          "calculate": "datum.SectorLabel == 'Commonwealth wild catch' ? 'Commonwealth|wild catch' : datum.SectorLabel",
+          "as": "EndpointLabel"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "dy": 0,
+        "fontSize": 13,
+        "fontWeight": 600
+      },
+      "encoding": {
+        "text": {
+          "field": "EndpointLabel"
+        },
+        "color": {
+          "field": "SectorLabel",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Aquaculture",
+              "State wild catch",
+              "Commonwealth wild catch"
+            ],
+            "range": [
+              "#007c91",
+              "#a75b20",
+              "#756487"
+            ]
+          },
+          "legend": null
+        }
+      }
+    }
+  ],
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  }
+}

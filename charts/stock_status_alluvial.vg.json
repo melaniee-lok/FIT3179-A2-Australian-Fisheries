@@ -1,0 +1,309 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Biomass-status alluvial for the same 102 Commonwealth stocks at 2004, 2014 and 2023. Neutral ribbon thickness equals stock count; block colours indicate status.",
+  "width": 640,
+  "height": 440,
+  "padding": 0,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+  "signals": [
+    {
+      "name": "width",
+      "init": "containerSize()[0]",
+      "on": [
+        {
+          "events": "window:resize",
+          "update": "containerSize()[0]"
+        }
+      ]
+    },
+    {
+      "name": "nodeWidth",
+      "update": "min(110, width / 4)"
+    },
+    {
+      "name": "gap",
+      "value": 18
+    },
+    {
+      "name": "unit",
+      "update": "(height - 70 - 3 * gap) / 102"
+    },
+    {
+      "name": "hoverPath",
+      "value": null,
+      "on": [
+        {
+          "events": "@ribbons:mouseover",
+          "update": "datum.PathID"
+        },
+        {
+          "events": "@ribbons:mouseout",
+          "update": "null"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "flows",
+      "url": "data/abares_stock_status_flows.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "PathID": "number",
+          "SourceColumn": "number",
+          "StartYear": "number",
+          "EndYear": "number",
+          "SourceIndex": "number",
+          "TargetIndex": "number",
+          "SourceLow": "number",
+          "SourceHigh": "number",
+          "TargetLow": "number",
+          "TargetHigh": "number",
+          "StockCount": "number"
+        }
+      }
+    },
+    {
+      "name": "nodes",
+      "url": "data/abares_stock_status_nodes.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "Year": "number",
+          "Column": "number",
+          "StatusIndex": "number",
+          "Low": "number",
+          "High": "number",
+          "StockCount": "number"
+        }
+      },
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.StockCount > 0"
+        }
+      ]
+    },
+    {
+      "name": "years",
+      "values": [
+        {
+          "Column": 0,
+          "Year": 2004
+        },
+        {
+          "Column": 1,
+          "Year": 2014
+        },
+        {
+          "Column": 2,
+          "Year": 2023
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "status",
+      "type": "ordinal",
+      "domain": [
+        "Not overfished",
+        "Overfished",
+        "Uncertain",
+        "Not assessed"
+      ],
+      "range": [
+        "#416eaa",
+        "#806099",
+        "#969696",
+        "#eeeeee"
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "name": "ribbons",
+      "type": "path",
+      "from": {
+        "data": "flows"
+      },
+      "encode": {
+        "update": {
+          "path": {
+            "signal": "'M' + (datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ',' + (45 + datum.SourceLow * unit + datum.SourceIndex * gap) + ' C' + (((datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2)) / 2) + ',' + (45 + datum.SourceLow * unit + datum.SourceIndex * gap) + ' ' + (((datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2)) / 2) + ',' + (45 + datum.TargetLow * unit + datum.TargetIndex * gap) + ' ' + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2) + ',' + (45 + datum.TargetLow * unit + datum.TargetIndex * gap) + ' L' + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2) + ',' + (45 + datum.TargetHigh * unit + datum.TargetIndex * gap) + ' C' + (((datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2)) / 2) + ',' + (45 + datum.TargetHigh * unit + datum.TargetIndex * gap) + ' ' + (((datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2)) / 2) + ',' + (45 + datum.SourceHigh * unit + datum.SourceIndex * gap) + ' ' + (datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ',' + (45 + datum.SourceHigh * unit + datum.SourceIndex * gap) + ' Z'"
+          },
+          "fill": {
+            "value": "#8198a1"
+          },
+          "fillOpacity": {
+            "signal": "hoverPath == null ? 0.32 : hoverPath == datum.PathID ? 0.8 : 0.1"
+          },
+          "stroke": {
+            "value": "white"
+          },
+          "strokeWidth": {
+            "value": 0.4
+          },
+          "tooltip": {
+            "signal": "{'Period': datum.StartYear + '\u00e2\u20ac\u201c' + datum.EndYear, 'Transition': datum.SourceStatus + ' \u00e2\u2020\u2019 ' + datum.TargetStatus, 'Stocks': datum.StockCount, 'Full pathway': datum.FullPath, 'Examples': datum.Examples}"
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {
+        "data": "nodes"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.Column * (width - nodeWidth) / 2"
+          },
+          "width": {
+            "signal": "nodeWidth"
+          },
+          "y": {
+            "signal": "45 + datum.Low * unit + datum.StatusIndex * gap"
+          },
+          "height": {
+            "signal": "datum.StockCount * unit"
+          },
+          "fill": {
+            "scale": "status",
+            "field": "Status"
+          },
+          "tooltip": {
+            "signal": "{'Year': datum.Year, 'Biomass status': datum.Status, 'Stocks': datum.StockCount}"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "nodes"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.Column * (width - nodeWidth) / 2 + nodeWidth / 2"
+          },
+          "y": {
+            "signal": "45 + (datum.Low + datum.High) / 2 * unit + datum.StatusIndex * gap"
+          },
+          "dy": {
+            "value": -4
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fontWeight": {
+            "value": 600
+          },
+          "text": {
+            "field": "Status"
+          },
+          "fill": {
+            "signal": "datum.Status == 'Not overfished' || datum.Status == 'Overfished' ? 'white' : '#153a44'"
+          },
+          "font": {
+            "value": "Arial"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "nodes"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.Column * (width - nodeWidth) / 2 + nodeWidth / 2"
+          },
+          "y": {
+            "signal": "45 + (datum.Low + datum.High) / 2 * unit + datum.StatusIndex * gap"
+          },
+          "dy": {
+            "value": 9
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fontWeight": {
+            "value": 400
+          },
+          "text": {
+            "signal": "datum.StockCount + (datum.StockCount == 1 ? ' stock' : ' stocks')"
+          },
+          "fill": {
+            "signal": "datum.Status == 'Not overfished' || datum.Status == 'Overfished' ? 'white' : '#153a44'"
+          },
+          "font": {
+            "value": "Arial"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "years"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.Column * (width - nodeWidth) / 2 + nodeWidth / 2"
+          },
+          "y": {
+            "value": 27
+          },
+          "align": {
+            "value": "center"
+          },
+          "text": {
+            "field": "Year"
+          },
+          "fontSize": {
+            "value": 14
+          },
+          "fontWeight": {
+            "value": 600
+          },
+          "fill": {
+            "value": "#153a44"
+          },
+          "font": {
+            "value": "Arial"
+          }
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "background": "white"
+  }
+}

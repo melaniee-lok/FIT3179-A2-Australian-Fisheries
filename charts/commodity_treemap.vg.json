@@ -1,0 +1,347 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Commodity production-value treemap grouped by seafood category; area encodes value, navy emphasises salmonids.",
+  "width": 640,
+  "height": 420,
+  "padding": 0,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+  "signals": [
+    {
+      "name": "width",
+      "init": "containerSize()[0]",
+      "on": [
+        {
+          "events": "window:resize",
+          "update": "containerSize()[0]"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "tree",
+      "url": "data/commodity_value_2024_25.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "Value_AUD_million": "number",
+          "Quantity_tonnes": "number",
+          "Share_percent": "number"
+        }
+      },
+      "transform": [
+        {
+          "type": "nest",
+          "keys": [
+            "Category"
+          ],
+          "generate": true
+        },
+        {
+          "type": "treemap",
+          "field": "Value_AUD_million",
+          "sort": {
+            "field": "value",
+            "order": "descending"
+          },
+          "method": "squarify",
+          "ratio": 1.4,
+          "round": true,
+          "paddingInner": 3,
+          "paddingOuter": 3,
+          "paddingTop": 24,
+          "size": [
+            {
+              "signal": "width"
+            },
+            {
+              "signal": "height"
+            }
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.y0 - 24",
+          "as": "y0"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.y1 - 24",
+          "as": "y1"
+        }
+      ]
+    },
+    {
+      "name": "groups",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.depth == 1"
+        }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.depth == 2"
+        }
+      ]
+    },
+    {
+      "name": "labels",
+      "source": "leaves",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.x1 - datum.x0 > 110 && datum.y1 - datum.y0 > 85"
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "from": {
+        "data": "groups"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "field": "y1"
+          },
+          "fill": {
+            "value": "#eff3f3"
+          },
+          "stroke": {
+            "value": "#b5c6ca"
+          },
+          "strokeWidth": {
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "field": "y1"
+          },
+          "fill": {
+            "signal": "datum.Commodity == 'Salmonids' ? '#344454' : '#a9bec5'"
+          },
+          "stroke": {
+            "value": "white"
+          },
+          "strokeWidth": {
+            "value": 1
+          },
+          "tooltip": {
+            "signal": "{'Commodity': datum.Commodity, 'Category': datum.Category, 'Production value': 'A$' + format(datum.Value_AUD_million, ',.1f') + ' million', 'Share of total': format(datum.Share_percent, '.1f') + '%', 'Production quantity': format(datum.Quantity_tonnes, ',.1f') + ' tonnes'}"
+          }
+        },
+        "hover": {
+          "fill": {
+            "value": "#789ba7"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "groups"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0 + 7"
+          },
+          "y": {
+            "signal": "datum.y0 + 7"
+          },
+          "text": {
+            "signal": "datum.key == 'Finfish, Sharks and Rays' ? 'FINFISH, SHARKS AND RAYS' : upper(datum.key)"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fontWeight": {
+            "value": 700
+          },
+          "fill": {
+            "value": "#153a44"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 14)"
+          },
+          "font": {
+            "value": "Arial"
+          },
+          "opacity": {
+            "signal": "datum.x1 - datum.x0 >= 85 ? 1 : 0"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "labels"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0 + 9"
+          },
+          "y": {
+            "signal": "datum.y0 + 12"
+          },
+          "text": {
+            "signal": "datum.Commodity == 'Other Finfish, Sharks and Rays' ? 'Other finfish|sharks and rays' : datum.Commodity"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fontWeight": {
+            "value": 600
+          },
+          "fill": {
+            "signal": "datum.Commodity == 'Salmonids' ? 'white' : '#153a44'"
+          },
+          "limit": {
+            "signal": "datum.x1 - datum.x0 - 18"
+          },
+          "font": {
+            "value": "Arial"
+          },
+          "lineBreak": {
+            "value": "|"
+          },
+          "lineHeight": {
+            "value": 16
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "labels"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0 + 9"
+          },
+          "y": {
+            "signal": "datum.y0 + 52"
+          },
+          "text": {
+            "signal": "datum.Value_AUD_million >= 1000 ? 'A$' + format(datum.Value_AUD_million / 1000, '.2f') + ' billion' : 'A$' + format(datum.Value_AUD_million, ',.0f') + (datum.x1 - datum.x0 < 150 ? '|million' : ' million')"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fill": {
+            "signal": "datum.Commodity == 'Salmonids' ? 'white' : '#153a44'"
+          },
+          "limit": {
+            "signal": "datum.x1 - datum.x0 - 18"
+          },
+          "font": {
+            "value": "Arial"
+          },
+          "lineBreak": {
+            "value": "|"
+          },
+          "lineHeight": {
+            "value": 14
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "labels"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0 + 9"
+          },
+          "y": {
+            "signal": "datum.y0 + (datum.x1 - datum.x0 < 150 ? 88 : 72)"
+          },
+          "text": {
+            "signal": "format(datum.Share_percent, '.1f') + (datum.x1 - datum.x0 < 150 ? '%' : '% of total')"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fill": {
+            "signal": "datum.Commodity == 'Salmonids' ? 'white' : '#153a44'"
+          },
+          "limit": {
+            "signal": "datum.x1 - datum.x0 - 18"
+          },
+          "font": {
+            "value": "Arial"
+          }
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "background": "white"
+  }
+}

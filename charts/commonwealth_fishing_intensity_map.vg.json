@@ -1,0 +1,339 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Equal-area fishing map with Year, Zoom and Map Centre controls.",
+  "width": 640,
+  "height": 500,
+  "padding": 0,
+  "autosize": {
+    "type": "none",
+    "resize": true
+  },
+  "signals": [
+    {
+      "name": "width",
+      "init": "containerSize()[0]",
+      "on": [
+        {
+          "events": "window:resize",
+          "update": "containerSize()[0]"
+        }
+      ]
+    },
+    {
+      "name": "mapHeight",
+      "value": 400
+    },
+    {
+      "name": "mapScale",
+      "update": "min((width - 20) / 7735975.4, (mapHeight - 10) / 4437500) * MapZoom"
+    },
+    {
+      "name": "hexRadius",
+      "update": "25000 * mapScale"
+    },
+    {
+      "name": "SelectedRanges",
+      "update": "length(data('selected_summary')) ? data('selected_summary')[0] : {LowRange: '', MediumRange: '', HighRange: ''}"
+    },
+    {
+      "name": "SelectedYear",
+      "value": 2023,
+      "bind": {
+        "input": "range",
+        "min": 2010,
+        "max": 2023,
+        "step": 1,
+        "name": "Year: ",
+        "element": "#fishing-map-controls"
+      }
+    },
+    {
+      "name": "MapZoom",
+      "value": 1,
+      "bind": {
+        "input": "range",
+        "min": 1,
+        "max": 8,
+        "step": 0.1,
+        "name": "Zoom: ",
+        "element": "#fishing-map-controls"
+      }
+    },
+    {
+      "name": "MapCentre",
+      "value": "Australia",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Australia",
+          "Northern waters",
+          "Western waters",
+          "South-eastern waters"
+        ],
+        "name": "Map Centre: ",
+        "element": "#fishing-map-controls"
+      }
+    },
+    {
+      "name": "CentreCoordinates",
+      "update": "MapCentre == 'Northern waters' ? [0,-1800000] : MapCentre == 'Western waters' ? [-2200000,-3300000] : MapCentre == 'South-eastern waters' ? [1400000,-4200000] : [-313934.2,-3131250]"
+    }
+  ],
+  "data": [
+    {
+      "name": "history",
+      "url": "data/commonwealth_fishing_footprint_yearly.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "Year": "number",
+          "FootprintArea_sq_km": "number",
+          "Footprint_million_sq_km": "number"
+        }
+      }
+    },
+    {
+      "name": "selected_summary",
+      "source": "history",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.Year == SelectedYear"
+        }
+      ]
+    },
+    {
+      "name": "centres",
+      "url": "data/commonwealth_fishing_hex_centres.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "CenterX": "number",
+          "CenterY": "number"
+        }
+      }
+    },
+    {
+      "name": "bins",
+      "url": "data/commonwealth_fishing_hex_yearly.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "Year": "number",
+          "ClassCode": "number",
+          "FootprintCoverage": "number",
+          "ClassifiedCoverage": "number",
+          "DominantShare": "number"
+        }
+      },
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.Year == SelectedYear"
+        },
+        {
+          "type": "lookup",
+          "from": "centres",
+          "key": "BinID",
+          "fields": [
+            "BinID"
+          ],
+          "values": [
+            "CenterX",
+            "CenterY"
+          ]
+        },
+        {
+          "type": "geopoint",
+          "projection": "map_projection",
+          "fields": [
+            "CenterX",
+            "CenterY"
+          ],
+          "as": [
+            "ScreenX",
+            "ScreenY"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "land",
+      "url": "maps/australia_albers_context.geojson",
+      "format": {
+        "type": "json",
+        "property": "features"
+      }
+    }
+  ],
+  "projections": [
+    {
+      "name": "map_projection",
+      "type": "identity",
+      "reflectY": true,
+      "scale": {
+        "signal": "mapScale"
+      },
+      "translate": {
+        "signal": "[width / 2 - CentreCoordinates[0] * mapScale, mapHeight / 2 + CentreCoordinates[1] * mapScale]"
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "intensity",
+      "type": "ordinal",
+      "domain": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "range": [
+        "#c3d3df",
+        "#7294ac",
+        "#243f56",
+        "#dedede"
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "name": "map_area",
+      "type": "group",
+      "clip": true,
+      "encode": {
+        "update": {
+          "width": {
+            "signal": "width"
+          },
+          "height": {
+            "signal": "mapHeight"
+          },
+          "fill": {
+            "value": "white"
+          },
+          "cursor": {
+            "value": "default"
+          }
+        }
+      },
+      "marks": [
+        {
+          "type": "shape",
+          "from": {
+            "data": "land"
+          },
+          "transform": [
+            {
+              "type": "geoshape",
+              "projection": "map_projection"
+            }
+          ],
+          "encode": {
+            "update": {
+              "fill": {
+                "value": "#eeeee8"
+              },
+              "stroke": {
+                "value": "white"
+              },
+              "strokeWidth": {
+                "value": 0.8
+              }
+            }
+          },
+          "clip": true
+        },
+        {
+          "name": "hex_bins",
+          "type": "path",
+          "from": {
+            "data": "bins"
+          },
+          "encode": {
+            "update": {
+              "path": {
+                "signal": "'M' + (datum.ScreenX + hexRadius * 0.866025403784) + ',' + (datum.ScreenY + hexRadius * 0.5) + 'L' + (datum.ScreenX + hexRadius * 0.0) + ',' + (datum.ScreenY + hexRadius * 1.0) + 'L' + (datum.ScreenX + hexRadius * -0.866025403784) + ',' + (datum.ScreenY + hexRadius * 0.5) + 'L' + (datum.ScreenX + hexRadius * -0.866025403784) + ',' + (datum.ScreenY + hexRadius * -0.5) + 'L' + (datum.ScreenX + hexRadius * -0.0) + ',' + (datum.ScreenY + hexRadius * -1.0) + 'L' + (datum.ScreenX + hexRadius * 0.866025403784) + ',' + (datum.ScreenY + hexRadius * -0.5) + 'Z'"
+              },
+              "fill": {
+                "scale": "intensity",
+                "field": "ClassCode"
+              },
+              "stroke": {
+                "value": "white"
+              },
+              "strokeWidth": {
+                "value": 0.3
+              },
+              "tooltip": {
+                "signal": "{'Year': datum.Year, 'Predominant reported class': ['Low','Medium','High','Footprint only'][datum.ClassCode], 'Source range (kilograms per square kilometre)': datum.ClassCode == 0 ? SelectedRanges.LowRange : datum.ClassCode == 1 ? SelectedRanges.MediumRange : datum.ClassCode == 2 ? SelectedRanges.HighRange : 'No published intensity', 'Full bin area (square kilometres)': 1624, 'Bin area with published intensity (%)': datum.ClassifiedCoverage, 'Predominant class share of classified area (%)': datum.DominantShare}"
+              }
+            }
+          },
+          "clip": true
+        }
+      ]
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "background": "white"
+  },
+  "legends": [
+    {
+      "fill": "intensity",
+      "values": [
+        0,
+        1,
+        2
+      ],
+      "title": "Predominant reported intensity class",
+      "orient": "none",
+      "legendX": 0,
+      "legendY": 420,
+      "direction": "horizontal",
+      "columns": 3,
+      "columnPadding": 24,
+      "labelFont": "Arial",
+      "titleFont": "Arial",
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "titleFontWeight": 600,
+      "symbolSize": 120,
+      "labelLimit": 220,
+      "titleLimit": 600,
+      "encode": {
+        "labels": {
+          "update": {
+            "text": {
+              "signal": "datum.value == 0 ? 'Low (' + SelectedRanges.LowRange + ')' : datum.value == 1 ? 'Medium (' + SelectedRanges.MediumRange + ')' : 'High (' + SelectedRanges.HighRange + ')'"
+            }
+          }
+        }
+      }
+    },
+    {
+      "fill": "intensity",
+      "values": [
+        3
+      ],
+      "orient": "none",
+      "legendX": 0,
+      "legendY": 470,
+      "direction": "horizontal",
+      "labelFont": "Arial",
+      "labelFontSize": 13,
+      "symbolSize": 120,
+      "encode": {
+        "labels": {
+          "update": {
+            "text": {
+              "value": "Footprint only"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

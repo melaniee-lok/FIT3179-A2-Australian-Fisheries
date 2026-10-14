@@ -1,0 +1,537 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Coordinated fishery-year heatmap, catch history and species breakdown. Clicks select one fishery and calendar year; missing records are not filled with zero.",
+  "spacing": 28,
+  "vconcat": [
+    {
+      "name": "catch_heatmap",
+      "data": {
+        "url": "data/afma_fishery_year_catch.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "Year": "number",
+            "FisheryOrder": "number",
+            "LandedCatch_tonnes": "number",
+            "SpeciesCount": "number"
+          }
+        }
+      },
+      "width": 500,
+      "height": 352,
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal",
+          "scale": {
+            "domain": [
+              2002,
+              2003,
+              2004,
+              2005,
+              2006,
+              2007,
+              2008,
+              2009,
+              2010,
+              2011,
+              2012,
+              2013,
+              2014,
+              2015,
+              2016,
+              2017,
+              2018,
+              2019,
+              2020,
+              2021,
+              2022,
+              2023
+            ]
+          },
+          "axis": {
+            "title": null,
+            "values": [
+              2002,
+              2007,
+              2012,
+              2017,
+              2023
+            ],
+            "labelAngle": 0,
+            "labelPadding": 8,
+            "tickSize": 0,
+            "domain": false
+          }
+        },
+        "y": {
+          "field": "FisheryLabel",
+          "type": "nominal",
+          "sort": {
+            "field": "FisheryOrder"
+          },
+          "axis": {
+            "title": null,
+            "labelLimit": 0,
+            "labelPadding": 8,
+            "tickSize": 0,
+            "domain": false,
+            "labelExpr": "datum.label",
+            "labelLineHeight": 13
+          }
+        }
+      },
+      "layer": [
+        {
+          "transform": [
+            {
+              "aggregate": [],
+              "groupby": [
+                "FisheryCode",
+                "FisheryLabel",
+                "FisheryOrder"
+              ]
+            },
+            {
+              "calculate": "sequence(2002, 2024)",
+              "as": "Years"
+            },
+            {
+              "flatten": [
+                "Years"
+              ],
+              "as": [
+                "Year"
+              ]
+            }
+          ],
+          "mark": {
+            "type": "rect",
+            "color": "#c6c6c6",
+            "stroke": "white",
+            "strokeWidth": 0.7
+          }
+        },
+        {
+          "mark": {
+            "type": "rect",
+            "cursor": "pointer"
+          },
+          "encoding": {
+            "color": {
+              "field": "LandedCatch_tonnes",
+              "type": "quantitative",
+              "scale": {
+                "type": "sqrt",
+                "domain": [
+                  0,
+                  25000
+                ],
+                "range": [
+                  "#edf2f3",
+                  "#344454"
+                ]
+              },
+              "legend": {
+                "title": "Landed catch (tonnes)",
+                "orient": "top",
+                "direction": "horizontal",
+                "gradientLength": 300,
+                "values": [
+                  0,
+                  5000,
+                  10000,
+                  15000,
+                  25000
+                ],
+                "format": ",.0f",
+                "titleLimit": 300
+              }
+            },
+            "stroke": {
+              "condition": {
+                "test": {
+                  "and": [
+                    {
+                      "param": "Fishery_select",
+                      "empty": false
+                    },
+                    {
+                      "param": "Year_select",
+                      "empty": false
+                    }
+                  ]
+                },
+                "value": "#153a44"
+              },
+              "value": "white"
+            },
+            "strokeWidth": {
+              "condition": {
+                "test": {
+                  "and": [
+                    {
+                      "param": "Fishery_select",
+                      "empty": false
+                    },
+                    {
+                      "param": "Year_select",
+                      "empty": false
+                    }
+                  ]
+                },
+                "value": 2.5
+              },
+              "value": 0.7
+            },
+            "tooltip": [
+              {
+                "field": "Fishery",
+                "title": "Fishery"
+              },
+              {
+                "field": "Year",
+                "type": "ordinal",
+                "title": "Calendar year"
+              },
+              {
+                "field": "LandedCatch_tonnes",
+                "type": "quantitative",
+                "title": "Landed catch (tonnes)",
+                "format": ",.0f"
+              },
+              {
+                "field": "SpeciesCount",
+                "title": "Species reported"
+              }
+            ]
+          },
+          "params": [
+            {
+              "name": "Fishery_select",
+              "select": {
+                "type": "point",
+                "fields": [
+                  "FisheryCode"
+                ],
+                "on": "@catch_heatmap_cells_marks:click",
+                "clear": false,
+                "toggle": false
+              },
+              "value": [
+                {
+                  "FisheryCode": "SPF"
+                }
+              ]
+            },
+            {
+              "name": "Year_select",
+              "select": {
+                "type": "point",
+                "fields": [
+                  "Year"
+                ],
+                "on": "@catch_heatmap_cells_marks:click",
+                "clear": false,
+                "toggle": false
+              },
+              "value": [
+                {
+                  "Year": 2023
+                }
+              ]
+            }
+          ],
+          "name": "catch_heatmap_cells"
+        }
+      ]
+    },
+    {
+      "hconcat": [
+        {
+          "data": {
+            "url": "data/afma_fishery_year_catch.csv",
+            "format": {
+              "type": "csv",
+              "parse": {
+                "Year": "number",
+                "FisheryOrder": "number",
+                "LandedCatch_tonnes": "number",
+                "SpeciesCount": "number"
+              }
+            }
+          },
+          "width": 500,
+          "height": 160,
+          "title": "Catch history",
+          "transform": [
+            {
+              "filter": {
+                "param": "Fishery_select",
+                "empty": false
+              }
+            },
+            {
+              "window": [
+                {
+                  "op": "lag",
+                  "field": "Year",
+                  "as": "PreviousYear"
+                }
+              ],
+              "sort": [
+                {
+                  "field": "Year"
+                }
+              ]
+            },
+            {
+              "calculate": "isValid(datum.PreviousYear) && datum.Year - datum.PreviousYear > 1 ? 1 : 0",
+              "as": "Gap"
+            },
+            {
+              "window": [
+                {
+                  "op": "sum",
+                  "field": "Gap",
+                  "as": "Segment"
+                }
+              ],
+              "sort": [
+                {
+                  "field": "Year"
+                }
+              ],
+              "frame": [
+                null,
+                0
+              ]
+            }
+          ],
+          "encoding": {
+            "x": {
+              "field": "Year",
+              "type": "quantitative",
+              "scale": {
+                "domain": [
+                  2002,
+                  2023
+                ],
+                "nice": false,
+                "zero": false
+              },
+              "axis": {
+                "title": "Calendar year",
+                "values": [
+                  2002,
+                  2012,
+                  2023
+                ],
+                "format": "d",
+                "grid": false
+              }
+            },
+            "y": {
+              "field": "LandedCatch_tonnes",
+              "type": "quantitative",
+              "axis": {
+                "title": "Landed catch (tonnes)",
+                "tickCount": 4,
+                "format": ",.0f"
+              }
+            },
+            "tooltip": [
+              {
+                "field": "Fishery",
+                "title": "Fishery"
+              },
+              {
+                "field": "Year",
+                "type": "ordinal",
+                "title": "Calendar year"
+              },
+              {
+                "field": "LandedCatch_tonnes",
+                "type": "quantitative",
+                "title": "Landed catch (tonnes)",
+                "format": ",.0f"
+              }
+            ]
+          },
+          "layer": [
+            {
+              "mark": {
+                "type": "line",
+                "strokeWidth": 2.5,
+                "color": "#344454"
+              },
+              "encoding": {
+                "detail": {
+                  "field": "Segment"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "circle",
+                "size": 100,
+                "opacity": 0
+              },
+              "encoding": {}
+            },
+            {
+              "transform": [
+                {
+                  "filter": {
+                    "param": "Year_select",
+                    "empty": false
+                  }
+                }
+              ],
+              "mark": {
+                "type": "circle",
+                "size": 65,
+                "color": "#344454",
+                "opacity": 1
+              }
+            }
+          ]
+        },
+        {
+          "data": {
+            "url": "data/afma_species_catch_clean.csv",
+            "format": {
+              "type": "csv",
+              "parse": {
+                "Year": "number",
+                "LandedCatch_tonnes": "number"
+              }
+            }
+          },
+          "width": 500,
+          "height": 160,
+          "title": "Top six species",
+          "transform": [
+            {
+              "filter": {
+                "param": "Fishery_select",
+                "empty": false
+              }
+            },
+            {
+              "filter": {
+                "param": "Year_select",
+                "empty": false
+              }
+            },
+            {
+              "aggregate": [
+                {
+                  "op": "sum",
+                  "field": "LandedCatch_tonnes",
+                  "as": "Catch"
+                }
+              ],
+              "groupby": [
+                "Species"
+              ]
+            },
+            {
+              "window": [
+                {
+                  "op": "row_number",
+                  "as": "SpeciesRank"
+                }
+              ],
+              "sort": [
+                {
+                  "field": "Catch",
+                  "order": "descending"
+                },
+                {
+                  "field": "Species"
+                }
+              ]
+            },
+            {
+              "filter": "datum.SpeciesRank <= 6"
+            }
+          ],
+          "mark": {
+            "type": "bar",
+            "color": "#607b87"
+          },
+          "encoding": {
+            "x": {
+              "field": "Catch",
+              "type": "quantitative",
+              "axis": {
+                "title": "Landed catch (tonnes)",
+                "tickCount": 3,
+                "format": ",.0f"
+              }
+            },
+            "y": {
+              "field": "Species",
+              "type": "nominal",
+              "sort": "-x",
+              "axis": {
+                "title": null,
+                "labelLimit": 165,
+                "labelFontSize": 12,
+                "ticks": false,
+                "domain": false,
+                "labelExpr": "datum.label == 'Jack Mackerel (mixed)' ? ['Jack Mackerel', '(mixed)'] : datum.label == 'Australian Sardine' ? ['Australian', 'Sardine'] : datum.label",
+                "labelLineHeight": 13
+              }
+            },
+            "tooltip": [
+              {
+                "field": "Species",
+                "title": "Species"
+              },
+              {
+                "field": "Catch",
+                "type": "quantitative",
+                "title": "Landed catch (tonnes)",
+                "format": ",.0f"
+              }
+            ]
+          }
+        }
+      ],
+      "spacing": 24
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "background": "white",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 13,
+      "titleFontWeight": 400,
+      "labelColor": "#55696f",
+      "titleColor": "#55696f",
+      "gridColor": "#edf0f0",
+      "domain": false,
+      "tickSize": 0,
+      "titlePadding": 12
+    },
+    "title": {
+      "fontSize": 14,
+      "fontWeight": 600,
+      "anchor": "start",
+      "color": "#153a44",
+      "offset": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 13,
+      "titleFontWeight": 400
+    }
+  },
+  "align": "each"
+}
