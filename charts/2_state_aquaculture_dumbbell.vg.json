@@ -15,6 +15,56 @@
       "type": "csv"
     }
   },
+  "encoding": {
+    "x": {
+      "field": "Value",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          0,
+          1600
+        ]
+      },
+      "axis": {
+        "title": "Production value (A$ million)",
+        "values": [
+          0,
+          400,
+          800,
+          1200
+        ],
+        "gridColor": "#f5f6f6",
+        "domain": false,
+        "ticks": false,
+        "titlePadding": 16,
+        "gridOpacity": 0.5,
+        "labelFontSize": 13,
+        "titleFontSize": 14
+      }
+    },
+    "y": {
+      "field": "State",
+      "type": "nominal",
+      "sort": [
+        "Tasmania",
+        "Queensland",
+        "South Australia",
+        "Western Australia",
+        "New South Wales",
+        "Northern Territory",
+        "Victoria"
+      ],
+      "axis": {
+        "title": null,
+        "domain": false,
+        "ticks": false,
+        "labelLimit": 220,
+        "labelPadding": 12,
+        "labelFontSize": 14,
+        "titleFontSize": 14
+      }
+    }
+  },
   "layer": [
     {
       "mark": {
@@ -24,54 +74,6 @@
         }
       },
       "encoding": {
-        "x": {
-          "field": "Value",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0,
-              1600
-            ]
-          },
-          "axis": {
-            "title": "Production value (A$ million)",
-            "values": [
-              0,
-              400,
-              800,
-              1200
-            ],
-            "gridColor": "#f5f6f6",
-            "domain": false,
-            "ticks": false,
-            "titlePadding": 16,
-            "gridOpacity": 0.5,
-            "labelFontSize": 13,
-            "titleFontSize": 14
-          }
-        },
-        "y": {
-          "field": "State",
-          "type": "nominal",
-          "sort": [
-            "Tasmania",
-            "Queensland",
-            "South Australia",
-            "Western Australia",
-            "New South Wales",
-            "Northern Territory",
-            "Victoria"
-          ],
-          "axis": {
-            "title": null,
-            "domain": false,
-            "ticks": false,
-            "labelLimit": 220,
-            "labelPadding": 12,
-            "labelFontSize": 14,
-            "titleFontSize": 14
-          }
-        },
         "detail": {
           "field": "State"
         },
@@ -102,54 +104,6 @@
         "opacity": 1
       },
       "encoding": {
-        "x": {
-          "field": "Value",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0,
-              1600
-            ]
-          },
-          "axis": {
-            "title": "Production value (A$ million)",
-            "values": [
-              0,
-              400,
-              800,
-              1200
-            ],
-            "gridColor": "#f5f6f6",
-            "domain": false,
-            "ticks": false,
-            "titlePadding": 16,
-            "gridOpacity": 0.5,
-            "labelFontSize": 13,
-            "titleFontSize": 14
-          }
-        },
-        "y": {
-          "field": "State",
-          "type": "nominal",
-          "sort": [
-            "Tasmania",
-            "Queensland",
-            "South Australia",
-            "Western Australia",
-            "New South Wales",
-            "Northern Territory",
-            "Victoria"
-          ],
-          "axis": {
-            "title": null,
-            "domain": false,
-            "ticks": false,
-            "labelLimit": 220,
-            "labelPadding": 12,
-            "labelFontSize": 14,
-            "titleFontSize": 14
-          }
-        },
         "stroke": {
           "condition": {
             "test": "datum.State == 'Tasmania'",
@@ -187,54 +141,6 @@
         "opacity": 1
       },
       "encoding": {
-        "x": {
-          "field": "Value",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0,
-              1600
-            ]
-          },
-          "axis": {
-            "title": "Production value (A$ million)",
-            "values": [
-              0,
-              400,
-              800,
-              1200
-            ],
-            "gridColor": "#f5f6f6",
-            "domain": false,
-            "ticks": false,
-            "titlePadding": 16,
-            "gridOpacity": 0.5,
-            "labelFontSize": 13,
-            "titleFontSize": 14
-          }
-        },
-        "y": {
-          "field": "State",
-          "type": "nominal",
-          "sort": [
-            "Tasmania",
-            "Queensland",
-            "South Australia",
-            "Western Australia",
-            "New South Wales",
-            "Northern Territory",
-            "Victoria"
-          ],
-          "axis": {
-            "title": null,
-            "domain": false,
-            "ticks": false,
-            "labelLimit": 220,
-            "labelPadding": 12,
-            "labelFontSize": 14,
-            "titleFontSize": 14
-          }
-        },
         "color": {
           "condition": {
             "test": "datum.State == 'Tasmania'",
@@ -280,54 +186,6 @@
         }
       },
       "encoding": {
-        "x": {
-          "field": "Value",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0,
-              1600
-            ]
-          },
-          "axis": {
-            "title": "Production value (A$ million)",
-            "values": [
-              0,
-              400,
-              800,
-              1200
-            ],
-            "gridColor": "#f5f6f6",
-            "domain": false,
-            "ticks": false,
-            "titlePadding": 16,
-            "gridOpacity": 0.5,
-            "labelFontSize": 13,
-            "titleFontSize": 14
-          }
-        },
-        "y": {
-          "field": "State",
-          "type": "nominal",
-          "sort": [
-            "Tasmania",
-            "Queensland",
-            "South Australia",
-            "Western Australia",
-            "New South Wales",
-            "Northern Territory",
-            "Victoria"
-          ],
-          "axis": {
-            "title": null,
-            "domain": false,
-            "ticks": false,
-            "labelLimit": 220,
-            "labelPadding": 12,
-            "labelFontSize": 14,
-            "titleFontSize": 14
-          }
-        },
         "text": {
           "field": "Label"
         },
@@ -364,19 +222,6 @@
           "field": "AnnotationX",
           "type": "quantitative"
         },
-        "y": {
-          "field": "State",
-          "type": "nominal",
-          "sort": [
-            "Tasmania",
-            "Queensland",
-            "South Australia",
-            "Western Australia",
-            "New South Wales",
-            "Northern Territory",
-            "Victoria"
-          ]
-        },
         "text": {
           "field": "Annotation"
         }
@@ -405,19 +250,6 @@
         "x": {
           "field": "AnnotationX",
           "type": "quantitative"
-        },
-        "y": {
-          "field": "State",
-          "type": "nominal",
-          "sort": [
-            "Tasmania",
-            "Queensland",
-            "South Australia",
-            "Western Australia",
-            "New South Wales",
-            "Northern Territory",
-            "Victoria"
-          ]
         },
         "text": {
           "field": "Annotation"
