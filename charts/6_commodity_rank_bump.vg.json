@@ -1,0 +1,282 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "All thirteen commodity rank trajectories remain visible in grey; the selected commodity is highlighted in teal.",
+  "width": "container",
+  "height": 480,
+  "padding": {
+    "left": 5,
+    "right": 5,
+    "top": 0,
+    "bottom": 5
+  },
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
+  "data": {
+    "url": "data/6_commodity_rank_history.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "YearIndex": "number",
+        "Rank": "number",
+        "Value_AUD_million": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "replace(datum.Year, '-', '–')",
+      "as": "FinancialYear"
+    },
+    {
+      "calculate": "datum.Rank == 1 ? '1st' : datum.Rank == 2 ? '2nd' : datum.Rank == 3 ? '3rd' : datum.Rank + 'th'",
+      "as": "RankLabel"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "sort": {
+        "field": "YearIndex",
+        "order": "ascending"
+      },
+      "title": "Financial year",
+      "axis": {
+        "values": [
+          "1998-99",
+          "2003-04",
+          "2008-09",
+          "2013-14",
+          "2018-19",
+          "2024-25"
+        ],
+        "labelExpr": "replace(datum.label, '-', '–')",
+        "labelAngle": 0,
+        "labelOverlap": false,
+        "grid": false,
+        "domain": false,
+        "tickSize": 0,
+        "labelPadding": 12
+      }
+    },
+    "y": {
+      "field": "Rank",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          13.5,
+          0.5
+        ],
+        "nice": false
+      },
+      "title": "Rank by production value",
+      "axis": {
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "labelExpr": "datum.value == 1 ? '1st' : datum.value == 2 ? '2nd' : datum.value == 3 ? '3rd' : datum.value + 'th'",
+        "grid": true,
+        "domain": false,
+        "tickSize": 0,
+        "labelPadding": 8
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "detail": {
+          "field": "Commodity"
+        },
+        "order": {
+          "field": "YearIndex"
+        },
+        "color": {
+          "value": "#c4cccf"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "detail": {
+          "field": "Commodity"
+        },
+        "order": {
+          "field": "YearIndex"
+        },
+        "color": {
+          "value": "#007c91"
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.Commodity == CommodityView"
+        }
+      ]
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.YearIndex == 0 || datum.YearIndex == 26"
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 65,
+        "opacity": 1
+      },
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "datum.Commodity == CommodityView",
+            "value": "#007c91"
+          },
+          "value": "#89979c"
+        },
+        "tooltip": [
+          {
+            "field": "Commodity",
+            "title": "Commodity"
+          },
+          {
+            "field": "FinancialYear",
+            "title": "Financial year"
+          },
+          {
+            "field": "RankLabel",
+            "title": "Rank"
+          },
+          {
+            "field": "Value_AUD_million",
+            "type": "quantitative",
+            "title": "Production value (A$ million)",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0,
+        "size": 150
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "Commodity",
+            "title": "Commodity"
+          },
+          {
+            "field": "FinancialYear",
+            "title": "Financial year"
+          },
+          {
+            "field": "RankLabel",
+            "title": "Rank"
+          },
+          {
+            "field": "Value_AUD_million",
+            "type": "quantitative",
+            "title": "Production value (A$ million)",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.YearIndex == 26"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 9,
+        "fontWeight": 600
+      },
+      "encoding": {
+        "text": {
+          "field": "Commodity"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.Commodity == CommodityView",
+            "value": "#007c91"
+          },
+          "value": "#89979c"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Segoe UI",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 14,
+      "titleFontSize": 14,
+      "titleFontWeight": 400,
+      "labelColor": "#55696f",
+      "titleColor": "#55696f",
+      "gridColor": "#e8eded",
+      "gridOpacity": 0.4,
+      "titlePadding": 16
+    },
+    "text": {
+      "fontSize": 13
+    }
+  },
+  "params": [
+    {
+      "name": "CommodityView",
+      "value": "Salmonids",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All 13",
+          "Abalone",
+          "Crabs",
+          "Other (n.e.i.)",
+          "Other Crustaceans",
+          "Other Finfish, Sharks and Rays",
+          "Other Molluscs",
+          "Oysters",
+          "Prawns",
+          "Rock Lobsters",
+          "Salmonids",
+          "Scallops",
+          "Squids",
+          "Tunas"
+        ],
+        "name": "Highlight commodity: ",
+        "element": "#rank-controls"
+      }
+    }
+  ]
+}

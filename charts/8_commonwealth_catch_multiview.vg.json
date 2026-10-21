@@ -6,7 +6,7 @@
     {
       "name": "catch_heatmap",
       "data": {
-        "url": "data/afma_fishery_year_catch.csv",
+        "url": "data/8_afma_fishery_year_catch.csv",
         "format": {
           "type": "csv",
           "parse": {
@@ -149,39 +149,9 @@
               }
             },
             "stroke": {
-              "condition": {
-                "test": {
-                  "and": [
-                    {
-                      "param": "Fishery_select",
-                      "empty": false
-                    },
-                    {
-                      "param": "Year_select",
-                      "empty": false
-                    }
-                  ]
-                },
-                "value": "#153a44"
-              },
               "value": "white"
             },
             "strokeWidth": {
-              "condition": {
-                "test": {
-                  "and": [
-                    {
-                      "param": "Fishery_select",
-                      "empty": false
-                    },
-                    {
-                      "param": "Year_select",
-                      "empty": false
-                    }
-                  ]
-                },
-                "value": 2.5
-              },
               "value": 0.7
             },
             "tooltip": [
@@ -243,6 +213,32 @@
             }
           ],
           "name": "catch_heatmap_cells"
+        },
+        {
+          "name": "catch_heatmap_selection",
+          "transform": [
+            {
+              "filter": {
+                "and": [
+                  {
+                    "param": "Fishery_select",
+                    "empty": false
+                  },
+                  {
+                    "param": "Year_select",
+                    "empty": false
+                  }
+                ]
+              }
+            }
+          ],
+          "mark": {
+            "type": "rect",
+            "fill": null,
+            "stroke": "#153a44",
+            "strokeWidth": 2.5,
+            "interactive": false
+          }
         }
       ]
     },
@@ -250,7 +246,7 @@
       "hconcat": [
         {
           "data": {
-            "url": "data/afma_fishery_year_catch.csv",
+            "url": "data/8_afma_fishery_year_catch.csv",
             "format": {
               "type": "csv",
               "parse": {
@@ -399,7 +395,7 @@
         },
         {
           "data": {
-            "url": "data/afma_species_catch_clean.csv",
+            "url": "data/8_afma_species_catch_clean.csv",
             "format": {
               "type": "csv",
               "parse": {

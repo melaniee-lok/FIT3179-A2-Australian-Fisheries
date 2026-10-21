@@ -1,5 +1,24 @@
+// Load lower charts near the viewport instead of all at startup.
+function loadWhenVisible(id, render) {
+  var container = document.getElementById(id);
+  container.style.minHeight = id === "commonwealth-catch" ? "580px" : "420px";
+  function load() {
+    Promise.resolve(render()).finally(function () {
+      container.style.minHeight = "";
+    });
+  }
+  if (!("IntersectionObserver" in window)) return load();
+  var observer = new IntersectionObserver(function (entries) {
+    if (entries.some(function (entry) { return entry.isIntersecting; })) {
+      observer.disconnect();
+      load();
+    }
+  }, { rootMargin: "300px 0px" });
+  observer.observe(container.closest("figure"));
+}
+
 // Chart data, labels and tooltips are defined in the JSON specification.
-vegaEmbed("#sector-trend", "charts/sector_trend.vg.json", {
+vegaEmbed("#sector-trend", "charts/1_sector_trend.vg.json", {
   actions: false,
   renderer: "svg"
 }).then(function () {
@@ -11,7 +30,9 @@ vegaEmbed("#sector-trend", "charts/sector_trend.vg.json", {
 });
 
 // State endpoints, highlights and annotations are defined in the JSON.
-vegaEmbed("#state-aquaculture-slope", "charts/state_aquaculture_dumbbell.vg.json", {
+
+loadWhenVisible("state-aquaculture-slope", function () {
+  return vegaEmbed("#state-aquaculture-slope", "charts/2_state_aquaculture_dumbbell.vg.json", {
   actions: false,
   renderer: "svg"
 }).then(function () {
@@ -21,8 +42,10 @@ vegaEmbed("#state-aquaculture-slope", "charts/state_aquaculture_dumbbell.vg.json
     "The state chart could not load. Please reload.";
   console.error(error);
 });
+});
 
-vegaEmbed("#state-aquaculture-share", "charts/state_aquaculture_share_map.vg.json", {
+loadWhenVisible("state-aquaculture-share", function () {
+  return vegaEmbed("#state-aquaculture-share", "charts/3_state_aquaculture_share_map.vg.json", {
   actions: false,
   renderer: "svg"
 }).then(function (result) {
@@ -41,7 +64,10 @@ vegaEmbed("#state-aquaculture-share", "charts/state_aquaculture_share_map.vg.jso
 });
 
 // Repeat layout adapts to the card width; map encodings stay in JSON.
-fetch("charts/state_sector_small_multiples.vg.json")
+});
+
+loadWhenVisible("state-sector-maps", function () {
+  return fetch("charts/4_state_sector_small_multiples.vg.json")
   .then(function (response) { return response.json(); })
   .then(function (spec) {
     var container = document.getElementById("state-sector-maps");
@@ -70,8 +96,10 @@ fetch("charts/state_sector_small_multiples.vg.json")
     document.getElementById("sector-maps-status").textContent = "The production maps could not load. Please reload.";
     console.error(error);
   });
+});
 
-vegaEmbed("#commodity-treemap", "charts/commodity_treemap.vg.json", {
+loadWhenVisible("commodity-treemap", function () {
+  return vegaEmbed("#commodity-treemap", "charts/5_commodity_treemap.vg.json", {
   actions: false,
   renderer: "svg"
 }).then(function () {
@@ -80,8 +108,10 @@ vegaEmbed("#commodity-treemap", "charts/commodity_treemap.vg.json", {
   document.getElementById("commodity-chart-status").textContent = "The commodity chart could not load. Please reload.";
   console.error(error);
 });
+});
 
-vegaEmbed("#commodity-rank", "charts/commodity_rank_bump.vg.json", {
+loadWhenVisible("commodity-rank", function () {
+  return vegaEmbed("#commodity-rank", "charts/6_commodity_rank_bump.vg.json", {
   actions: false,
   renderer: "svg"
 }).then(function () {
@@ -90,8 +120,10 @@ vegaEmbed("#commodity-rank", "charts/commodity_rank_bump.vg.json", {
   document.getElementById("rank-chart-status").textContent = "The ranking chart could not load. Please reload.";
   console.error(error);
 });
+});
 
-vegaEmbed("#commodity-value-volume", "charts/commodity_value_volume_slope.vg.json", {
+loadWhenVisible("commodity-value-volume", function () {
+  return vegaEmbed("#commodity-value-volume", "charts/7_commodity_value_volume_slope.vg.json", {
   actions: false,
   renderer: "svg"
 }).then(function () {
@@ -102,7 +134,10 @@ vegaEmbed("#commodity-value-volume", "charts/commodity_value_volume_slope.vg.jso
 });
 
 // Heatmap selections and linked-view filters are defined in the JSON.
-fetch("charts/commonwealth_catch_multiview.vg.json")
+});
+
+loadWhenVisible("commonwealth-catch", function () {
+  return fetch("charts/8_commonwealth_catch_multiview.vg.json")
   .then(function (response) { return response.json(); })
   .then(function (spec) {
     var container = document.getElementById("commonwealth-catch");
@@ -192,8 +227,10 @@ fetch("charts/commonwealth_catch_multiview.vg.json")
     document.getElementById("catch-chart-status").textContent = "The catch views could not load. Please reload.";
     console.error(error);
   });
+});
 
-vegaEmbed("#stock-status-history", "charts/stock_status_alluvial.vg.json", {
+loadWhenVisible("stock-status-history", function () {
+  return vegaEmbed("#stock-status-history", "charts/9_stock_status_alluvial.vg.json", {
   actions: false,
   renderer: "svg"
 }).then(function () {
@@ -202,8 +239,10 @@ vegaEmbed("#stock-status-history", "charts/stock_status_alluvial.vg.json", {
   document.getElementById("stock-chart-status").textContent = "The stock assessments could not load. Please reload.";
   console.error(error);
 });
+});
 
-vegaEmbed("#commonwealth-fishing-intensity", "charts/commonwealth_fishing_intensity_map.vg.json", {
+loadWhenVisible("commonwealth-fishing-intensity", function () {
+  return vegaEmbed("#commonwealth-fishing-intensity", "charts/10_commonwealth_fishing_intensity_map.vg.json", {
   actions: false,
   renderer: "svg"
 }).then(function (result) {
@@ -217,4 +256,5 @@ vegaEmbed("#commonwealth-fishing-intensity", "charts/commonwealth_fishing_intens
 }).catch(function (error) {
   document.getElementById("intensity-chart-status").textContent = "The fishing-intensity map could not load. Please reload.";
   console.error(error);
+});
 });

@@ -31,7 +31,7 @@
       },
       {
         "data": {
-          "url": "data/state_sector_values_2024_25.csv",
+          "url": "data/4_state_sector_values_2024_25.csv",
           "format": {
             "type": "csv",
             "parse": {"Aquaculture": "number", "WildCatch": "number", "TotalStateManaged": "number"}

@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Equal-area fishing map with Year, Zoom and Map Centre controls.",
   "width": 640,
-  "height": 500,
+  "height": 525,
   "padding": 0,
   "autosize": {
     "type": "none",
@@ -65,7 +65,7 @@
       "bind": {
         "input": "select",
         "options": [
-          "Australia",
+          "All waters",
           "Northern waters",
           "Western waters",
           "South-eastern waters"
@@ -82,7 +82,7 @@
   "data": [
     {
       "name": "history",
-      "url": "data/commonwealth_fishing_footprint_yearly.csv",
+      "url": "data/10_commonwealth_fishing_footprint_yearly.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -104,7 +104,7 @@
     },
     {
       "name": "centres",
-      "url": "data/commonwealth_fishing_hex_centres.csv",
+      "url": "data/10_commonwealth_fishing_hex_centres.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -115,7 +115,7 @@
     },
     {
       "name": "bins",
-      "url": "data/commonwealth_fishing_hex_yearly.csv",
+      "url": "data/10_commonwealth_fishing_hex_yearly.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -130,6 +130,26 @@
         {
           "type": "filter",
           "expr": "datum.Year == SelectedYear"
+        },
+        {
+          "type": "formula",
+          "as": "SourceRange",
+          "expr": "datum.ClassCode == 0 ? SelectedRanges.LowRange : datum.ClassCode == 1 ? SelectedRanges.MediumRange : datum.ClassCode == 2 ? SelectedRanges.HighRange : ''"
+        },
+        {
+          "type": "formula",
+          "as": "RangeLower",
+          "expr": "indexof(datum.SourceRange, '<') == 0 ? 0 : toNumber(split(datum.SourceRange, '-')[0])"
+        },
+        {
+          "type": "formula",
+          "as": "RangeUpper",
+          "expr": "indexof(datum.SourceRange, '<') == 0 ? toNumber(slice(datum.SourceRange, 1)) : toNumber(split(datum.SourceRange, '-')[1])"
+        },
+        {
+          "type": "formula",
+          "as": "FixedClass",
+          "expr": "datum.ClassCode == 3 ? 3 : datum.RangeUpper <= 300 ? 0 : datum.RangeLower >= 1200 ? 2 : datum.RangeLower >= 300 && datum.RangeUpper <= 1200 ? 1 : 4"
         },
         {
           "type": "lookup",
@@ -187,13 +207,15 @@
         0,
         1,
         2,
-        3
+        3,
+        4
       ],
       "range": [
-        "#c3d3df",
-        "#7294ac",
-        "#243f56",
-        "#dedede"
+        "#a1d99b",
+        "#41ab5d",
+        "#006d2c",
+        "#dedede",
+        "#858585"
       ]
     }
   ],
@@ -258,7 +280,7 @@
               },
               "fill": {
                 "scale": "intensity",
-                "field": "ClassCode"
+                "field": "FixedClass"
               },
               "stroke": {
                 "value": "white"
@@ -267,7 +289,7 @@
                 "value": 0.3
               },
               "tooltip": {
-                "signal": "{'Year': datum.Year, 'Predominant reported class': ['Low','Medium','High','Footprint only'][datum.ClassCode], 'Source range (kilograms per square kilometre)': datum.ClassCode == 0 ? SelectedRanges.LowRange : datum.ClassCode == 1 ? SelectedRanges.MediumRange : datum.ClassCode == 2 ? SelectedRanges.HighRange : 'No published intensity', 'Full bin area (square kilometres)': 1624, 'Bin area with published intensity (%)': datum.ClassifiedCoverage, 'Predominant class share of classified area (%)': datum.DominantShare}"
+                "signal": "{'Year': datum.Year, 'Fixed intensity band': ['Below 300','300 to below 1,200','1,200 and above','Footprint only','Uncertain: source range crosses a fixed threshold'][datum.FixedClass], 'Published predominant class': ['Low','Medium','High','Footprint only'][datum.ClassCode], 'Source range (kg/km²)': datum.SourceRange || 'No published intensity', 'Full bin area (km²)': 1624, 'Bin area with published intensity (%)': datum.ClassifiedCoverage, 'Predominant class share of classified area (%)': datum.DominantShare}"
               }
             }
           },
@@ -286,15 +308,15 @@
       "values": [
         0,
         1,
-        2
+        2,
+        3,
+        4
       ],
-      "title": "Predominant reported intensity class",
+      "title": "Fixed intensity bands (kg/km²) · all years",
       "orient": "none",
       "legendX": 0,
       "legendY": 420,
       "direction": "horizontal",
-      "columns": 3,
-      "columnPadding": 24,
       "labelFont": "Arial",
       "titleFont": "Arial",
       "labelFontSize": 13,
@@ -307,33 +329,14 @@
         "labels": {
           "update": {
             "text": {
-              "signal": "datum.value == 0 ? 'Low (' + SelectedRanges.LowRange + ')' : datum.value == 1 ? 'Medium (' + SelectedRanges.MediumRange + ')' : 'High (' + SelectedRanges.HighRange + ')'"
+              "signal": "['Below 300', '300 - 1,200', '1,200 and above', 'Footprint only', 'Range spans multiple bands'][datum.value]"
             }
           }
         }
-      }
-    },
-    {
-      "fill": "intensity",
-      "values": [
-        3
-      ],
-      "orient": "none",
-      "legendX": 0,
-      "legendY": 470,
-      "direction": "horizontal",
-      "labelFont": "Arial",
-      "labelFontSize": 13,
-      "symbolSize": 120,
-      "encode": {
-        "labels": {
-          "update": {
-            "text": {
-              "value": "Footprint only"
-            }
-          }
-        }
-      }
+      },
+      "type": "symbol",
+      "columns": 5,
+      "columnPadding": 12
     }
   ]
 }

@@ -51,7 +51,7 @@
       </div>
       <div class="story-intro">
         <p>Farmed seafood has grown in production value.<br>It has led state wild catch since <span class="financial-year">2016–17</span>.</p>
-        <p>Aquaculture means farming fish and other aquatic species.<br>Wild catch means harvesting them from natural waters.</p>
+        <div class="chart-info"><p class="chart-info-label">ABOUT THE CHART</p><p>Aquaculture means farming fish and other aquatic species.<br>Wild catch means harvesting them from natural waters.</p></div>
       </div>
       <div class="chart-layout">
       <figure class="chart-shell" aria-labelledby="chart-title" aria-describedby="chart-description">
@@ -64,7 +64,7 @@
         <ul class="chart-key" aria-label="Fisheries sector colour key"><li><span class="key-swatch" style="--key-colour: #007c91" aria-hidden="true"></span>Aquaculture</li><li><span class="key-swatch" style="--key-colour: #a75b20" aria-hidden="true"></span>State wild catch</li><li><span class="key-swatch" style="--key-colour: #756487" aria-hidden="true"></span>Commonwealth wild catch</li></ul>
         <div id="sector-trend" role="img" aria-label="Line chart comparing three sectors. Aquaculture rises from A$0.61 billion in 1998–99 to A$2.10 billion in 2024–25, after a peak in 2022–23."></div>
         <p id="chart-status" class="chart-status" role="status">Loading production values…</p>
-        <noscript><p>This chart needs JavaScript.<br><a href="data/sector_trend.csv">Download the data</a> to read the values.</p></noscript>
+        <noscript><p>This chart needs JavaScript.<br><a href="data/1_sector_trend.csv">Download the data</a> to read the values.</p></noscript>
       </figure>
       <aside class="takeaways" aria-label="What the chart shows">
         <article>
@@ -90,7 +90,7 @@
       </div>
       <div class="story-intro">
         <p>Tasmania contributed most of the increase in aquaculture value.<br>Its national share rose from <strong>14% to 62%.</strong></p>
-        <p><strong>Six of seven states and territories grew.</strong><br>Western Australia was the only one to decline.</p>
+        <div class="chart-info"><p class="chart-info-label">ABOUT THE CHART</p><p><strong>Six of seven states and territories grew.</strong><br>Western Australia was the only one to decline.</p></div>
       </div>
       <div class="chart-layout">
       <figure class="chart-shell state-chart-shell" aria-labelledby="state-chart-title">
@@ -125,7 +125,7 @@
       </div>
       <div class="story-intro">
         <p>Australia's aquaculture shift was uneven.<br>Explore 27 financial years to compare each jurisdiction.</p>
-        <p><span class="share-definition">Shares compare aquaculture with state-managed wild catch.</span><br>Commonwealth fisheries are excluded.</p>
+        <div class="chart-info"><p class="chart-info-label">ABOUT THE CHART</p><p><span class="share-definition">Shares compare aquaculture with state-managed wild catch.</span><br>Commonwealth fisheries are excluded.</p></div>
       </div>
       <div class="chart-layout">
         <figure class="chart-shell map-chart-shell" aria-labelledby="share-chart-title">
@@ -141,6 +141,7 @@
           <p id="share-chart-status" class="chart-status" role="status">Loading map…</p>
         </figure>
         <aside class="takeaways map-share-takeaways" aria-label="What the state fisheries mix shows">
+          <p class="takeaway-context">FULL-PERIOD FINDINGS · 1998–99 to 2024–25<br>These endpoint comparisons stay fixed as you move the year slider.</p>
           <article><p class="takeaway-label">THE BIGGEST SHIFT</p>
             <h3>Tasmania became an aquaculture stronghold</h3>
             <p><span class="share-change">33% → 91%</span><br>From <span class="financial-year">1998–99</span> to <span class="financial-year">2024–25</span>.</p></article>
@@ -187,7 +188,7 @@
       </div>
       <div class="story-intro">
         <p>Salmonids generated about one-third of national production value.<br>Salmonids include salmon and trout.</p>
-        <p>Rectangle area represents production value.<br>Commodities are grouped by broad seafood category.</p>
+        <div class="chart-info"><p class="chart-info-label">ABOUT THE CHART</p><p>Rectangle area represents production value.<br>Commodities are grouped by broad seafood category.</p></div>
       </div>
       <div class="chart-layout">
         <figure class="chart-shell commodity-chart-shell" aria-labelledby="commodity-chart-title">
@@ -215,12 +216,14 @@
         <figure class="chart-shell rank-chart-shell" aria-labelledby="rank-chart-title">
           <figcaption class="chart-heading"><div>
             <h3 id="rank-chart-title">Salmonids climbed from seventh to first</h3>
-            <p>Commodity rank by production value, <span class="financial-year">1998–99</span> to <span class="financial-year">2024–25</span>.<br>Six commodities shown; ranks compare all 13 commodities.</p>
+            <p>Commodity rank by production value, <span class="financial-year">1998–99</span> to <span class="financial-year">2024–25</span>.<br>Choose a commodity to highlight its path against the other 12 in grey. Ranks always compare all 13.</p>
           </div></figcaption>
-          <div id="commodity-rank" role="img" aria-label="Bump chart of six seafood commodities across 27 financial years. Salmonids climb from seventh to first; rock lobsters finish third despite higher value."></div>
+          <div id="rank-controls" class="rank-controls"></div>
+          <div id="commodity-rank" role="img" aria-label="Selectable bump chart of 13 seafood commodities across 27 financial years. Salmonids climb from seventh to first; rock lobsters finish third despite higher value."></div>
           <p id="rank-chart-status" class="chart-status" role="status">Loading commodity rankings…</p>
         </figure>
         <aside class="takeaways" aria-label="What changing commodity ranks show">
+          <p class="takeaway-context">FULL-PERIOD FINDINGS · 1998–99 to 2024–25<br>These findings stay fixed when you select commodities.</p>
           <article><p class="takeaway-label">THE BIGGEST CLIMB</p>
             <h3>Salmonids rose to the top</h3>
             <p>Salmonids became the leading contributor to seafood production value.<br>Their rise reshaped the national commodity ranking.</p></article>
@@ -260,7 +263,7 @@
       </div>
       <div class="story-intro">
         <p>Australian Fisheries Management Authority records show different catch patterns.<br>Select a fishery and year to explore its catch.</p>
-        <p>Landed catch includes retained catch and research catch.<br>Fish discarded at sea are excluded.</p>
+        <div class="chart-info"><p class="chart-info-label">ABOUT THE CHART</p><p>Landed catch includes retained catch and research catch.<br>Fish discarded at sea are excluded.</p></div>
       </div>
       <div class="chart-layout catch-chart-layout">
         <figure class="chart-shell" aria-labelledby="catch-chart-title">
@@ -274,6 +277,7 @@
           <p id="catch-chart-status" class="chart-status" role="status">Loading Commonwealth catches…</p>
         </figure>
         <aside class="takeaways" aria-label="Small Pelagic Fishery findings for 2023">
+          <p class="takeaway-context">FIXED 2023 CASE STUDY · Small Pelagic Fishery<br>These findings stay fixed as you explore other selections.</p>
           <article><p class="takeaway-label">THE RECENT PEAK</p>
             <h3>Small Pelagic Fishery surged in 2023</h3>
             <p>Landings reached <strong>23,067 tonnes</strong> in 2023.<br>This was its highest recorded total across 2011–2023.</p></article>
@@ -320,9 +324,10 @@
           <div id="fishing-map-controls" class="fishing-map-controls"></div>
           <div id="commonwealth-fishing-intensity" role="img" aria-label="Hexagonal fishing map, 2010 to 2023, with year, zoom and map-centre controls. Hexagon area is about 1,624 square kilometres."></div>
           <p id="intensity-chart-status" class="chart-status" role="status">Loading fishing-intensity map…</p>
-          <p class="chart-source">Colour shows the largest class within classified bin areas.<br>Ranges use kilograms per square kilometre; thresholds vary yearly.<br>2024 is excluded because its fishery coverage is reduced.</p>
+          <p class="chart-source">Colours use fixed thresholds of 300 and 1,200 kg/km² in every year.<br>Each bin uses its predominant published class. Source ranges crossing a fixed threshold are marked uncertain; exact intensity cannot be recovered from grouped data.<br>2024 is excluded because its fishery coverage is reduced.</p>
         </figure>
         <aside class="takeaways" aria-label="How to read the fishing-intensity map">
+          <p class="takeaway-context">FULL-PERIOD CONTEXT · 2010–2023<br>The footprint comparison stays fixed as you explore individual years.</p>
           <article><p class="takeaway-label">THE CHANGING FOOTPRINT</p>
             <h3>The reported footprint contracted</h3>
             <p>Across 2010–2023, the reported footprint fell about <strong>26%.</strong><br>This measures reported area, rather than total catch.<br>Coverage also depends on fishing patterns and reporting.</p></article>

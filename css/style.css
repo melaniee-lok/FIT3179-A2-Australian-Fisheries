@@ -208,7 +208,8 @@ h2 {
 .story-intro {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  gap: 20px;
+  align-items: start;
   margin: 16px 0 24px;
 }
 
@@ -218,9 +219,26 @@ h2 {
   max-width: 48ch;
 }
 
-.story-intro p:last-child {
+.chart-info {
   color: var(--muted);
+  padding: 12px 16px;
+  background: #eeeee7;
+  border-radius: 4px;
+  max-width: none;
 }
+
+.story-intro > p {
+  padding-top: 12px;
+}
+
+.chart-info .chart-info-label {
+  margin: 0 0 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.chart-info p { margin: 0; }
 
 .share-definition {
   white-space: nowrap;
@@ -233,6 +251,7 @@ h2 {
 }
 
 .chart-layout {
+  --chart-inset: 24px;
   display: grid;
   grid-template-columns: minmax(0, 2.3fr) minmax(220px, 1fr);
   gap: 28px;
@@ -245,7 +264,7 @@ h2 {
 
 .chart-shell {
   margin: 0;
-  padding: 24px;
+  padding: var(--chart-inset, 24px);
   background: white;
   border-radius: 4px;
 }
@@ -351,7 +370,14 @@ summary:focus-visible {
   grid-template-columns: 1fr;
   gap: 28px;
   margin: 0;
-  padding: 24px 0;
+  padding: var(--chart-inset, 24px) 0;
+  align-content: start;
+}
+
+/* Match the first text line to the title inside the neighbouring card. */
+.takeaways > article:first-child > .takeaway-label,
+.takeaways > .takeaway-context:first-child {
+  line-height: 24.7px;
 }
 
 .takeaways article + article {
@@ -485,6 +511,9 @@ a {
     grid-template-columns: 1fr;
     gap: 18px;
   }
+  .story-intro > p {
+    padding-top: 0;
+  }
   .takeaways article + article {
     padding-top: 12px;
   }
@@ -575,12 +604,6 @@ a {
   color: var(--aqua);
   font-size: 26px;
   font-weight: 650;
-}
-
-@media (min-width: 1051px) {
-  .map-share-takeaways {
-    padding-top: 48px;
-  }
 }
 
 .sector-maps-shell + .takeaways p:last-child {
@@ -705,9 +728,32 @@ a {
 }
 
 .takeaways .takeaway-context {
-  margin: 0 0 -12px;
+  margin: 0;
   color: var(--muted);
   font-size: 13px;
+}
+
+.rank-controls {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.rank-controls label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.rank-controls select {
+  max-width: 100%;
+  padding: 6px;
+  font: inherit;
+}
+
+@media (max-width: 1050px) {
+  .takeaway-context { grid-column: 1 / -1; }
 }
 
 .financial-year {

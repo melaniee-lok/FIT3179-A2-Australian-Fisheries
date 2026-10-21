@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Production value trends for three fisheries sectors, with selective annotations and hover tooltips.",
   "data": {
-    "url": "data/sector_trend.csv",
+    "url": "data/1_sector_trend.csv",
     "format": {
       "type": "csv"
     }

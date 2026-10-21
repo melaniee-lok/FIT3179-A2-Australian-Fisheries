@@ -10,7 +10,7 @@
     "bottom": 5
   },
   "data": {
-    "url": "data/state_aquaculture_change.csv",
+    "url": "data/2_state_aquaculture_change.csv",
     "format": {
       "type": "csv"
     }

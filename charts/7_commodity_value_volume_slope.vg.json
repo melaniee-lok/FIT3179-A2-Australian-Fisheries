@@ -6,7 +6,7 @@
   "autosize": {"type": "fit-x", "contains": "padding"},
   "padding": {"left": 5, "right": 5, "top": 25, "bottom": 5},
   "data": {
-    "url": "data/commodity_value_volume_2024_25.csv",
+    "url": "data/7_commodity_value_volume_2024_25.csv",
     "format": {
       "type": "csv",
       "parse": {

@@ -50,7 +50,7 @@
   "data": [
     {
       "name": "flows",
-      "url": "data/abares_stock_status_flows.csv",
+      "url": "data/9_abares_stock_status_flows.csv",
       "format": {
         "type": "csv",
         "parse": {
@@ -70,7 +70,7 @@
     },
     {
       "name": "nodes",
-      "url": "data/abares_stock_status_nodes.csv",
+      "url": "data/9_abares_stock_status_nodes.csv",
       "format": {
         "type": "csv",
         "parse": {
