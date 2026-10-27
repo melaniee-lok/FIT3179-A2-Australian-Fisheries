@@ -156,7 +156,7 @@
         "color": "#424242",
         "point": {
           "filled": true,
-          "color": "#4c78a8",
+          "color": "#000000",
           "size": 45
         }
       },
