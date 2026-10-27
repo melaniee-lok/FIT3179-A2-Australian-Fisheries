@@ -32,8 +32,6 @@ Each chart has a readable JSON specification. Listed in page order:
 - `charts/` contains nine Vega-Lite specifications and three Vega specifications. The treemap uses Vega's hierarchical layout, while the alluvial diagram and fishing-hours map use Vega.
 - `data/` contains the prepared CSV extracts used by the charts. `maps/` contains the map geometry.
 
-The state-share slider updates its map and highest-share summary through Vega signals. Selecting a heatmap cell updates the species breakdown. The fishing-hours controls update the map and the year-specific summaries alongside it. Chart action menus provide image export and specification inspection.
-
 ## Data sources
 
 - [ABARES Australian Fisheries and Aquaculture Statistics](https://www.agriculture.gov.au/abares/research-topics/fisheries/fisheries-and-aquaculture-statistics) â€” 2025 publication, Tables 1 and 2; production values and quantities through 2024â€“25. Monetary values are nominal, and 2024â€“25 figures are preliminary.
