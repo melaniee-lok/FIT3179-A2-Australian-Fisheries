@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": 390,
+  "height": 405,
   "projection": {
     "type": "conicEqualArea",
     "parallels": [
@@ -23,7 +23,7 @@
       "labelFontSize": 13,
       "titleFontSize": 13
     },
-    "background": "white"
+    "background": "transparent"
   },
   "params": [
     {
@@ -135,7 +135,7 @@
               "#c6e0dd",
               "#78b5b8",
               "#278f9b",
-              "#005b70"
+              "#007c91"
             ]
           },
           "legend": {
@@ -161,10 +161,6 @@
             "title": "State or territory"
           },
           {
-            "field": "Year",
-            "title": "Financial year"
-          },
-          {
             "field": "ShareLabel",
             "title": "Aquaculture share"
           },
@@ -185,64 +181,116 @@
     },
     {
       "data": {
-        "url": "data/3_state_aquaculture_share_yearly.csv",
-        "format": {
-          "type": "csv",
-          "parse": {
-            "YearStart": "number",
-            "AquacultureShare": "number",
-            "Aquaculture": "number",
-            "WildCatch": "number"
+        "values": [
+          {
+            "Longitude": 145,
+            "Latitude": -37,
+            "EndLongitude": 149,
+            "EndLatitude": -38.6
+          },
+          {
+            "Longitude": 146.8,
+            "Latitude": -42,
+            "EndLongitude": 147,
+            "EndLatitude": -43.7
           }
-        }
+        ]
       },
-      "transform": [
-        {
-          "filter": "datum.YearStart == Year_selection"
-        },
-        {
-          "window": [
-            {
-              "op": "rank",
-              "as": "ShareRank"
-            }
-          ],
-          "sort": [
-            {
-              "field": "AquacultureShare",
-              "order": "descending"
-            }
-          ]
-        },
-        {
-          "filter": "datum.ShareRank == 1"
-        },
-        {
-          "calculate": "'Highest aquaculture share: ' + datum.State + ' \u2014 ' + format(datum.AquacultureShare, '.0f') + '%'",
-          "as": "LeaderAnnotation"
-        }
-      ],
       "mark": {
-        "type": "text",
-        "align": "left",
-        "baseline": "top",
-        "font": "Arial",
-        "fontSize": 13,
-        "fontWeight": 600,
-        "color": "#55696f"
+        "type": "rule",
+        "color": "#777777",
+        "strokeWidth": 0.8
       },
       "encoding": {
-        "x": {
-          "value": 0
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
         },
-        "y": {
-          "value": 0
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
+        "longitude2": {
+          "field": "EndLongitude"
+        },
+        "latitude2": {
+          "field": "EndLatitude"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "State": "Western Australia",
+            "Label": "Western|Australia",
+            "Longitude": 121,
+            "Latitude": -25
+          },
+          {
+            "State": "Northern Territory",
+            "Label": "Northern|Territory",
+            "Longitude": 133.4,
+            "Latitude": -19.4
+          },
+          {
+            "State": "Queensland",
+            "Label": "Queensland",
+            "Longitude": 144,
+            "Latitude": -22.5
+          },
+          {
+            "State": "South Australia",
+            "Label": "South|Australia",
+            "Longitude": 134.5,
+            "Latitude": -29.2
+          },
+          {
+            "State": "New South Wales",
+            "Label": "New South|Wales",
+            "Longitude": 146.5,
+            "Latitude": -32.3
+          },
+          {
+            "State": "Victoria",
+            "Label": "Victoria",
+            "Longitude": 151.5,
+            "Latitude": -39
+          },
+          {
+            "State": "Tasmania",
+            "Label": "Tasmania",
+            "Longitude": 147,
+            "Latitude": -45
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "font": "Arial",
+        "fontSize": 11,
+        "fontWeight": 600,
+        "lineBreak": "|",
+        "lineHeight": 13,
+        "align": "center",
+        "baseline": "middle",
+        "color": "#292929"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
         },
         "text": {
-          "field": "LeaderAnnotation"
+          "field": "Label"
         }
       }
     }
   ],
-  "padding": 0
+  "padding": 0,
+  "background": "transparent"
 }

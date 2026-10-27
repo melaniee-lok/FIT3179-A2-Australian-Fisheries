@@ -128,8 +128,8 @@
                   25000
                 ],
                 "range": [
-                  "#edf2f3",
-                  "#344454"
+                  "#eee5f5",
+                  "#756487"
                 ]
               },
               "legend": {
@@ -169,10 +169,6 @@
                 "type": "quantitative",
                 "title": "Landed catch (tonnes)",
                 "format": ",.0f"
-              },
-              {
-                "field": "SpeciesCount",
-                "title": "Species reported"
               }
             ]
           },
@@ -235,7 +231,7 @@
           "mark": {
             "type": "rect",
             "fill": null,
-            "stroke": "#153a44",
+            "stroke": "#292929",
             "strokeWidth": 2.5,
             "interactive": false
           }
@@ -244,155 +240,6 @@
     },
     {
       "hconcat": [
-        {
-          "data": {
-            "url": "data/8_afma_fishery_year_catch.csv",
-            "format": {
-              "type": "csv",
-              "parse": {
-                "Year": "number",
-                "FisheryOrder": "number",
-                "LandedCatch_tonnes": "number",
-                "SpeciesCount": "number"
-              }
-            }
-          },
-          "width": 500,
-          "height": 160,
-          "title": "Catch history",
-          "transform": [
-            {
-              "filter": {
-                "param": "Fishery_select",
-                "empty": false
-              }
-            },
-            {
-              "window": [
-                {
-                  "op": "lag",
-                  "field": "Year",
-                  "as": "PreviousYear"
-                }
-              ],
-              "sort": [
-                {
-                  "field": "Year"
-                }
-              ]
-            },
-            {
-              "calculate": "isValid(datum.PreviousYear) && datum.Year - datum.PreviousYear > 1 ? 1 : 0",
-              "as": "Gap"
-            },
-            {
-              "window": [
-                {
-                  "op": "sum",
-                  "field": "Gap",
-                  "as": "Segment"
-                }
-              ],
-              "sort": [
-                {
-                  "field": "Year"
-                }
-              ],
-              "frame": [
-                null,
-                0
-              ]
-            }
-          ],
-          "encoding": {
-            "x": {
-              "field": "Year",
-              "type": "quantitative",
-              "scale": {
-                "domain": [
-                  2002,
-                  2023
-                ],
-                "nice": false,
-                "zero": false
-              },
-              "axis": {
-                "title": "Calendar year",
-                "values": [
-                  2002,
-                  2012,
-                  2023
-                ],
-                "format": "d",
-                "grid": false
-              }
-            },
-            "y": {
-              "field": "LandedCatch_tonnes",
-              "type": "quantitative",
-              "axis": {
-                "title": "Landed catch (tonnes)",
-                "tickCount": 4,
-                "format": ",.0f"
-              }
-            },
-            "tooltip": [
-              {
-                "field": "Fishery",
-                "title": "Fishery"
-              },
-              {
-                "field": "Year",
-                "type": "ordinal",
-                "title": "Calendar year"
-              },
-              {
-                "field": "LandedCatch_tonnes",
-                "type": "quantitative",
-                "title": "Landed catch (tonnes)",
-                "format": ",.0f"
-              }
-            ]
-          },
-          "layer": [
-            {
-              "mark": {
-                "type": "line",
-                "strokeWidth": 2.5,
-                "color": "#344454"
-              },
-              "encoding": {
-                "detail": {
-                  "field": "Segment"
-                }
-              }
-            },
-            {
-              "mark": {
-                "type": "circle",
-                "size": 100,
-                "opacity": 0
-              },
-              "encoding": {}
-            },
-            {
-              "transform": [
-                {
-                  "filter": {
-                    "param": "Year_select",
-                    "empty": false
-                  }
-                }
-              ],
-              "mark": {
-                "type": "circle",
-                "size": 65,
-                "color": "#344454",
-                "opacity": 1
-              }
-            }
-          ]
-        },
         {
           "data": {
             "url": "data/8_afma_species_catch_clean.csv",
@@ -455,7 +302,7 @@
           ],
           "mark": {
             "type": "bar",
-            "color": "#607b87"
+            "color": "#756487"
           },
           "encoding": {
             "x": {
@@ -473,11 +320,11 @@
               "sort": "-x",
               "axis": {
                 "title": null,
-                "labelLimit": 165,
+                "labelLimit": 200,
                 "labelFontSize": 12,
                 "ticks": false,
                 "domain": false,
-                "labelExpr": "datum.label == 'Jack Mackerel (mixed)' ? ['Jack Mackerel', '(mixed)'] : datum.label == 'Australian Sardine' ? ['Australian', 'Sardine'] : datum.label",
+                "labelExpr": "datum.label",
                 "labelLineHeight": 13
               }
             },
@@ -501,7 +348,7 @@
   ],
   "config": {
     "font": "Arial",
-    "background": "white",
+    "background": "transparent",
     "view": {
       "stroke": null
     },
@@ -509,9 +356,9 @@
       "labelFontSize": 12,
       "titleFontSize": 13,
       "titleFontWeight": 400,
-      "labelColor": "#55696f",
-      "titleColor": "#55696f",
-      "gridColor": "#edf0f0",
+      "labelColor": "#606060",
+      "titleColor": "#606060",
+      "gridColor": "#eeeeee",
       "domain": false,
       "tickSize": 0,
       "titlePadding": 12
@@ -520,7 +367,7 @@
       "fontSize": 14,
       "fontWeight": 600,
       "anchor": "start",
-      "color": "#153a44",
+      "color": "#292929",
       "offset": 12
     },
     "legend": {
@@ -529,5 +376,6 @@
       "titleFontWeight": 400
     }
   },
-  "align": "each"
+  "align": "each",
+  "background": "transparent"
 }

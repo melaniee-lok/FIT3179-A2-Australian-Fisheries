@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "State aquaculture dumbbell chart comparing two financial years on a common linear scale. Hollow circles show 1998-99; filled circles show 2024-25.",
   "width": "container",
-  "height": 420,
+  "height": 410,
   "padding": {
     "left": 5,
     "top": 0,
@@ -33,13 +33,17 @@
           800,
           1200
         ],
-        "gridColor": "#f5f6f6",
+        "gridColor": "#dcdcd6",
         "domain": false,
         "ticks": false,
         "titlePadding": 16,
-        "gridOpacity": 0.5,
+        "gridOpacity": 1,
         "labelFontSize": 13,
-        "titleFontSize": 14
+        "titleFontSize": 14,
+        "domainColor": "#d5d5d5",
+        "domainWidth": 1,
+        "grid": true,
+        "gridWidth": 1
       }
     },
     "y": {
@@ -259,7 +263,7 @@
   ],
   "config": {
     "font": "Arial",
-    "background": "white",
+    "background": "transparent",
     "view": {
       "stroke": null
     },
@@ -267,8 +271,8 @@
       "labelFontSize": 13,
       "titleFontSize": 14,
       "titleFontWeight": 400,
-      "labelColor": "#55696f",
-      "titleColor": "#55696f"
+      "labelColor": "#606060",
+      "titleColor": "#606060"
     },
     "text": {
       "fontSize": 13
@@ -278,5 +282,6 @@
     "type": "fit-x",
     "contains": "padding",
     "resize": true
-  }
+  },
+  "background": "transparent"
 }

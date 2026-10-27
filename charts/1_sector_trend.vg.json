@@ -22,17 +22,17 @@
     }
   ],
   "config": {
-    "background": "#ffffff",
+    "background": "transparent",
     "view": {
       "stroke": null
     },
     "font": "Arial",
     "axis": {
       "labelFontSize": 14,
-      "labelColor": "#526267",
-      "domainColor": "#cdd5d7",
-      "tickColor": "#cdd5d7",
-      "gridColor": "#f1f3f3",
+      "labelColor": "#606060",
+      "domainColor": "#d5d5d5",
+      "tickColor": "#d5d5d5",
+      "gridColor": "#f2f2f2",
       "gridWidth": 1,
       "titleFontSize": 14
     },
@@ -49,7 +49,7 @@
     }
   },
   "width": "container",
-  "height": 324,
+  "height": 390,
   "padding": {
     "left": 8,
     "top": 0,
@@ -78,13 +78,13 @@
           2019,
           2024
         ],
-        "labelExpr": "toString(datum.value) + '\u2013' + substring(toString(datum.value + 1), 2)",
+        "labelExpr": "toString(datum.value) + '–' + substring(toString(datum.value + 1), 2)",
         "labelAngle": 0,
         "labelPadding": 12,
         "grid": false,
         "titleFontSize": 14,
         "titleFontWeight": 400,
-        "titleColor": "#526267",
+        "titleColor": "#606060",
         "titlePadding": 16,
         "labelFontSize": 14,
         "labelOverlap": false,
@@ -114,13 +114,15 @@
         ],
         "format": ".1f",
         "labelPadding": 8,
-        "domain": false,
+        "domain": true,
         "ticks": false,
         "titleFontSize": 14,
         "titleFontWeight": 400,
-        "titleColor": "#526267",
+        "titleColor": "#606060",
         "titlePadding": 16,
-        "labelFontSize": 14
+        "labelFontSize": 14,
+        "domainColor": "#d5d5d5",
+        "domainWidth": 1
       }
     }
   },
@@ -128,9 +130,14 @@
     {
       "mark": {
         "type": "line",
-        "strokeWidth": 3.2,
+        "strokeWidth": 2,
         "strokeCap": "round",
-        "clip": true
+        "clip": false,
+        "point": {
+          "filled": true,
+          "size": 25,
+          "clip": false
+        }
       },
       "encoding": {
         "color": {
@@ -157,9 +164,35 @@
         "strokeWidth": {
           "condition": {
             "test": "datum.SectorLabel == 'Aquaculture'",
-            "value": 3.8
+            "value": 2.5
           },
-          "value": 3.2
+          "value": 2
+        },
+        "strokeDash": {
+          "field": "SectorLabel",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Aquaculture",
+              "State wild catch",
+              "Commonwealth wild catch"
+            ],
+            "range": [
+              [
+                1,
+                0
+              ],
+              [
+                8,
+                4
+              ],
+              [
+                2,
+                4
+              ]
+            ]
+          },
+          "legend": null
         }
       }
     },
@@ -191,21 +224,72 @@
     {
       "transform": [
         {
+          "filter": "datum.Sector == 'Commonwealth fisheries' && datum.StartYear == 2024"
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "#606060",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "y": {
+          "field": "Billions",
+          "type": "quantitative"
+        },
+        "y2": {
+          "datum": 0.24
+        },
+        "x2": {
+          "datum": 2023.65
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.Sector == 'Aquaculture' && datum.StartYear == 2024"
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "#606060",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "y": {
+          "field": "Billions",
+          "type": "quantitative"
+        },
+        "y2": {
+          "datum": 2.7
+        },
+        "x2": {
+          "datum": 2023.5
+        }
+      }
+    },
+    {
+      "transform": [
+        {
           "filter": "datum.Sector == 'Aquaculture' && datum.StartYear == 2024"
         }
       ],
       "mark": {
         "type": "text",
-        "dx": -10,
+        "dx": -16,
         "fontWeight": 600,
-        "color": "#007c91"
+        "color": "#292929",
+        "fontSize": 12,
+        "lineHeight": 16,
+        "lineBreak": "|"
       },
       "encoding": {
         "y": {
-          "datum": 2.58
+          "datum": 2.7
         },
         "text": {
-          "value": "2024\u201325: A$0.85 billion gap|Above state wild catch"
+          "value": "2024–25|A$0.85 billion above|state wild catch"
         }
       }
     },
@@ -219,14 +303,17 @@
         "type": "text",
         "dx": -10,
         "fontWeight": 600,
-        "color": "#756487"
+        "color": "#292929",
+        "fontSize": 12,
+        "lineHeight": 16,
+        "lineBreak": "|"
       },
       "encoding": {
         "y": {
           "datum": 0.24
         },
         "text": {
-          "value": "2.1% lower than in 1998\u201399"
+          "value": "2024–25|2.1% lower than in 1998–99"
         }
       }
     },
@@ -270,10 +357,58 @@
           "legend": null
         }
       }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.Sector == 'Aquaculture' && datum.StartYear == 2016"
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "#606060",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "y": {
+          "field": "Billions",
+          "type": "quantitative"
+        },
+        "y2": {
+          "datum": 1.96
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.Sector == 'Aquaculture' && datum.StartYear == 2016"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "bottom",
+        "dx": -8,
+        "fontSize": 12,
+        "fontWeight": 600,
+        "color": "#292929",
+        "lineBreak": "|",
+        "lineHeight": 16
+      },
+      "encoding": {
+        "y": {
+          "datum": 1.96
+        },
+        "text": {
+          "value": "2016–17|Aquaculture stays ahead|of state wild catch from here"
+        }
+      }
     }
   ],
   "autosize": {
     "type": "fit-x",
     "contains": "padding"
-  }
+  },
+  "background": "transparent"
 }

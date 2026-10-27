@@ -1,0 +1,42 @@
+{
+  "description": "Uses every colour from the user-supplied reference palette, reassigned to different commodities rather than matching the reference species. Each reassigned commodity identity stays consistent across charts. Explicit domains prevent colour reassignment under filtering.",
+  "commodities": {
+    "Salmonids": "#a63d64",
+    "Rock Lobsters": "#087fba",
+    "Other Finfish, Sharks and Rays": "#70451f",
+    "Prawns": "#355b98",
+    "Oysters": "#824b6a",
+    "Tunas": "#8f1538",
+    "Crabs": "#8b6a00",
+    "Other Crustaceans": "#5e5f59",
+    "Abalone": "#c76545",
+    "Scallops": "#9e4274",
+    "Squids": "#555072",
+    "Other Molluscs": "#c02983",
+    "Other products": "#d17b9b"
+  },
+  "sectors": {
+    "Aquaculture": "#007c91",
+    "State wild catch": "#a75b20",
+    "Commonwealth wild catch": "#756487"
+  },
+  "biomassStatus": {
+    "Not overfished": "#766858",
+    "Overfished": "#aa9781",
+    "Uncertain": "#cec0aa",
+    "Not assessed": "#ddd0bc"
+  },
+  "trackedFishingHours": {
+    "meaning": "AIS-based annual apparent fishing hours, one shared logarithmic colour scale across 2014?2024",
+    "low": "#e4dcec",
+    "high": "#4b365e",
+    "years": [
+      2014,
+      2024
+    ],
+    "domainHours": [
+      1,
+      30000
+    ]
+  }
+}

@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "Biomass-status alluvial for the same 102 Commonwealth stocks at 2004, 2014 and 2023. Neutral ribbon thickness equals stock count; block colours indicate status.",
+  "description": "Biomass-status alluvial for the same 107 stocks in the 2026 ABARES historical workbook at 2004, 2014 and 2025, using its current stock definitions. Ribbon thickness equals stock count; block colours indicate status.",
   "width": 640,
-  "height": 440,
+  "height": 464,
   "padding": 0,
   "autosize": {
     "type": "fit",
@@ -30,7 +30,7 @@
     },
     {
       "name": "unit",
-      "update": "(height - 70 - 3 * gap) / 102"
+      "update": "(height - 70 - 3 * gap) / 107"
     },
     {
       "name": "hoverPath",
@@ -102,7 +102,7 @@
         },
         {
           "Column": 2,
-          "Year": 2023
+          "Year": 2025
         }
       ]
     }
@@ -118,10 +118,10 @@
         "Not assessed"
       ],
       "range": [
-        "#416eaa",
-        "#806099",
-        "#969696",
-        "#eeeeee"
+        "#766858",
+        "#aa9781",
+        "#cec0aa",
+        "#ddd0bc"
       ]
     }
   ],
@@ -138,7 +138,7 @@
             "signal": "'M' + (datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ',' + (45 + datum.SourceLow * unit + datum.SourceIndex * gap) + ' C' + (((datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2)) / 2) + ',' + (45 + datum.SourceLow * unit + datum.SourceIndex * gap) + ' ' + (((datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2)) / 2) + ',' + (45 + datum.TargetLow * unit + datum.TargetIndex * gap) + ' ' + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2) + ',' + (45 + datum.TargetLow * unit + datum.TargetIndex * gap) + ' L' + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2) + ',' + (45 + datum.TargetHigh * unit + datum.TargetIndex * gap) + ' C' + (((datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2)) / 2) + ',' + (45 + datum.TargetHigh * unit + datum.TargetIndex * gap) + ' ' + (((datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ((datum.SourceColumn + 1) * (width - nodeWidth) / 2)) / 2) + ',' + (45 + datum.SourceHigh * unit + datum.SourceIndex * gap) + ' ' + (datum.SourceColumn * (width - nodeWidth) / 2 + nodeWidth) + ',' + (45 + datum.SourceHigh * unit + datum.SourceIndex * gap) + ' Z'"
           },
           "fill": {
-            "value": "#8198a1"
+            "value": "#999999"
           },
           "fillOpacity": {
             "signal": "hoverPath == null ? 0.32 : hoverPath == datum.PathID ? 0.8 : 0.1"
@@ -150,7 +150,7 @@
             "value": 0.4
           },
           "tooltip": {
-            "signal": "{'Period': datum.StartYear + '\u00e2\u20ac\u201c' + datum.EndYear, 'Transition': datum.SourceStatus + ' \u00e2\u2020\u2019 ' + datum.TargetStatus, 'Stocks': datum.StockCount, 'Full pathway': datum.FullPath, 'Examples': datum.Examples}"
+            "signal": "{'Period': format(datum.StartYear, 'd') + ' to ' + format(datum.EndYear, 'd'), 'Stocks in this pathway': format(datum.StockCount, ',d'), '2004 status': split(datum.FullPath, ' / ')[0], '2014 status': split(datum.FullPath, ' / ')[1], '2025 status': split(datum.FullPath, ' / ')[2], 'Example stocks': datum.Examples}"
           }
         }
       }
@@ -179,7 +179,7 @@
             "field": "Status"
           },
           "tooltip": {
-            "signal": "{'Year': datum.Year, 'Biomass status': datum.Status, 'Stocks': datum.StockCount}"
+            "signal": "{'Year': format(datum.Year, 'd'), 'Biomass status': datum.Status, 'Number of stocks': format(datum.StockCount, ',d')}"
           }
         }
       }
@@ -217,7 +217,7 @@
             "field": "Status"
           },
           "fill": {
-            "signal": "datum.Status == 'Not overfished' || datum.Status == 'Overfished' ? 'white' : '#153a44'"
+            "signal": "datum.Status == 'Not overfished' ? 'white' : '#292929'"
           },
           "font": {
             "value": "Arial"
@@ -258,7 +258,7 @@
             "signal": "datum.StockCount + (datum.StockCount == 1 ? ' stock' : ' stocks')"
           },
           "fill": {
-            "signal": "datum.Status == 'Not overfished' || datum.Status == 'Overfished' ? 'white' : '#153a44'"
+            "signal": "datum.Status == 'Not overfished' ? 'white' : '#292929'"
           },
           "font": {
             "value": "Arial"
@@ -293,7 +293,7 @@
             "value": 600
           },
           "fill": {
-            "value": "#153a44"
+            "value": "#292929"
           },
           "font": {
             "value": "Arial"
@@ -304,6 +304,7 @@
   ],
   "config": {
     "font": "Arial",
-    "background": "white"
-  }
+    "background": "transparent"
+  },
+  "background": "transparent"
 }

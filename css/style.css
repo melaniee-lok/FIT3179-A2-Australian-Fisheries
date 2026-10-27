@@ -1,6 +1,6 @@
 :root {
-  --ink: #153a44;
-  --muted: #55696f;
+  --ink: #292929;
+  --muted: #606060;
   --paper: #f5f4ef;
   --aqua: #007c91;
 }
@@ -16,6 +16,46 @@ body {
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
+/* Keep long stock names readable within the viewport. */
+#vg-tooltip-element.vg-tooltip {
+  max-width: min(380px, calc(100vw - 24px));
+}
+#vg-tooltip-element.vg-tooltip td.value {
+  max-width: 250px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+#vg-tooltip-element.vg-tooltip td.key {
+  max-width: 180px;
+  white-space: pre-line;
+  text-align: right;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: normal;
+}
+
+#vg-tooltip-element.vg-tooltip table {
+  width: auto;
+  table-layout: auto;
+}
+
+#vg-tooltip-element.vg-tooltip .slope-tooltip td.key {
+  max-width: none;
+  white-space: nowrap;
+}
+#vg-tooltip-element.vg-tooltip .slope-tooltip td.value {
+  display: table-cell;
+  max-width: 180px;
+  vertical-align: top;
+}
+.slope-tooltip .tooltip-unit {
+  display: block;
+  text-align: right;
+}
+
 .page {
   max-width: 1120px;
   padding: 40px 28px 24px;
@@ -28,7 +68,6 @@ body {
 }
 
 .eyebrow,
-.section-kicker,
 .takeaway-label {
   font-size: 11px;
   letter-spacing: 0.16em;
@@ -127,8 +166,7 @@ body {
 }
 
 h1,
-h2,
-.takeaways h3 {
+h2 {
   font-family: "Fraunces", Georgia, "Times New Roman", serif;
   font-weight: 400;
 }
@@ -151,17 +189,23 @@ p {
 }
 
 .story-section {
-  margin-top: 28px;
+  margin-top: 40px;
 }
 
 .story-section + .story-section {
   border-top: 1px solid #cbd5d4;
-  padding-top: 28px;
+  padding-top: 40px;
+}
+
+/* Let the section gap, rather than the final chart's padding, frame dividers. */
+.story-section > .chart-layout:last-child > .chart-shell,
+.story-section > .chart-layout:last-child > .takeaways {
+  padding-bottom: 0;
 }
 
 .chart-transition {
   max-width: 560px;
-  margin: 48px 0;
+  margin: 24px 0;
 }
 
 .transition-kicker {
@@ -169,7 +213,7 @@ p {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.13em;
-  color: var(--aqua);
+  color: var(--muted);
 }
 
 .chart-transition p:last-child {
@@ -180,22 +224,7 @@ p {
 }
 
 .section-heading {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-.section-number {
-  border-right: 1px solid #cbd5d4;
-  font-family: Georgia, serif;
-  font-size: 40px;
-  color: var(--aqua);
-  padding-right: 22px;
-}
-
-.section-kicker {
-  color: var(--aqua);
-  margin: 0 0 8px;
+  display: block;
 }
 
 h2 {
@@ -207,7 +236,7 @@ h2 {
 
 .story-intro {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
   align-items: start;
   margin: 16px 0 24px;
@@ -216,29 +245,13 @@ h2 {
 .story-intro p {
   font-size: 15px;
   margin: 0;
-  max-width: 48ch;
-}
-
-.chart-info {
-  color: var(--muted);
-  padding: 12px 16px;
-  background: #eeeee7;
-  border-radius: 4px;
-  max-width: none;
+  max-width: 72ch;
+  text-wrap: pretty;
 }
 
 .story-intro > p {
   padding-top: 12px;
 }
-
-.chart-info .chart-info-label {
-  margin: 0 0 4px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-}
-
-.chart-info p { margin: 0; }
 
 .share-definition {
   white-space: nowrap;
@@ -264,8 +277,8 @@ h2 {
 
 .chart-shell {
   margin: 0;
-  padding: var(--chart-inset, 24px);
-  background: white;
+  padding: var(--chart-inset, 24px) 0;
+  background: transparent;
   border-radius: 4px;
 }
 
@@ -274,12 +287,12 @@ h2 {
   grid-template-columns: 1fr;
   align-items: start;
   gap: 12px;
-  padding-bottom: 16px;
+  padding-bottom: 12px;
 }
 
 .chart-heading h3 {
   margin: 0 0 8px;
-  font-size: 19px;
+  font-size: 21px;
   line-height: 1.3;
   font-weight: 650;
 }
@@ -312,7 +325,7 @@ select:focus-visible,
 button:focus-visible,
 a:focus-visible,
 summary:focus-visible {
-  outline: 3px solid #007c91;
+  outline: 3px solid #424242;
   outline-offset: 4px;
 }
 
@@ -330,9 +343,11 @@ summary:focus-visible {
 #commodity-value-volume.vega-embed,
 #commonwealth-catch.vega-embed,
 #stock-status-history.vega-embed,
-#commonwealth-fishing-intensity.vega-embed {
+#commonwealth-fishing-intensity.vega-embed,
+#commodity-growth.vega-embed,
+#catch-concentration.vega-embed {
   display: block;
-  padding: 0;
+  padding: 36px 0 0;
 }
 
 #state-sector-maps.vega-embed {
@@ -348,7 +363,9 @@ summary:focus-visible {
 #commodity-value-volume svg,
 #commonwealth-catch svg,
 #stock-status-history svg,
-#commonwealth-fishing-intensity svg {
+#commonwealth-fishing-intensity svg,
+#commodity-growth svg,
+#catch-concentration svg {
   display: block;
   max-width: 100%;
   height: auto;
@@ -368,37 +385,87 @@ summary:focus-visible {
 .takeaways {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 28px;
+  gap: 24px;
   margin: 0;
   padding: var(--chart-inset, 24px) 0;
   align-content: start;
 }
 
 /* Match the first text line to the title inside the neighbouring card. */
-.takeaways > article:first-child > .takeaway-label,
-.takeaways > .takeaway-context:first-child {
+.takeaways > article:first-child > .takeaway-label {
   line-height: 24.7px;
 }
 
 .takeaways article + article {
-  padding-top: 12px;
+  padding-top: 0;
+}
+
+.takeaways article {
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.takeaways article > p {
+  line-height: inherit;
 }
 
 .takeaway-label {
-  color: var(--aqua);
+  color: var(--muted);
   margin: 0 0 8px;
 }
 
 .takeaways h3 {
-  font-size: 23px;
-  line-height: 1.25;
-  margin: 0 0 12px;
+  display: inline;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: inherit;
+  margin: 0;
+}
+
+.takeaways h3::after {
+  content: ". ";
+}
+
+.takeaways article > p {
+  display: inline;
 }
 
 .takeaways p:last-child {
   font-size: 15px;
   margin: 0;
   max-width: 48ch;
+  text-wrap: pretty;
+}
+
+.conclusion {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid #cbd5d4;
+}
+
+.conclusion h2 {
+  margin-bottom: 18px;
+}
+
+.conclusion p {
+  margin: 0 0 14px;
+  max-width: 65ch;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.conclusion-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+@media (max-width: 800px) {
+  .conclusion-columns {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
 }
 
 /* Source attribution */
@@ -411,20 +478,33 @@ summary:focus-visible {
   line-height: 1.65;
 }
 
-.sources h3 {
-  margin: 0 0 28px;
-  font-family: "Fraunces", Georgia, "Times New Roman", serif;
-  font-size: 23px;
-  font-weight: 400;
-  line-height: 1.25;
+.sources h2 {
+  margin: 0 0 18px;
 }
 
 .sources p {
   margin: 0 0 28px;
 }
 
+.sources-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 28px;
+  margin-bottom: 28px;
+}
+
+.sources-grid .source-entry {
+  margin: 0;
+}
+
+@media (max-width: 800px) {
+  .sources-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .sources a {
-  color: #46758d;
+  color: #505050;
   overflow-wrap: anywhere;
 }
 
@@ -438,17 +518,20 @@ summary:focus-visible {
 }
 
 a {
-  color: #006d81;
+  color: #505050;
   text-underline-offset: 3px;
 }
 
 .page-footer {
   display: flex;
-  justify-content: space-between;
-  gap: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 3px;
   border-top: 1px solid #cbd5d4;
-  padding-top: 16px;
-  font-size: 11px;
+  padding: 16px 0 0;
+  background: transparent;
+  font-size: 13px;
   color: var(--muted);
 }
 
@@ -484,7 +567,7 @@ a {
     gap: 24px;
   }
   .chart-shell {
-    padding: 20px 16px;
+    padding: 20px 0;
   }
 }
 
@@ -495,18 +578,7 @@ a {
   .page-header {
     padding-bottom: 24px;
   }
-  .section-heading {
-    gap: 14px;
-  }
-  .section-number {
-    padding-right: 14px;
-    font-size: 32px;
-  }
-  .section-kicker {
-    font-size: 9px;
-    letter-spacing: 0.08em;
-  }
-  .story-intro,
+.story-intro,
   .takeaways {
     grid-template-columns: 1fr;
     gap: 18px;
@@ -515,17 +587,20 @@ a {
     padding-top: 0;
   }
   .takeaways article + article {
-    padding-top: 12px;
+    padding-top: 0;
   }
   .chart-shell {
-    padding: 16px 12px;
+    padding: 16px 0;
   }
   .chart-heading h3 {
-    font-size: 17px;
+    font-size: 19px;
+  }
+  .takeaways h3 {
+    font-size: 15px;
   }
   .page-footer {
     flex-direction: column;
-    gap: 12px;
+    gap: 3px;
   }
 }
 
@@ -589,7 +664,7 @@ a {
   width: 100%;
   min-width: 80px;
   max-width: 320px;
-  accent-color: var(--aqua);
+  accent-color: #424242;
 }
 
 #map-year-control input + span {
@@ -689,11 +764,29 @@ a {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Keep integer and decimal slider readouts from changing the control layout. */
+.fishing-map-controls .vega-bind input[type="range"] + span {
+  display: inline-block;
+  flex: 0 0 4ch;
+  min-width: 4ch;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.fishing-map-controls .vega-bind > label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .fishing-map-controls input[type="range"] {
   width: 160px;
-  accent-color: #344454;
+  margin: 0;
+  vertical-align: middle;
+  accent-color: #424242;
 }
 
 .fishing-map-controls select {
@@ -727,10 +820,38 @@ a {
   background: var(--key-colour);
 }
 
+.chart-key[aria-label="Fisheries sector colour key"] .key-swatch {
+  width: 26px;
+  height: 0;
+  background: none;
+  border-top: 3px solid var(--key-colour);
+}
+.chart-key[aria-label="Fisheries sector colour key"] li:nth-child(2) .key-swatch {
+  border-top-style: dashed;
+}
+.chart-key[aria-label="Fisheries sector colour key"] li:nth-child(3) .key-swatch {
+  border-top-style: dotted;
+}
+
 .takeaways .takeaway-context {
   margin: 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.takeaway-context .case-study-title {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.takeaway-context .case-study-title + br {
+  display: none;
 }
 
 .rank-controls {
@@ -759,3 +880,136 @@ a {
 .financial-year {
   white-space: nowrap;
 }
+
+#commodity-growth,
+#catch-concentration {
+  width: 100%;
+  min-width: 0;
+}
+
+.pareto-bar-key {
+  width: 18px;
+  height: 10px;
+  background: #756487;
+  border: 1px solid #756487;
+}
+
+.pareto-line-key {
+  position: relative;
+  width: 22px;
+  height: 2px;
+  background: #424242;
+}
+
+.pareto-line-key::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4c78a8;
+}
+
+.commodity-colour-key {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.commodity-colour-key summary {
+  cursor: pointer;
+  padding: 4px 0;
+  font-weight: 600;
+}
+.commodity-colour-key ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.commodity-colour-key li {
+  display: flex;
+  align-items: start;
+  gap: 7px;
+  line-height: 1.4;
+}
+.commodity-colour-key .key-swatch {
+  height: 10px;
+  width: 12px;
+  margin-top: 3px;
+}
+@media (max-width: 540px) {
+  .commodity-colour-key ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.statistics-grid > div:nth-child(3) dd { color: var(--ink); }
+
+/* Keep map controls above the drawing surface and draggable on touchscreens. */
+.fishing-map-controls {
+  position: relative;
+  z-index: 1;
+}
+.fishing-map-controls input[type="range"] {
+  cursor: pointer;
+  touch-action: none;
+}
+#commonwealth-fishing-intensity canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* Plain definitions sit beside headings, then wrap beneath on narrow cards. */
+.chart-heading.with-definition {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: flex-start;
+}
+.chart-heading.with-definition > div {
+  flex: 1 1 300px;
+  min-width: 0;
+}
+.chart-heading.with-definition > .chart-definition {
+  flex: 1 1 220px;
+  min-width: 0;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.chart-heading .chart-reading-note {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* Keep the action button subtle until the chart is being used. */
+.chart-shell .vega-embed > details {
+  z-index: 3;
+}
+.chart-shell .vega-embed > details > summary {
+  opacity: 0.2;
+  transition: opacity 150ms ease;
+}
+.chart-shell .vega-embed:hover > details > summary,
+.chart-shell .vega-embed:focus-within > details > summary,
+.chart-shell .vega-embed > details[open] > summary {
+  opacity: 1;
+}
+
+@media (min-width: 801px) and (max-width: 1050px) {
+  .takeaways {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0;
+  }
+  .takeaways > .takeaway-context {
+    grid-column: 1 / -1;
+  }
+}
+

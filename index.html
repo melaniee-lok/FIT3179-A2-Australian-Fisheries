@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="The changing value of Australia's farmed and wild-caught seafood.">
+  <meta name="description" content="The changing value of Australia's fisheries and aquaculture.">
   <title>Australia's Fisheries | From catch to cultivation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap"
+    rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=79">
 </head>
+
 <body>
   <main class="page">
     <header class="page-header">
@@ -20,7 +23,7 @@
         <div>
           <p class="eyebrow">AUSTRALIA'S FISHERIES</p>
           <h1>From catch<br>to cultivation.</h1>
-          <p class="page-intro">The changing value of Australian seafood,<br>from wild fisheries to aquatic farms.</p>
+          <p class="page-intro">The changing value of Australian fisheries,<br>from wild catch to aquaculture.</p>
         </div>
         <aside class="header-statistics" aria-label="Australian fisheries production value in 2024–25">
           <p class="statistics-year">PRODUCTION VALUE · <span class="financial-year">2024–25</span></p>
@@ -42,170 +45,209 @@
       </div>
     </header>
     <section class="story-section" aria-labelledby="sector-heading">
-      <div class="section-heading">
-        <span class="section-number" aria-hidden="true">01</span>
-        <div>
-          <p class="section-kicker">A SEAFOOD ECONOMY IN TRANSITION</p>
-          <h2 id="sector-heading">Aquaculture takes the lead</h2>
-        </div>
-      </div>
+      <header class="section-heading">
+        <h2 id="sector-heading">Aquaculture takes the lead</h2>
+      </header>
       <div class="story-intro">
-        <p>Farmed seafood has grown in production value.<br>It has led state wild catch since <span class="financial-year">2016–17</span>.</p>
-        <div class="chart-info"><p class="chart-info-label">ABOUT THE CHART</p><p>Aquaculture means farming fish and other aquatic species.<br>Wild catch means harvesting them from natural waters.</p></div>
+        <p>Catch weight alone cannot describe the fisheries economy. Production value provides a starting point for
+          understanding how the industry has changed across regions and commodities.</p>
       </div>
       <div class="chart-layout">
-      <figure class="chart-shell" aria-labelledby="chart-title" aria-describedby="chart-description">
-        <figcaption class="chart-heading">
-          <div>
-            <h3 id="chart-title">A growing divide in production value</h3>
-            <p id="chart-description">Gross value of production, A$ billion.<br>Financial years, <span class="financial-year">1998–99</span> to <span class="financial-year">2024–25</span>.</p>
+        <figure class="chart-shell" aria-labelledby="chart-title" aria-describedby="chart-description">
+          <figcaption class="chart-heading">
+            <div>
+              <h3 id="chart-title">A growing divide in production value</h3>
+              <p id="chart-description">Gross value of production, A$ billion.<br>Financial years, <span
+                  class="financial-year">1998–99</span> to <span class="financial-year">2024–25</span>.</p>
+              <p class="chart-reading-note">How to read: Aquaculture means farming aquatic species.<br>Wild catch means
+                harvesting them from natural waters.</p>
+
+            </div>
+          </figcaption>
+          <div id="sector-trend" role="img"
+            aria-label="Line chart comparing three sectors. Aquaculture rises from A$0.61 billion in 1998–99 to A$2.10 billion in 2024–25, after a peak in 2022–23.">
           </div>
-        </figcaption>
-        <ul class="chart-key" aria-label="Fisheries sector colour key"><li><span class="key-swatch" style="--key-colour: #007c91" aria-hidden="true"></span>Aquaculture</li><li><span class="key-swatch" style="--key-colour: #a75b20" aria-hidden="true"></span>State wild catch</li><li><span class="key-swatch" style="--key-colour: #756487" aria-hidden="true"></span>Commonwealth wild catch</li></ul>
-        <div id="sector-trend" role="img" aria-label="Line chart comparing three sectors. Aquaculture rises from A$0.61 billion in 1998–99 to A$2.10 billion in 2024–25, after a peak in 2022–23."></div>
-        <p id="chart-status" class="chart-status" role="status">Loading production values…</p>
-        <noscript><p>This chart needs JavaScript.<br><a href="data/1_sector_trend.csv">Download the data</a> to read the values.</p></noscript>
-      </figure>
-      <aside class="takeaways" aria-label="What the chart shows">
-        <article>
-          <p class="takeaway-label">THE TURNING POINT</p>
-          <h3>A lead that held</h3>
-          <p>Aquaculture first passed state wild catch in <span class="financial-year">2011–12</span>.<br>State wild catch briefly regained the lead.<br>From <span class="financial-year">2016–17</span>, aquaculture stayed ahead every year.</p>
-        </article>
-        <article>
-          <p class="takeaway-label">THE RECENT SHIFT</p>
-          <h3>Growth has eased from its peak</h3>
-          <p>Aquaculture peaked at A$2.27 billion in <span class="financial-year">2022–23</span>.<br>Its value fell 7.4% over the next two years.<br>It still reached A$2.10 billion in <span class="financial-year">2024–25</span>.</p>
-        </article>
-      </aside>
+          <p id="chart-status" class="chart-status" role="status">Loading production values…</p>
+          <noscript>
+            <p>This chart needs JavaScript.<br><a href="data/1_sector_trend.csv">Download the data</a> to read the
+              values.</p>
+          </noscript>
+        </figure>
+        <aside class="takeaways" aria-label="What the chart shows">
+          <article>
+            <h3>A lead that held</h3>
+            <p>Aquaculture first passed state wild catch in <span class="financial-year">2011–12</span>. State wild
+              catch briefly regained the lead. From <span class="financial-year">2016–17</span>, aquaculture stayed
+              ahead every year.</p>
+          </article>
+          <article>
+            <h3>Growth has eased from its peak</h3>
+            <p>Aquaculture peaked at A$2.27 billion in <span class="financial-year">2022–23</span>. Its value fell 7.4%
+              over the next two years. It still reached A$2.10 billion in <span class="financial-year">2024–25</span>.
+            </p>
+          </article>
+        </aside>
       </div>
     </section>
     <section class="story-section" aria-labelledby="state-heading">
-      <div class="section-heading">
-        <span class="section-number" aria-hidden="true">02</span>
-        <div>
-          <p class="section-kicker">GROWTH WAS HIGHLY CONCENTRATED</p>
-          <h2 id="state-heading">Tasmania drove the aquaculture boom</h2>
-        </div>
-      </div>
+      <header class="section-heading">
+        <h2 id="state-heading">Tasmania drove the aquaculture boom</h2>
+      </header>
       <div class="story-intro">
-        <p>Tasmania contributed most of the increase in aquaculture value.<br>Its national share rose from <strong>14% to 62%.</strong></p>
-        <div class="chart-info"><p class="chart-info-label">ABOUT THE CHART</p><p><strong>Six of seven states and territories grew.</strong><br>Western Australia was the only one to decline.</p></div>
+        <p>National growth can conceal very different regional experiences. Its geography reveals whether expansion was
+          widespread or concentrated in a small part of the country.</p>
       </div>
       <div class="chart-layout">
-      <figure class="chart-shell state-chart-shell" aria-labelledby="state-chart-title">
-        <figcaption class="chart-heading">
-          <div>
-            <h3 id="state-chart-title">Aquaculture value by state and territory, <span class="financial-year">1998–99</span> vs <span class="financial-year">2024–25</span></h3>
-            <p><span class="legend-circle" aria-hidden="true"></span> <span class="financial-year">1998–99</span> &nbsp; <span class="legend-circle legend-circle-filled" aria-hidden="true"></span> <span class="financial-year">2024–25</span><br>Hover for exact values.</p>
+        <figure class="chart-shell state-chart-shell" aria-labelledby="state-chart-title">
+          <figcaption class="chart-heading">
+            <div>
+              <h3 id="state-chart-title">Tasmania's aquaculture growth outpaced every other state</h3>
+              <p>Aquaculture production value by state and territory, A$ million.</p>
+              <p>Each connected pair shows the change between the two years.</p>
+              <p><span class="legend-circle" aria-hidden="true"></span> <span class="financial-year">1998–99</span>
+                &nbsp; <span class="legend-circle legend-circle-filled" aria-hidden="true"></span> <span
+                  class="financial-year">2024–25</span></p>
+            </div>
+
+          </figcaption>
+          <div id="state-aquaculture-slope" role="img"
+            aria-label="Dumbbell chart comparing aquaculture production value in seven states and territories. Tasmania grew more than fifteen times; Western Australia declined.">
           </div>
-        </figcaption>
-        <div id="state-aquaculture-slope" role="img" aria-label="Dumbbell chart comparing aquaculture production value in seven states and territories. Tasmania grew more than fifteen times; Western Australia declined."></div>
-        <p id="state-chart-status" class="chart-status" role="status">Loading state production values…</p>
-      </figure>
-      <aside class="takeaways" aria-label="What state aquaculture changes show">
-        <article>
-          <p class="takeaway-label">THE MAIN CONTRIBUTOR</p>
-          <h3>Growth concentrated in Tasmania</h3>
-          <p>By <span class="financial-year">2024–25</span>, Tasmania accounted for<br><strong>62% of Australia's aquaculture value.</strong></p>
-        </article>
-        <article>
-          <p class="takeaway-label">THE EXCEPTION</p>
-          <h3>Western Australia moved against the trend</h3>
-          <p>While six states and territories grew,<br>Western Australia ended below its <span class="financial-year">1998–99</span> level.</p>
-        </article>
-      </aside>
+          <p id="state-chart-status" class="chart-status" role="status">Loading state production values…</p>
+        </figure>
+        <aside class="takeaways" aria-label="What state aquaculture changes show">
+          <article>
+            <h3>Growth concentrated in Tasmania</h3>
+            <p>By <span class="financial-year">2024–25</span>, Tasmania accounted for <strong>62%</strong> of
+              Australia's aquaculture value. Its contribution shows how strongly the national industry depends on
+              production in one state.</p>
+          </article>
+          <article>
+            <h3>Western Australia moved against the trend</h3>
+            <p>While six states and territories grew, Western Australia ended below its <span
+                class="financial-year">1998–99</span> level. The national rise therefore masks a different local
+              experience: aquaculture growth was widespread, but not universal.</p>
+          </article>
+        </aside>
       </div>
     </section>
     <section class="story-section" aria-labelledby="share-heading">
-      <div class="section-heading">
-        <span class="section-number" aria-hidden="true">03</span>
-        <div><p class="section-kicker">GEOGRAPHY SHAPES THE INDUSTRY</p>
-          <h2 id="share-heading">Australia's fisheries economy varies from place to place</h2></div>
-      </div>
+      <header class="section-heading">
+        <h2 id="share-heading">Australia's fisheries economy varies from place to place</h2>
+      </header>
       <div class="story-intro">
-        <p>Australia's aquaculture shift was uneven.<br>Explore 27 financial years to compare each jurisdiction.</p>
-        <div class="chart-info"><p class="chart-info-label">ABOUT THE CHART</p><p><span class="share-definition">Shares compare aquaculture with state-managed wild catch.</span><br>Commonwealth fisheries are excluded.</p></div>
+        <p>Regional growth and regional dependence are different questions. A place can rely heavily on aquaculture
+          without contributing a large share of national production value.</p>
       </div>
       <div class="chart-layout">
         <figure class="chart-shell map-chart-shell" aria-labelledby="share-chart-title">
-          <figcaption class="chart-heading"><div>
-            <h3 id="share-chart-title">Aquaculture dependence varies across Australia</h3>
-            <p>Move through financial years to compare each jurisdiction.</p>
-          </div></figcaption>
+          <figcaption class="chart-heading">
+            <div>
+              <h3 id="share-chart-title">Aquaculture dependence varies across Australia</h3>
+              <p>Shares compare farming with state-managed wild catch.</p>
+              <p>Move through financial years to compare each jurisdiction.</p>
+
+            </div>
+          </figcaption>
           <div class="map-controls">
             <div id="map-year-control"></div>
             <output id="map-selected-year">Selected year: <span class="financial-year">2024–25</span></output>
           </div>
-          <div id="state-aquaculture-share" role="img" aria-label="Interactive Australian state choropleth across 27 financial years. Use the year slider to compare aquaculture shares. ACT has no separate data."></div>
+          <p id="map-highest-share" class="catch-selection-label" aria-live="polite"></p>
+          <div id="state-aquaculture-share" role="img"
+            aria-label="Interactive Australian state choropleth across 27 financial years. Use the year slider to compare aquaculture shares. ACT has no separate data.">
+          </div>
           <p id="share-chart-status" class="chart-status" role="status">Loading map…</p>
         </figure>
         <aside class="takeaways map-share-takeaways" aria-label="What the state fisheries mix shows">
-          <p class="takeaway-context">FULL-PERIOD FINDINGS · 1998–99 to 2024–25<br>These endpoint comparisons stay fixed as you move the year slider.</p>
-          <article><p class="takeaway-label">THE BIGGEST SHIFT</p>
+          <p class="takeaway-context"><strong class="case-study-title">State fisheries mix · 1998–99 to
+              2024–25</strong><br>These endpoint comparisons stay fixed as you move the year slider.</p>
+          <article>
             <h3>Tasmania became an aquaculture stronghold</h3>
-            <p><span class="share-change">33% → 91%</span><br>From <span class="financial-year">1998–99</span> to <span class="financial-year">2024–25</span>.</p></article>
-          <article><p class="takeaway-label">THE OPPOSITE DIRECTION</p>
+            <p>Aquaculture's share rose <strong>from 33% to 91%</strong> between <span
+                class="financial-year">1998–99</span> and <span class="financial-year">2024–25</span>, growing from
+              roughly one-third to almost all of Tasmania's state-managed fisheries production value.</p>
+          </article>
+          <article>
             <h3>Western Australia became less aquaculture-dependent</h3>
-            <p><span class="share-change">32% → 19%</span><br>Across the same period.</p></article>
+            <p>Aquaculture's share fell <strong>from 32% to 19%</strong> across the same period, becoming a smaller part
+              of Western Australia's fisheries mix. State wild catch remained the larger contributor to local production
+              value.</p>
+          </article>
         </aside>
       </div>
       <div class="chart-transition">
         <p class="transition-kicker">FROM SHARE TO SCALE</p>
-        <p>Aquaculture dependence shows farming's importance to each jurisdiction.<br>Absolute production value reveals where the industry is concentrated.</p>
+        <p>Aquaculture dependence shows farming's importance to each jurisdiction.<br>Absolute production value reveals
+          where the industry is concentrated.</p>
       </div>
       <div class="chart-layout">
-      <figure class="chart-shell sector-maps-shell" aria-label="Three maps comparing 2024–25 production values">
-        <figcaption class="chart-heading">
-          <div>
-            <h3>Where fisheries production value is concentrated</h3>
-            <p>Production value · <span class="financial-year">2024–25</span><br>All three maps use the same circle-area scale.</p>
+        <figure class="chart-shell sector-maps-shell" aria-label="Three maps comparing 2024–25 production values">
+          <figcaption class="chart-heading">
+            <div>
+              <h3>Where fisheries production value is concentrated</h3>
+              <p>Aquaculture, state wild catch and combined production value, <span
+                  class="financial-year">2024–25</span>.<br>Circle area represents production value in A$
+                million.<br>Equal-sized circles represent equal values across all three maps.</p>
+            </div>
+          </figcaption>
+          <div id="state-sector-maps" role="img"
+            aria-label="Three Australian proportional-symbol maps on a shared value scale: aquaculture, state wild catch, and total state-managed production value.">
           </div>
-        </figcaption>
-        <div id="state-sector-maps" role="img" aria-label="Three Australian proportional-symbol maps on a shared value scale: aquaculture, state wild catch, and total state-managed production value."></div>
-        <p class="chart-source">Circles represent jurisdiction totals, not production sites.<br>Circle area shows production value; Commonwealth fisheries are excluded.</p>
-        <p id="sector-maps-status" class="chart-status" role="status">Loading production maps…</p>
-      </figure>
-      <aside class="takeaways" aria-label="What the production maps show">
-        <article>
-          <p class="takeaway-label">THE AQUACULTURE CENTRE</p>
-          <h3>Tasmania stands apart</h3>
-          <p>Its aquaculture value reached <strong>A$1.29 billion</strong>,<br>nearly six times Queensland's.</p>
-        </article>
-        <article>
-          <p class="takeaway-label">THE WILD-CATCH LEADER</p>
-          <h3>Western Australia leads wild catch</h3>
-          <p>Its state wild-catch value reached <strong>A$503 million</strong>,<br>more than double South Australia's.</p>
-        </article>
-      </aside>
+          <p id="sector-maps-status" class="chart-status" role="status">Loading production maps…</p>
+        </figure>
+        <aside class="takeaways" aria-label="What the production maps show">
+          <article>
+            <h3>Tasmania stands apart</h3>
+            <p>Its aquaculture value reached <strong>A$1.29 billion</strong>, nearly six times Queensland's. Farming was
+              the main contributor to Tasmania's combined state-managed production value.</p>
+          </article>
+          <article>
+            <h3>Western Australia leads wild catch</h3>
+            <p>Its state wild-catch value reached <strong>A$503 million</strong>, more than double South Australia's.
+              The two leading states had contrasting strengths: wild catch in Western Australia and aquaculture in
+              Tasmania.</p>
+          </article>
+        </aside>
       </div>
     </section>
     <section class="story-section" aria-labelledby="commodity-heading">
-      <div class="section-heading">
-        <span class="section-number" aria-hidden="true">04</span>
-        <div><p class="section-kicker">WHAT CREATES THE VALUE?</p>
-          <h2 id="commodity-heading">A handful of commodities shape Australia's seafood economy</h2></div>
-      </div>
+      <header class="section-heading">
+        <h2 id="commodity-heading">A handful of commodities shape Australia's fisheries economy</h2>
+      </header>
       <div class="story-intro">
-        <p>Salmonids generated about one-third of national production value.<br>Salmonids include salmon and trout.</p>
-        <div class="chart-info"><p class="chart-info-label">ABOUT THE CHART</p><p>Rectangle area represents production value.<br>Commodities are grouped by broad seafood category.</p></div>
+        <p>Location explains only one dimension of the fisheries economy. Different commodities contribute different
+          amounts of weight and value, and their importance can change over time.</p>
       </div>
       <div class="chart-layout">
         <figure class="chart-shell commodity-chart-shell" aria-labelledby="commodity-chart-title">
-          <figcaption class="chart-heading"><div>
-            <h3 id="commodity-chart-title">Production value by commodity, <span class="financial-year">2024–25</span></h3>
-            <p>Larger rectangles represent greater value.<br>Hover for commodity names and exact values.</p>
-          </div></figcaption>
-          <div id="commodity-treemap" role="img" aria-label="Hierarchical treemap of 13 seafood commodities. Salmonids contribute 34% of national value; rock lobsters contribute 16.7%."></div>
+          <figcaption class="chart-heading">
+            <div>
+              <h3 id="commodity-chart-title">Salmonids and rock lobsters generated half of fisheries production value
+              </h3>
+              <p>Australia's fisheries production value by commodity, <span
+                  class="financial-year">2024–25</span>.<br>Larger rectangles represent greater production
+                value.<br>Labels show each commodity's percentage of the national total.</p>
+
+            </div>
+          </figcaption>
+
+          <div id="commodity-treemap" role="img"
+            aria-label="Hierarchical treemap of 13 fisheries commodities. Salmonids contribute 34% of national value; rock lobsters contribute 16.7%.">
+          </div>
           <p id="commodity-chart-status" class="chart-status" role="status">Loading commodity values…</p>
         </figure>
         <aside class="takeaways" aria-label="What commodity values show">
-          <article><p class="takeaway-label">THE VALUE LEADER</p>
+          <article>
             <h3>Salmonids stand above the rest</h3>
-            <p>They generated <strong>A$1.27 billion</strong> in <span class="financial-year">2024–25</span>,<br>accounting for <strong>34%</strong> of total production value.</p></article>
-          <article><p class="takeaway-label">HIGH VALUE, LOW VOLUME</p>
+            <p>Salmonids, including salmon and trout, generated <strong>A$1.27 billion</strong> in 2024-25. Their 34%
+              share means one commodity group contributed about one-third of national production value.</p>
+          </article>
+          <article>
             <h3>Rock lobsters punch above their weight</h3>
-            <p>They contributed <strong>16.7%</strong> of production value,<br>despite representing only <strong>3.7%</strong> of total quantity.</p></article>
+            <p>They contributed <strong>16.7%</strong> of production value from just 3.7% of total quantity. Together,
+              rock lobsters and salmonids generated just over half of national production value.</p>
+          </article>
         </aside>
       </div>
       <div class="chart-transition">
@@ -214,150 +256,332 @@
       </div>
       <div class="chart-layout">
         <figure class="chart-shell rank-chart-shell" aria-labelledby="rank-chart-title">
-          <figcaption class="chart-heading"><div>
-            <h3 id="rank-chart-title">Salmonids climbed from seventh to first</h3>
-            <p>Commodity rank by production value, <span class="financial-year">1998–99</span> to <span class="financial-year">2024–25</span>.<br>Choose a commodity to highlight its path against the other 12 in grey. Ranks always compare all 13.</p>
-          </div></figcaption>
+          <figcaption class="chart-heading">
+            <div>
+              <h3 id="rank-chart-title">Salmonids climbed from seventh to first</h3>
+              <p>Commodity rank by production value, <span class="financial-year">1998–99</span> to <span
+                  class="financial-year">2024–25</span>.<br>Only the top nine commodities in 2024–25 are shown.<br>Ranks
+                include all commodities.<br>Choose a commodity to emphasise its path.</p>
+            </div>
+          </figcaption>
           <div id="rank-controls" class="rank-controls"></div>
-          <div id="commodity-rank" role="img" aria-label="Selectable bump chart of 13 seafood commodities across 27 financial years. Salmonids climb from seventh to first; rock lobsters finish third despite higher value."></div>
+
+          <div id="commodity-rank" role="img"
+            aria-label="Selectable bump chart tracking nine leading commodities in 2024-25, excluding Other products across 27 financial years; historical ranks compare all 13. Salmonids climb from seventh to first.">
+          </div>
           <p id="rank-chart-status" class="chart-status" role="status">Loading commodity rankings…</p>
         </figure>
-        <aside class="takeaways" aria-label="What changing commodity ranks show">
-          <p class="takeaway-context">FULL-PERIOD FINDINGS · 1998–99 to 2024–25<br>These findings stay fixed when you select commodities.</p>
-          <article><p class="takeaway-label">THE BIGGEST CLIMB</p>
+        <aside class="takeaways takeaways-rank" aria-label="What changing commodity ranks show">
+          <p class="takeaway-context"><strong class="case-study-title">Commodity rankings · 1998–99 to
+              2024–25</strong><br>These findings stay fixed as you highlight different commodities.</p>
+          <article>
             <h3>Salmonids rose to the top</h3>
-            <p>Salmonids became the leading contributor to seafood production value.<br>Their rise reshaped the national commodity ranking.</p></article>
-          <article><p class="takeaway-label">RANK FELL, VALUE ROSE</p>
+            <p>Salmonids climbed from seventh to first by production value, first reaching the top in
+              <strong>2010-11</strong>. They briefly slipped to second before returning to first, so their rise was not
+              uninterrupted.
+            </p>
+          </article>
+          <article>
             <h3>Rock lobsters stayed highly valuable</h3>
-            <p>Other commodities grew faster, lowering rock lobsters' relative position.<br>A lower rank does not necessarily mean falling value.</p></article>
+            <p>Rock lobsters moved from first to third between the endpoints, remaining among the three highest-value
+              groups in 2024-25. Rank measures relative position: a lower rank does not by itself establish falling
+              production value.</p>
+          </article>
         </aside>
       </div>
       <div class="chart-transition">
-        <p class="transition-kicker">FROM RANK TO RETURN</p>
-        <p>Ranking shows who leads.<br>Comparing value with volume reveals a different story.</p>
+        <p class="transition-kicker">FROM POSITION TO CONTRIBUTION</p>
+        <p>Rankings show which commodities moved ahead.<br>Changes in dollars show what drove the overall increase.</p>
+      </div>
+      <div class="chart-layout">
+        <figure class="chart-shell" aria-labelledby="growth-chart-title">
+          <figcaption class="chart-heading">
+            <div>
+              <h3 id="growth-chart-title">Salmonids drove nearly three-quarters of the net increase</h3>
+              <p>Commodity production value change, 1998–99 to 2024–25.<br>Follow the floating bars from top to
+                bottom.<br>Each bar adds or subtracts from the running change.<br>Bar colour identifies the commodity,
+                rather than change direction.</p>
+            </div>
+          </figcaption>
+          <div id="commodity-growth" role="img"
+            aria-label="Waterfall showing changes for all 13 fisheries commodities. Salmonids added A$1.183 billion, about 73 percent of the A$1.611 billion net increase.">
+          </div>
+          <p id="growth-chart-status" class="chart-status" role="status">Loading contributions to growth…</p>
+        </figure>
+        <aside class="takeaways" aria-label="What drove commodity value growth">
+          <article>
+            <h3>One group changed the scale</h3>
+            <p>Salmonids added <strong>A$1.18 billion</strong> in production value. That represents 73% of the net
+              commodity increase. This compares two endpoints, rather than annual growth.</p>
+          </article>
+          <article>
+            <h3>Six groups ended below their starting values</h3>
+            <p>Abalone recorded the largest decrease: <strong>A$90.9 million</strong>. Gains elsewhere more than offset
+              these declines. Price changes also affect nominal production value.</p>
+          </article>
+        </aside>
+      </div>
+      <div class="chart-transition">
+        <p class="transition-kicker">FROM GROWTH TO RETURN</p>
+        <p>Dollar changes reveal the drivers of growth.<br>Comparing value with volume reveals a different story.</p>
       </div>
       <div class="chart-layout">
         <figure class="chart-shell" aria-labelledby="volume-chart-title">
-          <figcaption class="chart-heading"><div>
-            <h3 id="volume-chart-title">High volume does not always mean high value</h3>
-            <p>National production quantity and value shares, <span class="financial-year">2024–25</span>.<br>Upward lines show greater value share than quantity share.</p>
-          </div></figcaption>
-          <div id="commodity-value-volume" role="img" aria-label="Slopegraph comparing quantity and value shares for 13 commodities. Rock lobsters contribute disproportionately high value; other finfish contribute disproportionately high quantity."></div>
+          <figcaption class="chart-heading">
+            <div>
+              <h3 id="volume-chart-title">High volume does not always mean high value</h3>
+              <p>National production quantity and value shares, <span class="financial-year">2024–25</span>.<br>Upward
+                lines show greater value share than quantity share.<br>The top five by production value are
+                highlighted.<br>All 13 commodities are shown.</p>
+            </div>
+          </figcaption>
+          <div id="commodity-value-volume" role="img"
+            aria-label="Slopegraph comparing quantity and value shares for 13 commodities. Rock lobsters contribute disproportionately high value; other finfish contribute disproportionately high quantity.">
+          </div>
           <p id="volume-chart-status" class="chart-status" role="status">Loading quantity and value shares…</p>
         </figure>
         <aside class="takeaways" aria-label="What quantity and value shares show">
-          <article><p class="takeaway-label">VALUE-DENSE</p>
+          <article>
             <h3>Rock lobsters punch above their volume</h3>
-            <p>Their implied production value was <strong>A$56.83 per kilogram.</strong><br>This measures production value, rather than a retail price.</p></article>
-          <article><p class="takeaway-label">VOLUME-HEAVY</p>
+            <p>Their implied production value was <strong>A$56.83 per kilogram</strong>. This measures production value,
+              rather than a retail price.</p>
+          </article>
+          <article>
             <h3>Other finfish dominate quantity</h3>
-            <p>This broad group includes finfish, sharks and rays.<br>Large production volumes do not necessarily generate comparable value.</p></article>
+            <p>Other finfish, sharks and rays supplied <strong>48.3%</strong> of national production quantity but only
+              18.3% of value. Their large landed weight therefore contributed a much smaller share of the industry's
+              production value.</p>
+          </article>
         </aside>
       </div>
     </section>
     <section class="story-section" aria-labelledby="catch-heading">
-      <div class="section-heading">
-        <span class="section-number" aria-hidden="true">05</span>
-        <div><p class="section-kicker">BENEATH THE CATCH</p>
-          <h2 id="catch-heading">Commonwealth fisheries reveal another side of the industry</h2></div>
-      </div>
+      <header class="section-heading">
+        <h2 id="catch-heading">Commonwealth fisheries reveal another side of the industry</h2>
+      </header>
       <div class="story-intro">
-        <p>Australian Fisheries Management Authority records show different catch patterns.<br>Select a fishery and year to explore its catch.</p>
-        <div class="chart-info"><p class="chart-info-label">ABOUT THE CHART</p><p>Landed catch includes retained catch and research catch.<br>Fish discarded at sea are excluded.</p></div>
+        <p>Production value cannot tell us everything about wild fisheries. Understanding them also means examining what
+          is caught, the condition of stocks and where vessels appear to fish.</p>
       </div>
       <div class="chart-layout catch-chart-layout">
         <figure class="chart-shell" aria-labelledby="catch-chart-title">
-          <figcaption class="chart-heading"><div>
-            <h3 id="catch-chart-title">Commonwealth catches rise and fall in different ways</h3>
-            <p>Annual landed catch by fishery, 2002–2023.<br>Select a heatmap cell to explore that fishery and year.</p>
-          </div></figcaption>
-          <p id="catch-selection-label" class="catch-selection-label" aria-live="polite">Small Pelagic Fishery · 2023</p>
-          <p class="missing-data-key"><span aria-hidden="true"></span>No reported data</p>
-          <div id="commonwealth-catch" role="group" aria-label="Linked catch views: select a fishery and calendar year in the heatmap to update the catch history and top six species."></div>
+          <figcaption class="chart-heading">
+            <div>
+              <h3 id="catch-chart-title">Commonwealth catches rise and fall in different ways</h3>
+              <p>Commonwealth fisheries are managed solely or jointly by Australia's government.<br>Annual landed catch
+                by fishery, 2002–2023.<br>Landed catch includes retained catch and research catch.<br>Darker cells
+                indicate larger catches in that fishery and year.<br>Select a cell to see its top six species.</p>
+
+            </div>
+          </figcaption>
+          <p id="catch-selection-label" class="catch-selection-label" aria-live="polite">Small Pelagic Fishery · 2023
+          </p>
+          <div id="commonwealth-catch" role="group"
+            aria-label="Linked catch views: select a fishery and calendar year in the heatmap to update the top six species breakdown.">
+          </div>
           <p id="catch-chart-status" class="chart-status" role="status">Loading Commonwealth catches…</p>
         </figure>
-        <aside class="takeaways" aria-label="Small Pelagic Fishery findings for 2023">
-          <p class="takeaway-context">FIXED 2023 CASE STUDY · Small Pelagic Fishery<br>These findings stay fixed as you explore other selections.</p>
-          <article><p class="takeaway-label">THE RECENT PEAK</p>
-            <h3>Small Pelagic Fishery surged in 2023</h3>
-            <p>Landings reached <strong>23,067 tonnes</strong> in 2023.<br>This was its highest recorded total across 2011–2023.</p></article>
-          <article><p class="takeaway-label">WHAT MADE UP THE CATCH?</p>
-            <h3>Two mackerel species dominated</h3>
-            <p>Blue and Jack Mackerel together contributed about <strong>91%</strong><br>of Small Pelagic Fishery landings in 2023.</p></article>
+        <aside class="takeaways takeaways-catch" aria-label="Catch patterns across Commonwealth fisheries">
+          <p class="takeaway-context"><strong class="case-study-title">Patterns across fisheries ·
+              2002–2023</strong><br>The heatmap compares annual catches; the bars follow your selection.</p>
+          <article>
+            <h3>Catch trends diverged across fisheries</h3>
+            <p>Commonwealth Trawl catch fell by about <strong>49%</strong> between 2004 and 2023. Great Australian Bight
+              Trawl also ended well below its starting level, while Small Pelagic catches rose strongly towards the end
+              of its reported series. The fisheries did not follow one shared trend.</p>
+          </article>
+          <article>
+            <h3>Catch volumes vary widely between fisheries</h3>
+            <p>Annual catches exceeded <strong>20,000 tonnes</strong> in Commonwealth Trawl and Small Pelagic, while
+              Coral Sea catches stayed below 100 tonnes in every reported year. Pale cells can therefore represent
+              consistently smaller fisheries, rather than missing activity. Grey cells indicate no reported data.</p>
+          </article>
+        </aside>
+      </div>
+      <div class="chart-transition">
+        <p class="transition-kicker">FROM CATCH PATTERNS TO CONCENTRATION</p>
+        <p>Fisheries differ in how their catches change.<br>Now compare their contributions to the same year's total.
+        </p>
+      </div>
+      <div class="chart-layout">
+        <figure class="chart-shell" aria-labelledby="concentration-chart-title">
+          <figcaption class="chart-heading">
+            <div>
+              <h3 id="concentration-chart-title">Two fisheries supplied over three-quarters of reported catch</h3>
+              <p>Reported landed catch in 2023, ranked largest first.<br>Read downward to see how the shares add up.</p>
+            </div>
+          </figcaption>
+          <ul class="chart-key" aria-label="Catch concentration mark key">
+            <li><span class="pareto-bar-key" aria-hidden="true"></span>Each fishery's share</li>
+            <li><span class="pareto-line-key" aria-hidden="true"></span>Combined share so far</li>
+          </ul>
+          <div id="catch-concentration" role="img"
+            aria-label="Pareto chart of nine fisheries reporting catch in 2023. Small Pelagic contributes 50.1 percent; adding Commonwealth Trawl brings the cumulative share to 77.3 percent.">
+          </div>
+          <p id="concentration-chart-status" class="chart-status" role="status">Loading catch concentration…</p>
+        </figure>
+        <aside class="takeaways" aria-label="What catch concentration shows">
+          <article>
+            <h3>Small Pelagic leads by volume</h3>
+            <p>Its 23,067 tonnes supplied 50.1% of this total. Adding Commonwealth Trawl brings the share to
+              <strong>77.3%</strong>.
+            </p>
+          </article>
+          <article>
+            <h3>A larger catch does not establish healthier stocks</h3>
+            <p>This ranking compares landed weight, rather than economic value. Stock assessments answer a different
+              question: biological condition.</p>
+          </article>
         </aside>
       </div>
       <div class="chart-transition">
         <p class="transition-kicker">FROM CATCH TO CONDITION</p>
-        <p>Catch volumes alone do not reveal stock health.<br>Biological assessments show a different side of the story.</p>
+        <p>Catch volumes alone do not reveal stock health.<br>Biological assessments show a different side of the story.
+        </p>
       </div>
       <div class="chart-layout">
         <figure class="chart-shell" aria-labelledby="stock-chart-title">
-          <figcaption class="chart-heading"><div>
-            <h3 id="stock-chart-title">Fish stocks followed very different paths</h3>
-            <p>Commonwealth biomass status: 2004, 2014 and 2023.<br>Ribbon thickness represents the number of stocks.</p>
-          </div></figcaption>
-          <ul class="chart-key" aria-label="Biomass status colour key"><li><span class="key-swatch" style="--key-colour: #416eaa" aria-hidden="true"></span>Not overfished</li><li><span class="key-swatch" style="--key-colour: #806099" aria-hidden="true"></span>Overfished</li><li><span class="key-swatch" style="--key-colour: #969696" aria-hidden="true"></span>Uncertain</li><li><span class="key-swatch" style="--key-colour: #eeeeee" aria-hidden="true"></span>Not assessed</li></ul>
-          <div id="stock-status-history" role="img" aria-label="Alluvial tracing the same 102 Commonwealth stocks across three benchmark years. Five moved from overfished to not overfished; nine were overfished at all three checkpoints."></div>
+          <figcaption class="chart-heading">
+            <div>
+              <h3 id="stock-chart-title">Fish stocks followed very different paths</h3>
+              <p>Commonwealth biomass status: 107 stocks, 2004, 2014 and 2025.<br>Ribbon thickness shows how many stocks
+                follow each pathway.<br>Overfished: total fish weight falls below the assessment limit.<br>Uncertain:
+                evidence cannot establish whether the stock is overfished.<br>Not assessed: no biomass-status
+                classification was made that year.</p>
+            </div>
+          </figcaption>
+          <ul class="chart-key" aria-label="Biomass status colour key">
+            <li><span class="key-swatch" style="--key-colour: #766858" aria-hidden="true"></span>Not overfished</li>
+            <li><span class="key-swatch" style="--key-colour: #aa9781" aria-hidden="true"></span>Overfished</li>
+            <li><span class="key-swatch" style="--key-colour: #cec0aa" aria-hidden="true"></span>Uncertain</li>
+            <li><span class="key-swatch" style="--key-colour: #ddd0bc" aria-hidden="true"></span>Not assessed</li>
+          </ul>
+          <div id="stock-status-history" role="img"
+            aria-label="Alluvial tracing the same 107 stocks using the 2026 ABARES stock definitions across 2004, 2014 and 2025. Five moved from overfished to not overfished; eight were overfished at all three checkpoints.">
+          </div>
           <p id="stock-chart-status" class="chart-status" role="status">Loading stock pathways…</p>
-          <p class="chart-source">The same 102 stocks appear at each checkpoint.<br>2023 is used because 46 stocks lack a 2024 assessment.<br>Overfished means biomass is below its biological limit.<br>Uncertain means available evidence cannot establish biomass status.<br>Not assessed means no biomass assessment was reported.</p>
         </figure>
         <aside class="takeaways" aria-label="What biomass-status transitions show">
-          <article><p class="takeaway-label">THE RECOVERY PATH</p>
+          <article>
             <h3>Five stocks moved out of overfished status</h3>
-            <p>They were overfished in 2004,<br>but classified <strong>not overfished</strong> in 2023.<br>Examples include southern bluefin tuna and eastern orange roughy.</p></article>
-          <article><p class="takeaway-label">PRESSURE PERSISTED</p>
-            <h3>Nine stocks remained overfished</h3>
-            <p>They were classified <strong>overfished</strong> at all three checkpoints.<br>This group includes school shark.</p></article>
+            <p>They were overfished in 2004, but classified <strong>not overfished</strong> in 2025. Examples include
+              southern bluefin tuna and eastern orange roughy.</p>
+          </article>
+          <article>
+            <h3>Eight stocks remained overfished</h3>
+            <p>Eight stocks, including redfish and eastern gemfish, were classified <strong>overfished</strong> in 2004,
+              2014 and 2025. These repeated classifications show persistent low stock levels at the three checkpoints;
+              they do not describe every intervening year.</p>
+          </article>
         </aside>
       </div>
       <div class="chart-transition">
-        <p class="transition-kicker">FROM CONDITION TO SPACE</p>
-        <p>Stock status tells us how populations changed.<br>Fishing-intensity data show where activity was concentrated.</p>
+        <p class="transition-kicker">FROM CONDITION TO ACTIVITY</p>
+        <p>Catch records measure the weight landed.<br>Vessel tracking adds another perspective: time spent
+          fishing.<br>This view includes tracked vessels beyond Commonwealth-managed fisheries.</p>
       </div>
       <div class="chart-layout">
         <figure class="chart-shell" aria-labelledby="intensity-chart-title">
-          <figcaption class="chart-heading"><div>
-            <h3 id="intensity-chart-title">Where Commonwealth fishing activity is concentrated</h3>
-            <p>Equal-area hexagonal fishing bins, 2010–2023.<br>Use Year, Zoom and Map Centre to explore.</p>
-          </div></figcaption>
-          <p id="intensity-selected-year" class="catch-selection-label" aria-live="polite">Selected year: 2023</p>
+          <figcaption class="chart-heading">
+            <div>
+              <h3 id="intensity-chart-title">Where tracked vessels spent time fishing</h3>
+              <p>Estimated fishing hours in Australia's mapped economic zone, 2014–2024.<br>Each full hexagon covers
+                approximately 1,624 km²; darker
+                shades indicate more estimated fishing hours.<br>Use Year, Zoom and Map Centre to explore.<br>Note:
+                Unfilled areas have no recorded tracked activity; fishing may still occur there.</p>
+            </div>
+          </figcaption>
+          <p id="intensity-selected-year" class="catch-selection-label">Selected year: 2024 · satellite-tracked fishing
+            vessels</p>
           <div id="fishing-map-controls" class="fishing-map-controls"></div>
-          <div id="commonwealth-fishing-intensity" role="img" aria-label="Hexagonal fishing map, 2010 to 2023, with year, zoom and map-centre controls. Hexagon area is about 1,624 square kilometres."></div>
-          <p id="intensity-chart-status" class="chart-status" role="status">Loading fishing-intensity map…</p>
-          <p class="chart-source">Colours use fixed thresholds of 300 and 1,200 kg/km² in every year.<br>Each bin uses its predominant published class. Source ranges crossing a fixed threshold are marked uncertain; exact intensity cannot be recovered from grouped data.<br>2024 is excluded because its fishery coverage is reduced.</p>
+          <div id="commonwealth-fishing-intensity" role="img"
+            aria-label="Equal-area hex-bin map of estimated fishing hours in the mapped Australian exclusive economic zone, 2014 to 2024. A shared continuous purple scale shows increasing hours; year, zoom and regional controls are available.">
+          </div>
+          <p id="intensity-chart-status" class="chart-status" role="status">Loading estimated fishing hours…</p>
         </figure>
-        <aside class="takeaways" aria-label="How to read the fishing-intensity map">
-          <p class="takeaway-context">FULL-PERIOD CONTEXT · 2010–2023<br>The footprint comparison stays fixed as you explore individual years.</p>
-          <article><p class="takeaway-label">THE CHANGING FOOTPRINT</p>
-            <h3>The reported footprint contracted</h3>
-            <p>Across 2010–2023, the reported footprint fell about <strong>26%.</strong><br>This measures reported area, rather than total catch.<br>Coverage also depends on fishing patterns and reporting.</p></article>
-          <article><p class="takeaway-label">PRIVACY THRESHOLD</p>
-            <h3>Some activity is withheld</h3>
-            <p>Intensity is published where at least <strong>five vessels</strong> operated.<br>Unshaded areas do not necessarily mean no fishing.<br>Fishing intensity does not measure stock sustainability.</p></article>
+        <aside class="takeaways" aria-label="What tracked fishing hours show">
+          <article>
+            <h3>Most tracked activity lies in relatively few bins</h3>
+            <p>In <span id="fishing-share-year">2024</span>, the busiest tenth of occupied hexagons contains <strong
+                id="fishing-hours-share">64%</strong> of estimated fishing hours in this extract. Tracked activity is
+              concentrated in a small part of the mapped fishing footprint.</p>
+          </article>
+          <article>
+            <h3>Tracking measures activity, rather than catch or health</h3>
+            <p>Fishing hours are estimated from vessel movements. In <span id="fishing-total-year">2024</span>, the
+              extract contains about <strong id="fishing-hours-total">350,703 estimated fishing hours</strong>. Vessels
+              without captured tracking
+              signals are not represented. These estimates do not measure stock sustainability.</p>
+          </article>
         </aside>
       </div>
+      <section class="conclusion" aria-labelledby="conclusion-heading">
+        <h2 id="conclusion-heading">A changing fisheries economy</h2>
+        <div class="conclusion-columns">
+          <div>
+            <p>Aquaculture now leads state wild catch in production value.<br>
+              Tasmania and salmonids are central to this shift.<br>
+              Growth remains uneven across regions and commodities.</p>
+            <p>The national total captures only part of the story.<br>
+              Geography reveals where production value is concentrated.</p>
+          </div>
+          <div>
+            <p>Wild fisheries show a more varied picture.<br>
+              Large catches alone do not establish healthy fish stocks.<br>
+              Vessel tracking shows activity, rather than biological condition.</p>
+            <p>Value, location and stock health each tell a different story.<br>
+              Together, they give a fuller picture of Australia's fisheries.</p>
+          </div>
+        </div>
+      </section>
       <section class="sources" aria-labelledby="sources-heading">
-        <h3 id="sources-heading">SOURCES</h3>
-        <p class="source-entry"><strong>Australian Bureau of Agricultural and Resource Economics and Sciences (ABARES)</strong> &mdash; Australian Fisheries and Aquaculture Statistics 2025, Tables 1 and 2<br>
-          <a href="https://www.agriculture.gov.au/abares/research-topics/fisheries/fisheries-and-aquaculture-statistics">https://www.agriculture.gov.au/abares/research-topics/fisheries/fisheries-and-aquaculture-statistics</a></p>
-        <p class="source-entry"><strong>Australian Bureau of Statistics (ABS)</strong> &mdash; Australian Statistical Geography Standard: 2021 state and territory boundaries<br>
-          <a href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs/edition-3-july-2021-june-2026/access-and-downloads/data-services-and-apis">https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs/edition-3-july-2021-june-2026/access-and-downloads/data-services-and-apis</a></p>
-        <p class="source-entry"><strong>Australian Fisheries Management Authority (AFMA)</strong> &mdash; Reported landed annual catch from Commonwealth fisheries, 2002–2023<br>
-          <a href="https://data.gov.au/data/en/dataset/reported-landed-annual-catch-from-commonwealth-fisheries">https://data.gov.au/data/en/dataset/reported-landed-annual-catch-from-commonwealth-fisheries</a></p>
-        <p class="source-entry"><strong>Australian Bureau of Agricultural and Resource Economics and Sciences (ABARES)</strong> &mdash; Fishery Status Reports 2025: historical stock assessments<br>
-          <a href="https://www.agriculture.gov.au/abares/research-topics/fisheries/fishery-status">https://www.agriculture.gov.au/abares/research-topics/fisheries/fishery-status</a></p>
-        <p class="source-entry"><strong>Australian Bureau of Agricultural and Resource Economics and Sciences (ABARES)</strong> &mdash; Commonwealth fishing intensity and maximum area fished, 2010–2024<br>
-          <a href="https://doi.org/10.25814/hz78-vc73">https://doi.org/10.25814/hz78-vc73</a></p>
-        <p class="source-definition">Production value is measured at landing or farm gate.<br>
-          Financial years end in June.<br>
-          <span class="financial-year">2024–25</span> values are preliminary.<br>
-          National totals exclude double-counted Southern Bluefin Tuna inputs.</p>
+        <h2 id="sources-heading">Sources</h2>
+        <div class="sources-grid">
+          <p class="source-entry"><strong>Australian Bureau of Agricultural and Resource Economics and Sciences
+              (ABARES)</strong> &mdash; Australian Fisheries and Aquaculture Statistics 2025, Tables 1 and 2, data
+            through 2024&#8211;25. Figures for 2024&#8211;25 are preliminary.<br>
+            <a
+              href="https://www.agriculture.gov.au/abares/research-topics/fisheries/fisheries-and-aquaculture-statistics">https://www.agriculture.gov.au/abares/research-topics/fisheries/fisheries-and-aquaculture-statistics</a>
+          </p>
+          <p class="source-entry"><strong>Australian Fisheries Management Authority (AFMA)</strong> &mdash; Reported
+            landed annual catch from Commonwealth fisheries catch disposal records, 2002&#8211;2023<br>
+            <a
+              href="https://www.afma.gov.au/resources/commonwealth-fisheries-annual-catch-and-effort-data">https://www.afma.gov.au/resources/commonwealth-fisheries-annual-catch-and-effort-data</a>
+          </p>
+          <p class="source-entry"><strong>Australian Bureau of Agricultural and Resource Economics and Sciences
+              (ABARES)</strong> &mdash; Fishery Status Reports 2026, historical stock-status workbook, data through
+            2025<br>
+            <a
+              href="https://www.agriculture.gov.au/abares/research-topics/fisheries/fishery-status">https://www.agriculture.gov.au/abares/research-topics/fisheries/fishery-status</a><br>
+            <a href="https://daff.ent.sirsidynix.net.au/client/en_AU/search/asset/1038621/32/.xlsx">Historical
+              stock-status workbook (XLSX)</a>
+          </p>
+          <p class="source-entry"><strong>Global Fishing Watch</strong> &mdash; Global AIS-based Apparent Fishing Effort
+            Dataset v3.0, March 2025 release, data for 2014&#8211;2024 (CC BY-NC 4.0)<br>
+            <a href="https://doi.org/10.5281/zenodo.14982712">https://doi.org/10.5281/zenodo.14982712</a>
+          </p>
+        </div>
+        <div class="sources-grid">
+          <p class="source-entry"><strong>Australian Bureau of Statistics (ABS)</strong> &mdash; Map outlines: ASGS 2021
+            generalised state and territory boundaries<br>
+            <a
+              href="https://geo.abs.gov.au/arcgis/rest/services/ASGS2021/STE/MapServer/1">https://geo.abs.gov.au/arcgis/rest/services/ASGS2021/STE/MapServer/1</a>
+          </p>
+          <p class="source-entry"><strong>Marine Regions / Flanders Marine Institute (VLIZ)</strong> &mdash; Maritime
+            boundary: Australian Exclusive Economic Zone, MRGID 8323, version 12 (2023)<br>
+            <a
+              href="https://www.marineregions.org/gazetteer.php?p=details&amp;id=8323">https://www.marineregions.org/gazetteer.php?p=details&amp;id=8323</a>
+          </p>
+        </div>
+
       </section>
     </section>
     <footer class="page-footer">
-      <p>Visualisation by Melanie Lok Huey Xin.<br><i>FIT3179 Data Visualisation 2 | October 2026 </i></p>
+      <p><strong>Australian fisheries industry · FIT3179 Data Visualisation 2</strong></p>
+      <p>Visualisation By Melanie Lok Huey Xin · October 2026</p>
     </footer>
   </main>
-  <script src="js/vega_lite_vis.js"></script>
+  <script src="js/vega_lite_vis.js?v=55"></script>
 </body>
+
 </html>

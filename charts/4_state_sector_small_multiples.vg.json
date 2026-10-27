@@ -1,32 +1,53 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Three proportional-symbol maps. Circle area encodes production value on one shared scale; representative jurisdiction locations are schematic, not production sites.",
-  "repeat": ["Aquaculture", "State wild catch", "Total state-managed"],
+  "repeat": [
+    "Aquaculture",
+    "State wild catch",
+    "Total state-managed"
+  ],
   "columns": 3,
   "spacing": 8,
   "resolve": {
-    "scale": {"size": "shared"},
-    "legend": {"size": "shared"}
+    "scale": {
+      "size": "shared"
+    },
+    "legend": {
+      "size": "shared"
+    }
   },
   "spec": {
     "width": 225,
     "height": 220,
     "projection": {
       "type": "conicEqualArea",
-      "parallels": [-18, -36],
-      "rotate": [-132, 0, 0]
+      "parallels": [
+        -18,
+        -36
+      ],
+      "rotate": [
+        -132,
+        0,
+        0
+      ]
     },
     "layer": [
       {
         "data": {
           "url": "maps/australia_states.topojson",
-          "format": {"type": "topojson", "feature": "states"}
+          "format": {
+            "type": "topojson",
+            "feature": "states"
+          }
         },
-        "mark": {"type": "geoshape", "fill": "#d6e0e2", "stroke": "#ffffff", "strokeWidth": 0.8},
+        "mark": {
+          "type": "geoshape",
+          "fill": "#e1e1de",
+          "stroke": "#ffffff",
+          "strokeWidth": 0.8
+        },
         "encoding": {
-          "tooltip": [
-            {"field": "properties.State", "title": "Jurisdiction"}
-          ]
+          "tooltip": null
         }
       },
       {
@@ -34,7 +55,11 @@
           "url": "data/4_state_sector_values_2024_25.csv",
           "format": {
             "type": "csv",
-            "parse": {"Aquaculture": "number", "WildCatch": "number", "TotalStateManaged": "number"}
+            "parse": {
+              "Aquaculture": "number",
+              "WildCatch": "number",
+              "TotalStateManaged": "number"
+            }
           }
         },
         "transform": [
@@ -43,50 +68,157 @@
             "from": {
               "data": {
                 "values": [
-                  {"State": "New South Wales", "Longitude": 147, "Latitude": -32.5},
-                  {"State": "Victoria", "Longitude": 145, "Latitude": -37},
-                  {"State": "Queensland", "Longitude": 144.5, "Latitude": -22.5},
-                  {"State": "South Australia", "Longitude": 135.5, "Latitude": -30},
-                  {"State": "Western Australia", "Longitude": 121, "Latitude": -25.5},
-                  {"State": "Tasmania", "Longitude": 146.7, "Latitude": -42},
-                  {"State": "Northern Territory", "Longitude": 133.5, "Latitude": -19.5}
+                  {
+                    "State": "New South Wales",
+                    "Longitude": 147,
+                    "Latitude": -32.5
+                  },
+                  {
+                    "State": "Victoria",
+                    "Longitude": 145,
+                    "Latitude": -37
+                  },
+                  {
+                    "State": "Queensland",
+                    "Longitude": 144.5,
+                    "Latitude": -22.5
+                  },
+                  {
+                    "State": "South Australia",
+                    "Longitude": 135.5,
+                    "Latitude": -30
+                  },
+                  {
+                    "State": "Western Australia",
+                    "Longitude": 121,
+                    "Latitude": -25.5
+                  },
+                  {
+                    "State": "Tasmania",
+                    "Longitude": 146.7,
+                    "Latitude": -42
+                  },
+                  {
+                    "State": "Northern Territory",
+                    "Longitude": 133.5,
+                    "Latitude": -19.5
+                  }
                 ]
               },
               "key": "State",
-              "fields": ["Longitude", "Latitude"]
+              "fields": [
+                "Longitude",
+                "Latitude"
+              ]
             }
           },
-          {"calculate": "datum.WildCatch", "as": "State wild catch"},
-          {"calculate": "datum.TotalStateManaged", "as": "Total state-managed"}
+          {
+            "calculate": "datum.WildCatch",
+            "as": "State wild catch"
+          },
+          {
+            "calculate": "datum.TotalStateManaged",
+            "as": "Total state-managed"
+          }
         ],
-        "mark": {"type": "circle", "color": "#194c5a", "opacity": 0.75, "stroke": "#ffffff", "strokeWidth": 1},
+        "mark": {
+          "type": "circle",
+          "strokeWidth": 1.3,
+          "fillOpacity": 0.35,
+          "strokeOpacity": 1,
+          "filled": true
+        },
         "encoding": {
-          "longitude": {"field": "Longitude", "type": "quantitative"},
-          "latitude": {"field": "Latitude", "type": "quantitative"},
+          "longitude": {
+            "field": "Longitude",
+            "type": "quantitative"
+          },
+          "latitude": {
+            "field": "Latitude",
+            "type": "quantitative"
+          },
           "size": {
-            "field": {"repeat": "repeat"},
+            "field": {
+              "repeat": "repeat"
+            },
             "type": "quantitative",
             "scale": {
-              "domain": [0, 1450],
-              "range": [0, 1500]
+              "domain": [
+                0,
+                1450
+              ],
+              "range": [
+                0,
+                1500
+              ]
             },
             "legend": {
               "title": "Production value (A$ million)",
               "orient": "bottom",
               "direction": "horizontal",
-              "values": [100, 500, 1400],
+              "values": [
+                100,
+                500,
+                1400
+              ],
               "format": ",.0f",
-              "titleLimit": 400
+              "titleLimit": 400,
+              "symbolFillColor": "#777777",
+              "symbolStrokeColor": "#777777"
             }
           },
           "tooltip": [
-            {"field": "State", "title": "Jurisdiction"},
             {
-              "field": {"repeat": "repeat"},
+              "field": "State",
+              "title": "State or territory"
+            },
+            {
+              "field": {
+                "repeat": "repeat"
+              },
               "type": "quantitative",
-              "format": ",.1f"
+              "format": ",.1f",
+              "title": "Production value (A$ million)"
             }
-          ]
+          ],
+          "color": {
+            "datum": {
+              "repeat": "repeat"
+            },
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "Aquaculture",
+                "State wild catch",
+                "Total state-managed"
+              ],
+              "range": [
+                "#007c91",
+                "#a75b20",
+                "#555555"
+              ]
+            },
+            "legend": null
+          },
+          "stroke": {
+            "datum": {
+              "repeat": "repeat"
+            },
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "Aquaculture",
+                "State wild catch",
+                "Total state-managed"
+              ],
+              "range": [
+                "#007c91",
+                "#a75b20",
+                "#555555"
+              ]
+            },
+            "legend": null
+          }
         }
       },
       {
@@ -105,23 +237,116 @@
           "baseline": "bottom",
           "fontSize": 14,
           "fontWeight": 700,
-          "color": "#153a44",
-          "dy": -10
+          "color": "#292929",
+          "dy": -10,
+          "tooltip": null
         },
         "encoding": {
-          "x": {"value": 105},
-          "y": {"value": 0},
+          "x": {
+            "value": 105
+          },
+          "y": {
+            "value": 0
+          },
           "text": {
-            "field": {"repeat": "repeat"}
+            "field": {
+              "repeat": "repeat"
+            }
           }
+        }
+      },
+      {
+        "data": {
+          "values": [
+            {
+              "State": "Western Australia",
+              "Label": "Western|Australia",
+              "Longitude": 121,
+              "Latitude": -25.5
+            },
+            {
+              "State": "Northern Territory",
+              "Label": "Northern|Territory",
+              "Longitude": 133.4,
+              "Latitude": -19.4
+            },
+            {
+              "State": "Queensland",
+              "Label": "Queensland",
+              "Longitude": 145,
+              "Latitude": -22.5
+            },
+            {
+              "State": "South Australia",
+              "Label": "South|Australia",
+              "Longitude": 134.5,
+              "Latitude": -30
+            },
+            {
+              "State": "New South Wales",
+              "Label": "New South|Wales",
+              "Longitude": 148,
+              "Latitude": -32.5
+            },
+            {
+              "State": "Victoria",
+              "Label": "Victoria",
+              "Longitude": 148,
+              "Latitude": -37.7
+            },
+            {
+              "State": "Tasmania",
+              "Label": "Tasmania",
+              "Longitude": 146.7,
+              "Latitude": -45
+            }
+          ]
+        },
+        "mark": {
+          "type": "text",
+          "font": "Arial",
+          "fontSize": {
+            "expr": "width < 300 ? 9 : 11"
+          },
+          "lineHeight": {
+            "expr": "width < 300 ? 11 : 13"
+          },
+          "fontWeight": 600,
+          "lineBreak": "|",
+          "align": "center",
+          "baseline": "middle",
+          "color": "#292929",
+          "tooltip": null
+        },
+        "encoding": {
+          "longitude": {
+            "field": "Longitude",
+            "type": "quantitative"
+          },
+          "latitude": {
+            "field": "Latitude",
+            "type": "quantitative"
+          },
+          "text": {
+            "field": "Label"
+          },
+          "tooltip": null
         }
       }
     ]
   },
   "config": {
     "font": "Arial",
-    "background": "white",
-    "view": {"stroke": null},
-    "legend": {"labelFontSize": 13, "titleFontSize": 13, "titleFontWeight": 400}
-  }
+    "background": "transparent",
+    "view": {
+      "stroke": null
+    },
+    "legend": {
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "titleFontWeight": 400,
+      "symbolFillColor": "#777777"
+    }
+  },
+  "background": "transparent"
 }

@@ -1,0 +1,268 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Waterfall decomposing nominal commodity production value change between 1998?99 and 2024?25. All 13 commodity groups are retained.",
+  "data": {
+    "url": "data/6_commodity_rank_history.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "YearIndex": "number",
+        "Value_AUD_million": "number"
+      }
+    }
+  },
+  "width": "container",
+  "height": 464,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "transform": [
+    {
+      "filter": "datum.YearIndex == 0 || datum.YearIndex == 26"
+    },
+    {
+      "pivot": "YearIndex",
+      "value": "Value_AUD_million",
+      "groupby": [
+        "Commodity"
+      ]
+    },
+    {
+      "calculate": "datum['26'] - datum['0']",
+      "as": "Change"
+    },
+    {
+      "calculate": "datum.Change >= 0 ? 'Increase' : 'Decrease'",
+      "as": "Direction"
+    },
+    {
+      "window": [
+        {
+          "op": "sum",
+          "field": "Change",
+          "as": "End"
+        }
+      ],
+      "sort": [
+        {
+          "field": "Change",
+          "order": "descending"
+        },
+        {
+          "field": "Commodity",
+          "order": "ascending"
+        }
+      ],
+      "frame": [
+        null,
+        0
+      ]
+    },
+    {
+      "calculate": "datum.End - datum.Change",
+      "as": "Start"
+    },
+    {
+      "window": [
+        {
+          "op": "lead",
+          "field": "Commodity",
+          "as": "NextCommodity"
+        }
+      ],
+      "sort": [
+        {
+          "field": "Change",
+          "order": "descending"
+        },
+        {
+          "field": "Commodity",
+          "order": "ascending"
+        }
+      ]
+    },
+    {
+      "calculate": "datum.Commodity == 'Salmonids' ? '73% of the|net increase' : ''",
+      "as": "Annotation"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "Commodity",
+      "type": "nominal",
+      "sort": {
+        "field": "Change",
+        "order": "descending"
+      },
+      "axis": {
+        "title": null,
+        "labelLimit": 0,
+        "labelExpr": "datum.label",
+        "labelLineHeight": 13,
+        "labelBaseline": "middle"
+      },
+      "scale": {
+        "paddingInner": 0.25,
+        "paddingOuter": 0.125
+      }
+    },
+    "tooltip": [
+      {
+        "field": "Commodity"
+      },
+      {
+        "field": "0",
+        "type": "quantitative",
+        "title": "1998–99 (A$ million)",
+        "format": ",.2f"
+      },
+      {
+        "field": "26",
+        "type": "quantitative",
+        "title": "2024–25 (A$ million)",
+        "format": ",.2f"
+      },
+      {
+        "field": "Change",
+        "type": "quantitative",
+        "title": "Change (A$ million)",
+        "format": "+,.2f"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#bbbbbb",
+        "strokeDash": [
+          3,
+          3
+        ]
+      },
+      "encoding": {
+        "x": {
+          "field": "End",
+          "type": "quantitative"
+        },
+        "y2": {
+          "field": "NextCommodity"
+        }
+      },
+      "transform": [
+        {
+          "filter": "isValid(datum.NextCommodity)"
+        }
+      ]
+    },
+    {
+      "mark": {
+        "type": "bar",
+        "size": 19,
+        "stroke": "#ffffff",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "x": {
+          "field": "Start",
+          "type": "quantitative",
+          "title": "Cumulative change in production value (A$ million)",
+          "scale": {
+            "zero": true
+          },
+          "axis": {
+            "tickCount": 5,
+            "format": ",.0f"
+          }
+        },
+        "x2": {
+          "field": "End"
+        },
+        "color": {
+          "field": "Commodity",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Salmonids",
+              "Rock Lobsters",
+              "Other Finfish, Sharks and Rays",
+              "Prawns",
+              "Oysters",
+              "Tunas",
+              "Crabs",
+              "Other Crustaceans",
+              "Abalone",
+              "Scallops",
+              "Squids",
+              "Other Molluscs",
+              "Other products"
+            ],
+            "range": [
+              "#a63d64",
+              "#087fba",
+              "#70451f",
+              "#355b98",
+              "#824b6a",
+              "#8f1538",
+              "#8b6a00",
+              "#5e5f59",
+              "#c76545",
+              "#9e4274",
+              "#555072",
+              "#c02983",
+              "#d17b9b"
+            ]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 6,
+        "fontSize": 12,
+        "fontWeight": 600,
+        "color": "#292929",
+        "lineBreak": "|",
+        "lineHeight": 14,
+        "baseline": "middle",
+        "dy": -7
+      },
+      "encoding": {
+        "x": {
+          "field": "End",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Annotation"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 13,
+      "titleFontWeight": 400,
+      "labelColor": "#606060",
+      "titleColor": "#606060",
+      "gridColor": "#e5e5e5",
+      "domain": false,
+      "tickSize": 0,
+      "titlePadding": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 400
+    }
+  },
+  "background": "transparent"
+}

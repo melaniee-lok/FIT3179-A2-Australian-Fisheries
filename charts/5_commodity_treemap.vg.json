@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "Commodity production-value treemap grouped by seafood category; area encodes value, navy emphasises salmonids.",
+  "description": "Commodity treemap: area encodes production value; each commodity uses its reserved page-wide colour.",
   "width": 640,
-  "height": 420,
+  "height": 464,
   "padding": 0,
   "autosize": {
     "type": "fit",
@@ -128,10 +128,10 @@
             "field": "y1"
           },
           "fill": {
-            "value": "#eff3f3"
+            "value": "#f3f3f0"
           },
           "stroke": {
-            "value": "#b5c6ca"
+            "value": "#cccccc"
           },
           "strokeWidth": {
             "value": 1
@@ -159,7 +159,8 @@
             "field": "y1"
           },
           "fill": {
-            "signal": "datum.Commodity == 'Salmonids' ? '#344454' : '#a9bec5'"
+            "scale": "commodityColour",
+            "field": "Commodity"
           },
           "stroke": {
             "value": "white"
@@ -168,12 +169,15 @@
             "value": 1
           },
           "tooltip": {
-            "signal": "{'Commodity': datum.Commodity, 'Category': datum.Category, 'Production value': 'A$' + format(datum.Value_AUD_million, ',.1f') + ' million', 'Share of total': format(datum.Share_percent, '.1f') + '%', 'Production quantity': format(datum.Quantity_tonnes, ',.1f') + ' tonnes'}"
+            "signal": "{'Commodity': datum.Commodity, 'Category': datum.Category, 'Production value': 'A$' + format(datum.Value_AUD_million, ',.1f') + ' million', 'Share of total': format(datum.Share_percent, '.1f') + '%'}"
           }
         },
         "hover": {
-          "fill": {
-            "value": "#789ba7"
+          "stroke": {
+            "value": "#292929"
+          },
+          "strokeWidth": {
+            "value": 2
           }
         }
       }
@@ -205,7 +209,7 @@
             "value": 700
           },
           "fill": {
-            "value": "#153a44"
+            "value": "#292929"
           },
           "limit": {
             "signal": "max(0, datum.x1 - datum.x0 - 14)"
@@ -246,7 +250,7 @@
             "value": 600
           },
           "fill": {
-            "signal": "datum.Commodity == 'Salmonids' ? 'white' : '#153a44'"
+            "value": "white"
           },
           "limit": {
             "signal": "datum.x1 - datum.x0 - 18"
@@ -275,10 +279,10 @@
             "signal": "datum.x0 + 9"
           },
           "y": {
-            "signal": "datum.y0 + 52"
+            "signal": "datum.y0 + (datum.Commodity == 'Other Finfish, Sharks and Rays' ? 44 : 28)"
           },
           "text": {
-            "signal": "datum.Value_AUD_million >= 1000 ? 'A$' + format(datum.Value_AUD_million / 1000, '.2f') + ' billion' : 'A$' + format(datum.Value_AUD_million, ',.0f') + (datum.x1 - datum.x0 < 150 ? '|million' : ' million')"
+            "signal": "format(datum.Share_percent, '.1f') + '%'"
           },
           "baseline": {
             "value": "top"
@@ -287,48 +291,7 @@
             "value": 12
           },
           "fill": {
-            "signal": "datum.Commodity == 'Salmonids' ? 'white' : '#153a44'"
-          },
-          "limit": {
-            "signal": "datum.x1 - datum.x0 - 18"
-          },
-          "font": {
-            "value": "Arial"
-          },
-          "lineBreak": {
-            "value": "|"
-          },
-          "lineHeight": {
-            "value": 14
-          }
-        }
-      }
-    },
-    {
-      "type": "text",
-      "from": {
-        "data": "labels"
-      },
-      "interactive": false,
-      "encode": {
-        "update": {
-          "x": {
-            "signal": "datum.x0 + 9"
-          },
-          "y": {
-            "signal": "datum.y0 + (datum.x1 - datum.x0 < 150 ? 88 : 72)"
-          },
-          "text": {
-            "signal": "format(datum.Share_percent, '.1f') + (datum.x1 - datum.x0 < 150 ? '%' : '% of total')"
-          },
-          "baseline": {
-            "value": "top"
-          },
-          "fontSize": {
-            "value": 12
-          },
-          "fill": {
-            "signal": "datum.Commodity == 'Salmonids' ? 'white' : '#153a44'"
+            "value": "white"
           },
           "limit": {
             "signal": "datum.x1 - datum.x0 - 18"
@@ -342,6 +305,43 @@
   ],
   "config": {
     "font": "Arial",
-    "background": "white"
-  }
+    "background": "transparent"
+  },
+  "scales": [
+    {
+      "name": "commodityColour",
+      "type": "ordinal",
+      "domain": [
+        "Salmonids",
+        "Rock Lobsters",
+        "Other Finfish, Sharks and Rays",
+        "Prawns",
+        "Oysters",
+        "Tunas",
+        "Crabs",
+        "Other Crustaceans",
+        "Abalone",
+        "Scallops",
+        "Squids",
+        "Other Molluscs",
+        "Other products"
+      ],
+      "range": [
+        "#a63d64",
+        "#087fba",
+        "#70451f",
+        "#355b98",
+        "#824b6a",
+        "#8f1538",
+        "#8b6a00",
+        "#5e5f59",
+        "#c76545",
+        "#9e4274",
+        "#555072",
+        "#c02983",
+        "#d17b9b"
+      ]
+    }
+  ],
+  "background": "transparent"
 }

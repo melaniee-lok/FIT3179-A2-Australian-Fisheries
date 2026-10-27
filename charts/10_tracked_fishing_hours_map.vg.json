@@ -1,0 +1,578 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Equal-area hex-bin map of annual 2014–2024 apparent fishing hours from Global Fishing Watch AIS estimates in the mapped Australian EEZ. Year comparison uses identical grid, scope and continuous colour scale. Tracking coverage changes over time; differences do not establish changes in actual fishing.",
+  "width": 640,
+  "height": 464,
+  "padding": 0,
+  "autosize": {
+    "type": "none",
+    "resize": true
+  },
+  "signals": [
+    {
+      "name": "SelectedYear",
+      "value": 2024,
+      "bind": {
+        "input": "range",
+        "min": 2014,
+        "max": 2024,
+        "step": 1,
+        "name": "Year: ",
+        "element": "#fishing-map-controls",
+        "debounce": 60
+      }
+    },
+    {
+      "name": "width",
+      "init": "containerSize()[0]",
+      "on": [
+        {
+          "events": {
+            "source": "window",
+            "type": "resize",
+            "debounce": 150
+          },
+          "update": "containerSize()[0]"
+        }
+      ]
+    },
+    {
+      "name": "mapHeight",
+      "value": 384
+    },
+    {
+      "name": "mapScale",
+      "update": "min((width - 20) / 7735975.4, (mapHeight - 10) / 4437500) * MapZoom"
+    },
+    {
+      "name": "hexRadius",
+      "update": "25000 * mapScale"
+    },
+    {
+      "name": "MapZoom",
+      "value": 1,
+      "bind": {
+        "input": "range",
+        "min": 1,
+        "max": 8,
+        "step": 0.1,
+        "name": "Zoom: ",
+        "element": "#fishing-map-controls"
+      },
+      "on": [
+        {
+          "events": {
+            "signal": "MapCentre"
+          },
+          "update": "MapCentre == 'All Australian waters' ? 1 : MapCentre == 'South-eastern waters' ? 3 : MapCentre == 'Southern waters' ? 2.5 : MapCentre == 'Western waters' ? 2 : 2.2"
+        }
+      ]
+    },
+    {
+      "name": "MapCentre",
+      "value": "All Australian waters",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All Australian waters",
+          "Northern waters",
+          "Western waters",
+          "Southern waters",
+          "South-eastern waters",
+          "Eastern waters"
+        ],
+        "name": "Map Centre: ",
+        "element": "#fishing-map-controls"
+      }
+    },
+    {
+      "name": "CentreCoordinates",
+      "update": "MapCentre == 'Northern waters' ? [0,-1800000] : MapCentre == 'Western waters' ? [-2200000,-3300000] : MapCentre == 'Southern waters' ? [300000,-4000000] : MapCentre == 'South-eastern waters' ? [1400000,-4200000] : MapCentre == 'Eastern waters' ? [2100000,-2900000] : [321161,-2928492.55]"
+    },
+    {
+      "name": "MapTransform",
+      "update": "{scale: mapScale, x: width / 2 - CentreCoordinates[0] * mapScale, y: mapHeight / 2 + CentreCoordinates[1] * mapScale}"
+    }
+  ],
+  "data": [
+    {
+      "name": "centres",
+      "url": "data/10_gfw_hex_centres.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "CenterX": "number",
+          "CenterY": "number"
+        }
+      }
+    },
+    {
+      "name": "bins",
+      "url": "data/10_gfw_fishing_hours_yearly.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "Year": "number",
+          "FishingHours": "number",
+          "SourceCells": "number"
+        }
+      },
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.Year == SelectedYear"
+        },
+        {
+          "type": "filter",
+          "expr": "datum.FishingHours > 0"
+        },
+        {
+          "type": "lookup",
+          "from": "centres",
+          "key": "BinID",
+          "fields": [
+            "BinID"
+          ],
+          "values": [
+            "CenterX",
+            "CenterY"
+          ]
+        },
+        {
+          "type": "geopoint",
+          "projection": "map_projection",
+          "fields": [
+            "CenterX",
+            "CenterY"
+          ],
+          "as": [
+            "ScreenX",
+            "ScreenY"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "land",
+      "url": "maps/australia_albers_context.geojson",
+      "format": {
+        "type": "json",
+        "property": "features"
+      }
+    },
+    {
+      "name": "annual_summary",
+      "values": [
+        {
+          "Year": 2014,
+          "EstimatedHours": 51849.861,
+          "BusyTenthShare": 0.6600194549799436,
+          "MappedBins": 798
+        },
+        {
+          "Year": 2015,
+          "EstimatedHours": 92127.828,
+          "BusyTenthShare": 0.6075799427373669,
+          "MappedBins": 981
+        },
+        {
+          "Year": 2016,
+          "EstimatedHours": 134770.707,
+          "BusyTenthShare": 0.6382656395799721,
+          "MappedBins": 1332
+        },
+        {
+          "Year": 2017,
+          "EstimatedHours": 185515.721,
+          "BusyTenthShare": 0.679420584675041,
+          "MappedBins": 1351
+        },
+        {
+          "Year": 2018,
+          "EstimatedHours": 245460.789,
+          "BusyTenthShare": 0.6934858157404288,
+          "MappedBins": 1685
+        },
+        {
+          "Year": 2019,
+          "EstimatedHours": 254952.393,
+          "BusyTenthShare": 0.6984566617526016,
+          "MappedBins": 1742
+        },
+        {
+          "Year": 2020,
+          "EstimatedHours": 265042.283,
+          "BusyTenthShare": 0.7048157039981665,
+          "MappedBins": 1733
+        },
+        {
+          "Year": 2021,
+          "EstimatedHours": 321093.388,
+          "BusyTenthShare": 0.7154826165858164,
+          "MappedBins": 1950
+        },
+        {
+          "Year": 2022,
+          "EstimatedHours": 311999.84,
+          "BusyTenthShare": 0.7010244818067699,
+          "MappedBins": 1894
+        },
+        {
+          "Year": 2023,
+          "EstimatedHours": 355823.545,
+          "BusyTenthShare": 0.6525997828383727,
+          "MappedBins": 1976
+        },
+        {
+          "Year": 2024,
+          "EstimatedHours": 350702.61,
+          "BusyTenthShare": 0.6385581643441102,
+          "MappedBins": 1886
+        }
+      ]
+    },
+    {
+      "name": "state_labels",
+      "values": [
+        {
+          "State": "Western Australia",
+          "Label": [
+            "Western",
+            "Australia"
+          ],
+          "X": -992565.2,
+          "Y": -2797474.6
+        },
+        {
+          "State": "Northern Territory",
+          "Label": [
+            "Northern",
+            "Territory"
+          ],
+          "X": 146563,
+          "Y": -2078217.8
+        },
+        {
+          "State": "Queensland",
+          "Label": [
+            "Queensland"
+          ],
+          "X": 1272796.9,
+          "Y": -2485125.4
+        },
+        {
+          "State": "South Australia",
+          "Label": [
+            "South",
+            "Australia"
+          ],
+          "X": 333269.8,
+          "Y": -3290305.8
+        },
+        {
+          "State": "New South Wales",
+          "Label": [
+            "New South",
+            "Wales"
+          ],
+          "X": 1396342.3,
+          "Y": -3614139.5
+        },
+        {
+          "State": "Victoria",
+          "Label": [
+            "Victoria"
+          ],
+          "X": 1134394.5,
+          "Y": -4078322.1
+        },
+        {
+          "State": "Tasmania",
+          "Label": [
+            "Tasmania"
+          ],
+          "X": 654188.8,
+          "Y": -5018769
+        }
+      ],
+      "transform": [
+        {
+          "type": "geopoint",
+          "projection": "map_projection",
+          "fields": [
+            "X",
+            "Y"
+          ],
+          "as": [
+            "ScreenX",
+            "ScreenY"
+          ]
+        },
+        {
+          "type": "filter",
+          "expr": "datum.ScreenX > 30 && datum.ScreenX < width - 30 && datum.ScreenY > 14 && datum.ScreenY < mapHeight - 14"
+        }
+      ]
+    },
+    {
+      "name": "tasmania_leader",
+      "values": [
+        {
+          "X": 1245640.6,
+          "Y": -4674278.8,
+          "EndX": 756727.5,
+          "EndY": -4962036.8
+        }
+      ],
+      "transform": [
+        {
+          "type": "geopoint",
+          "projection": "map_projection",
+          "fields": [
+            "X",
+            "Y"
+          ],
+          "as": [
+            "ScreenX",
+            "ScreenY"
+          ]
+        },
+        {
+          "type": "geopoint",
+          "projection": "map_projection",
+          "fields": [
+            "EndX",
+            "EndY"
+          ],
+          "as": [
+            "EndScreenX",
+            "EndScreenY"
+          ]
+        }
+      ]
+    }
+  ],
+  "projections": [
+    {
+      "name": "map_projection",
+      "type": "identity",
+      "reflectY": true,
+      "scale": {
+        "signal": "MapTransform.scale"
+      },
+      "translate": {
+        "signal": "[MapTransform.x, MapTransform.y]"
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "fishing_hours",
+      "type": "log",
+      "domain": [
+        1,
+        30000
+      ],
+      "range": [
+        "#e4dcec",
+        "#4b365e"
+      ],
+      "zero": false,
+      "nice": false,
+      "clamp": true
+    }
+  ],
+  "marks": [
+    {
+      "name": "map_area",
+      "type": "group",
+      "clip": true,
+      "encode": {
+        "update": {
+          "width": {
+            "signal": "width"
+          },
+          "height": {
+            "signal": "mapHeight"
+          },
+          "fill": {
+            "value": "transparent"
+          },
+          "cursor": {
+            "value": "default"
+          }
+        }
+      },
+      "marks": [
+        {
+          "type": "shape",
+          "from": {
+            "data": "land"
+          },
+          "transform": [
+            {
+              "type": "geoshape",
+              "projection": "map_projection"
+            }
+          ],
+          "encode": {
+            "update": {
+              "fill": {
+                "value": "#eeeee8"
+              },
+              "stroke": {
+                "value": "white"
+              },
+              "strokeWidth": {
+                "value": 0.8
+              }
+            }
+          },
+          "clip": true
+        },
+        {
+          "name": "hex_bins",
+          "type": "path",
+          "from": {
+            "data": "bins"
+          },
+          "encode": {
+            "update": {
+              "path": {
+                "signal": "'M' + (datum.ScreenX + hexRadius * 0.866025403784) + ',' + (datum.ScreenY + hexRadius * 0.5) + 'L' + (datum.ScreenX + hexRadius * 0.0) + ',' + (datum.ScreenY + hexRadius * 1.0) + 'L' + (datum.ScreenX + hexRadius * -0.866025403784) + ',' + (datum.ScreenY + hexRadius * 0.5) + 'L' + (datum.ScreenX + hexRadius * -0.866025403784) + ',' + (datum.ScreenY + hexRadius * -0.5) + 'L' + (datum.ScreenX + hexRadius * -0.0) + ',' + (datum.ScreenY + hexRadius * -1.0) + 'L' + (datum.ScreenX + hexRadius * 0.866025403784) + ',' + (datum.ScreenY + hexRadius * -0.5) + 'Z'"
+              },
+              "fill": {
+                "scale": "fishing_hours",
+                "field": "FishingHours"
+              },
+              "stroke": {
+                "value": "white"
+              },
+              "strokeWidth": {
+                "value": 0.15
+              },
+              "tooltip": {
+                "signal": "{'Year': datum.Year, 'Estimated fishing hours': format(datum.FishingHours, ',.2f')}"
+              }
+            }
+          },
+          "clip": true
+        },
+        {
+          "name": "tasmania_label_line",
+          "type": "rule",
+          "from": {
+            "data": "tasmania_leader"
+          },
+          "interactive": false,
+          "encode": {
+            "update": {
+              "x": {
+                "field": "ScreenX"
+              },
+              "y": {
+                "field": "ScreenY"
+              },
+              "x2": {
+                "field": "EndScreenX"
+              },
+              "y2": {
+                "field": "EndScreenY"
+              },
+              "stroke": {
+                "value": "#777777"
+              },
+              "strokeWidth": {
+                "value": 0.8
+              }
+            }
+          }
+        },
+        {
+          "name": "state_names",
+          "type": "text",
+          "from": {
+            "data": "state_labels"
+          },
+          "interactive": false,
+          "encode": {
+            "update": {
+              "x": {
+                "field": "ScreenX"
+              },
+              "y": {
+                "field": "ScreenY"
+              },
+              "text": {
+                "field": "Label"
+              },
+              "font": {
+                "value": "Arial"
+              },
+              "fontSize": {
+                "signal": "width < 500 ? 10 : 11"
+              },
+              "fontWeight": {
+                "value": 600
+              },
+              "lineHeight": {
+                "value": 13
+              },
+              "align": {
+                "value": "center"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#292929"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "background": "transparent"
+  },
+  "legends": [
+    {
+      "fill": "fishing_hours",
+      "title": "Estimated fishing hours per hexagon",
+      "type": "gradient",
+      "orient": "none",
+      "legendX": 0,
+      "legendY": 404,
+      "direction": "horizontal",
+      "gradientLength": {
+        "signal": "max(180, width - 16)"
+      },
+      "gradientThickness": 14,
+      "labelFontSize": 12,
+      "titleFontSize": 13,
+      "titleFontWeight": 600,
+      "format": ",~g",
+      "values": [
+        1,
+        10,
+        100,
+        1000,
+        30000
+      ],
+      "titleLimit": 600,
+      "labelOverlap": false,
+      "encode": {
+        "labels": {
+          "update": {
+            "text": {
+              "signal": "datum.value == 1 ? '\\u22641' : format(datum.value, ',.0f')"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "background": "transparent"
+}

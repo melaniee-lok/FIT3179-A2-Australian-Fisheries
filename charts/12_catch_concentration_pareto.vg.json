@@ -1,0 +1,245 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Horizontal Pareto chart of the nine fisheries with reported catches in 2023 in the supplied AFMA dataset. Bars show individual shares; connected circles show cumulative shares. Both use one percentage scale.",
+  "data": {
+    "url": "data/8_afma_fishery_year_catch.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Year": "number",
+        "LandedCatch_tonnes": "number"
+      }
+    }
+  },
+  "width": "container",
+  "height": 464,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "transform": [
+    {
+      "filter": "datum.Year == 2023"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "LandedCatch_tonnes",
+          "as": "TotalCatch"
+        }
+      ]
+    },
+    {
+      "window": [
+        {
+          "op": "sum",
+          "field": "LandedCatch_tonnes",
+          "as": "CumulativeCatch"
+        },
+        {
+          "op": "row_number",
+          "as": "Rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "LandedCatch_tonnes",
+          "order": "descending"
+        },
+        {
+          "field": "FisheryCode",
+          "order": "ascending"
+        }
+      ],
+      "frame": [
+        null,
+        0
+      ]
+    },
+    {
+      "calculate": "datum.LandedCatch_tonnes / datum.TotalCatch",
+      "as": "Share"
+    },
+    {
+      "calculate": "datum.CumulativeCatch / datum.TotalCatch",
+      "as": "CumulativeShare"
+    },
+    {
+      "calculate": "datum.Rank == 2 ? format(datum.CumulativeShare, '.1%') + ' combined' : ''",
+      "as": "Annotation"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "FisheryCode",
+      "type": "nominal",
+      "sort": [
+        "SPF",
+        "CTS",
+        "HIMI",
+        "GHAT",
+        "BSCZSF",
+        "GAB",
+        "SSJF",
+        "MITF",
+        "CSF"
+      ],
+      "axis": {
+        "title": null,
+        "labelLimit": 0,
+        "labelLineHeight": 13,
+        "labelExpr": "({\"SPF\": [\"Small Pelagic\"], \"CTS\": [\"Commonwealth\", \"Trawl\"], \"HIMI\": [\"Heard & McDonald\", \"Islands\"], \"GHAT\": [\"Gillnet, Hook\", \"& Trap\"], \"BSCZSF\": [\"Bass Strait\", \"Scallop\"], \"GAB\": [\"Great Australian\", \"Bight Trawl\"], \"SSJF\": [\"Southern\", \"Squid Jig\"], \"MITF\": [\"Macquarie Island\", \"Toothfish\"], \"CSF\": [\"Coral Sea\"]})[datum.label]"
+      }
+    },
+    "x": {
+      "field": "Share",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          0,
+          1
+        ],
+        "nice": false
+      },
+      "axis": {
+        "title": "Share of reported catch",
+        "values": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "format": ".0%"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "Fishery",
+        "title": "Fishery"
+      },
+      {
+        "field": "LandedCatch_tonnes",
+        "type": "quantitative",
+        "title": "2023 landed catch (tonnes)",
+        "format": ",.0f"
+      },
+      {
+        "field": "Share",
+        "type": "quantitative",
+        "title": "Individual share",
+        "format": ".1%"
+      },
+      {
+        "field": "CumulativeShare",
+        "type": "quantitative",
+        "title": "Combined share so far",
+        "format": ".1%"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "size": 19,
+        "fill": "#756487",
+        "fillOpacity": 1
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "orient": "horizontal",
+        "strokeWidth": 2,
+        "color": "#424242",
+        "point": {
+          "filled": true,
+          "color": "#4c78a8",
+          "size": 45
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "CumulativeShare",
+          "type": "quantitative"
+        },
+        "order": {
+          "field": "Rank",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.Rank == 2"
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "#777777",
+        "strokeWidth": 1,
+        "x2Offset": -12,
+        "y2Offset": 16
+      },
+      "encoding": {
+        "x": {
+          "field": "CumulativeShare",
+          "type": "quantitative"
+        },
+        "x2": {
+          "field": "CumulativeShare"
+        },
+        "y2": {
+          "field": "FisheryCode"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -16,
+        "dy": 20,
+        "fontSize": 12,
+        "fontWeight": 600,
+        "color": "#424242",
+        "baseline": "top"
+      },
+      "encoding": {
+        "x": {
+          "field": "CumulativeShare",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Annotation"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 13,
+      "titleFontWeight": 400,
+      "labelColor": "#606060",
+      "titleColor": "#606060",
+      "gridColor": "#e5e5e5",
+      "domain": false,
+      "tickSize": 0,
+      "titlePadding": 12
+    },
+    "legend": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "titleFontWeight": 400
+    }
+  },
+  "background": "transparent"
+}

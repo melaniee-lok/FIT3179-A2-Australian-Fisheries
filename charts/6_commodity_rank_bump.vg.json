@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "All thirteen commodity rank trajectories remain visible in grey; the selected commodity is highlighted in teal.",
+  "description": "Historical ranks for nine leading commodities in 2024-25, excluding Other products. Ranks remain relative to all 13 commodities.",
   "width": "container",
-  "height": 480,
+  "height": 403,
   "padding": {
     "left": 5,
     "right": 5,
@@ -26,6 +26,9 @@
   },
   "transform": [
     {
+      "filter": "indexof([\"Other Crustaceans\",\"Scallops\",\"Squids\",\"Other products\"], datum.Commodity) < 0"
+    },
+    {
       "calculate": "replace(datum.Year, '-', '–')",
       "as": "FinancialYear"
     },
@@ -46,10 +49,7 @@
       "axis": {
         "values": [
           "1998-99",
-          "2003-04",
-          "2008-09",
-          "2013-14",
-          "2018-19",
+          "2011-12",
           "2024-25"
         ],
         "labelExpr": "replace(datum.label, '-', '–')",
@@ -66,7 +66,7 @@
       "type": "quantitative",
       "scale": {
         "domain": [
-          13.5,
+          10.5,
           0.5
         ],
         "nice": false
@@ -83,13 +83,10 @@
           7,
           8,
           9,
-          10,
-          11,
-          12,
-          13
+          10
         ],
         "labelExpr": "datum.value == 1 ? '1st' : datum.value == 2 ? '2nd' : datum.value == 3 ? '3rd' : datum.value + 'th'",
-        "grid": true,
+        "grid": false,
         "domain": false,
         "tickSize": 0,
         "labelPadding": 8
@@ -110,7 +107,48 @@
           "field": "YearIndex"
         },
         "color": {
-          "value": "#c4cccf"
+          "field": "Commodity",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Salmonids",
+              "Rock Lobsters",
+              "Other Finfish, Sharks and Rays",
+              "Prawns",
+              "Oysters",
+              "Tunas",
+              "Crabs",
+              "Other Crustaceans",
+              "Abalone",
+              "Scallops",
+              "Squids",
+              "Other Molluscs",
+              "Other products"
+            ],
+            "range": [
+              "#a63d64",
+              "#087fba",
+              "#70451f",
+              "#355b98",
+              "#824b6a",
+              "#8f1538",
+              "#8b6a00",
+              "#5e5f59",
+              "#c76545",
+              "#9e4274",
+              "#555072",
+              "#c02983",
+              "#d17b9b"
+            ]
+          },
+          "legend": null
+        },
+        "opacity": {
+          "condition": {
+            "test": "CommodityView == 'All 9'",
+            "value": 0.8
+          },
+          "value": 0.22
         }
       }
     },
@@ -127,7 +165,41 @@
           "field": "YearIndex"
         },
         "color": {
-          "value": "#007c91"
+          "field": "Commodity",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Salmonids",
+              "Rock Lobsters",
+              "Other Finfish, Sharks and Rays",
+              "Prawns",
+              "Oysters",
+              "Tunas",
+              "Crabs",
+              "Other Crustaceans",
+              "Abalone",
+              "Scallops",
+              "Squids",
+              "Other Molluscs",
+              "Other products"
+            ],
+            "range": [
+              "#a63d64",
+              "#087fba",
+              "#70451f",
+              "#355b98",
+              "#824b6a",
+              "#8f1538",
+              "#8b6a00",
+              "#5e5f59",
+              "#c76545",
+              "#9e4274",
+              "#555072",
+              "#c02983",
+              "#d17b9b"
+            ]
+          },
+          "legend": null
         }
       },
       "transform": [
@@ -150,11 +222,41 @@
       },
       "encoding": {
         "color": {
-          "condition": {
-            "test": "datum.Commodity == CommodityView",
-            "value": "#007c91"
+          "field": "Commodity",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Salmonids",
+              "Rock Lobsters",
+              "Other Finfish, Sharks and Rays",
+              "Prawns",
+              "Oysters",
+              "Tunas",
+              "Crabs",
+              "Other Crustaceans",
+              "Abalone",
+              "Scallops",
+              "Squids",
+              "Other Molluscs",
+              "Other products"
+            ],
+            "range": [
+              "#a63d64",
+              "#087fba",
+              "#70451f",
+              "#355b98",
+              "#824b6a",
+              "#8f1538",
+              "#8b6a00",
+              "#5e5f59",
+              "#c76545",
+              "#9e4274",
+              "#555072",
+              "#c02983",
+              "#d17b9b"
+            ]
           },
-          "value": "#89979c"
+          "legend": null
         },
         "tooltip": [
           {
@@ -175,7 +277,14 @@
             "title": "Production value (A$ million)",
             "format": ",.1f"
           }
-        ]
+        ],
+        "opacity": {
+          "condition": {
+            "test": "CommodityView == 'All 9' || datum.Commodity == CommodityView",
+            "value": 1
+          },
+          "value": 0.35
+        }
       }
     },
     {
@@ -224,11 +333,48 @@
           "field": "Commodity"
         },
         "color": {
-          "condition": {
-            "test": "datum.Commodity == CommodityView",
-            "value": "#007c91"
+          "field": "Commodity",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Salmonids",
+              "Rock Lobsters",
+              "Other Finfish, Sharks and Rays",
+              "Prawns",
+              "Oysters",
+              "Tunas",
+              "Crabs",
+              "Other Crustaceans",
+              "Abalone",
+              "Scallops",
+              "Squids",
+              "Other Molluscs",
+              "Other products"
+            ],
+            "range": [
+              "#a63d64",
+              "#087fba",
+              "#70451f",
+              "#355b98",
+              "#824b6a",
+              "#8f1538",
+              "#8b6a00",
+              "#5e5f59",
+              "#c76545",
+              "#9e4274",
+              "#555072",
+              "#c02983",
+              "#d17b9b"
+            ]
           },
-          "value": "#89979c"
+          "legend": null
+        },
+        "opacity": {
+          "condition": {
+            "test": "CommodityView == 'All 9' || datum.Commodity == CommodityView",
+            "value": 1
+          },
+          "value": 0.35
         }
       }
     }
@@ -242,9 +388,9 @@
       "labelFontSize": 14,
       "titleFontSize": 14,
       "titleFontWeight": 400,
-      "labelColor": "#55696f",
-      "titleColor": "#55696f",
-      "gridColor": "#e8eded",
+      "labelColor": "#606060",
+      "titleColor": "#606060",
+      "gridColor": "#ebebeb",
       "gridOpacity": 0.4,
       "titlePadding": 16
     },
@@ -255,28 +401,25 @@
   "params": [
     {
       "name": "CommodityView",
-      "value": "Salmonids",
+      "value": "All 9",
       "bind": {
         "input": "select",
         "options": [
-          "All 13",
+          "All 9",
           "Abalone",
           "Crabs",
-          "Other (n.e.i.)",
-          "Other Crustaceans",
           "Other Finfish, Sharks and Rays",
           "Other Molluscs",
           "Oysters",
           "Prawns",
           "Rock Lobsters",
           "Salmonids",
-          "Scallops",
-          "Squids",
           "Tunas"
         ],
         "name": "Highlight commodity: ",
         "element": "#rank-controls"
       }
     }
-  ]
+  ],
+  "background": "transparent"
 }

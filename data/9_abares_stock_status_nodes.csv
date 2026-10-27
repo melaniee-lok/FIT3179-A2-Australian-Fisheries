@@ -1,13 +1,13 @@
 Year,Column,Status,StatusIndex,Low,High,StockCount
-2004,0,Not overfished,0,0,21,21
-2004,0,Overfished,1,21,38,17
-2004,0,Uncertain,2,38,75,37
-2004,0,Not assessed,3,75,102,27
-2014,1,Not overfished,0,0,67,67
-2014,1,Overfished,1,67,80,13
-2014,1,Uncertain,2,80,93,13
-2014,1,Not assessed,3,93,102,9
-2023,2,Not overfished,0,0,67,67
-2023,2,Overfished,1,67,81,14
-2023,2,Uncertain,2,81,102,21
-2023,2,Not assessed,3,102,102,0
+2004,0,Not overfished,0,0,23,23
+2004,0,Overfished,1,23,40,17
+2004,0,Uncertain,2,40,79,39
+2004,0,Not assessed,3,79,107,28
+2014,1,Not overfished,0,0,71,71
+2014,1,Overfished,1,71,84,13
+2014,1,Uncertain,2,84,97,13
+2014,1,Not assessed,3,97,107,10
+2025,2,Not overfished,0,0,66,66
+2025,2,Overfished,1,66,79,13
+2025,2,Uncertain,2,79,107,28
+2025,2,Not assessed,3,107,107,0
